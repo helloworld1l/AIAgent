@@ -1,0 +1,7 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-dotenv==1.0.0
+qdrant-client==1.7.1
+sentence-transformers==2.2.2
+requests==2.31.0
+torch==2.7.0

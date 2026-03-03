@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATLAB模型生成助手</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; background: #f6f8fa; }
+        .card { background: #fff; border-radius: 10px; padding: 20px; max-width: 980px; margin: 0 auto; box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        textarea { width: 100%; height: 110px; border: 1px solid #d0d7de; border-radius: 8px; padding: 12px; font-size: 14px; }
+        button { background: #2f81f7; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; margin-top: 12px; }
+        pre { background: #0d1117; color: #c9d1d9; border-radius: 8px; padding: 14px; overflow-x: auto; }
+        .muted { color: #57606a; font-size: 13px; }
+        ul { padding-left: 18px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>MATLAB模型生成助手</h2>
+        <p class="muted">输入模型描述，系统会生成并保存对应的 <code>.m</code> 文件。</p>
+        <textarea id="prompt" placeholder="示例：构建一个PID闭环控制的Simulink模型，kp=1.5, ki=0.8, kd=0.02"></textarea>
+        <br>
+        <button onclick="generate()">生成 .m 文件</button>
+        <button onclick="loadModels()">查看支持模型</button>
+
+        <h3>结果</h3>
+        <div id="message" class="muted">尚未生成</div>
+        <h4>脚本内容</h4>
+        <pre id="script">--</pre>
+
+        <h4>支持模型</h4>
+        <ul id="models"></ul>
+    </div>
+
+    <script>
+        const BASE = "http://127.0.0.1:8000";
+
+        async function generate() {
+            const q = document.getElementById("prompt").value.trim();
+            if (!q) return alert("请输入描述");
+            const res = await fetch(`${BASE}/api/query`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: q, user_id: "web_user", session_id: "web_session" }),
+            });
+            const data = await res.json();
+            document.getElementById("message").innerText = data.message || "完成";
+            const script = data?.data?.script || "--";
+            document.getElementById("script").innerText = script;
+        }
+
+        async function loadModels() {
+            const res = await fetch(`${BASE}/api/models`);
+            const text = await res.text();
+            let parsed = {};
+            try { parsed = JSON.parse(text); } catch (e) { parsed = {}; }
+            const models = parsed.models || [];
+            const ul = document.getElementById("models");
+            ul.innerHTML = "";
+            models.forEach(m => {
+                const li = document.createElement("li");
+                li.innerText = `${m.model_id} - ${m.name}`;
+                ul.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
+
