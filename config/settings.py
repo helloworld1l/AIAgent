@@ -15,6 +15,8 @@ DEFAULTS: Dict[str, Any] = {
     "QDRANT_COLLECTION": "crm_filters",
     "OLLAMA_BASE_URL": "http://localhost:11434",
     "OLLAMA_MODEL": "deepseek-r1:7b",
+    "OLLAMA_TIMEOUT_SEC": 180,
+    "OLLAMA_NUM_PREDICT": 128,
     "EMBEDDING_MODEL": "BAAI/bge-large-zh-v1.5",
     "EMBEDDING_DEVICE": "cpu",
     "API_HOST": "0.0.0.0",
@@ -36,6 +38,23 @@ def _cast_env_value(raw: str, expected_type: Type[Any], default: Any) -> Any:
         return default
 
 
+def _read_env_file(path: str) -> Dict[str, str]:
+    values: Dict[str, str] = {}
+    if not os.path.exists(path):
+        return values
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                values[key.strip()] = value.strip().strip('"').strip("'")
+    except Exception:
+        return {}
+    return values
+
+
 if BaseSettings is not None:
     class Settings(BaseSettings):
         # Qdrant配置
@@ -46,6 +65,8 @@ if BaseSettings is not None:
         # Ollama配置
         OLLAMA_BASE_URL: str = DEFAULTS["OLLAMA_BASE_URL"]
         OLLAMA_MODEL: str = DEFAULTS["OLLAMA_MODEL"]
+        OLLAMA_TIMEOUT_SEC: int = DEFAULTS["OLLAMA_TIMEOUT_SEC"]
+        OLLAMA_NUM_PREDICT: int = DEFAULTS["OLLAMA_NUM_PREDICT"]
         
         # 嵌入模型配置
         EMBEDDING_MODEL: str = DEFAULTS["EMBEDDING_MODEL"]
@@ -67,8 +88,11 @@ else:
         """无 pydantic 时的轻量配置加载器。"""
 
         def __init__(self):
+            file_env = _read_env_file(".env")
             for key, default in DEFAULTS.items():
                 raw = os.getenv(key)
+                if raw is None:
+                    raw = file_env.get(key)
                 if raw is None:
                     value = default
                 else:

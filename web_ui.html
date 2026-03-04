@@ -3,67 +3,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATLAB模型生成助手</title>
+    <title>对话式AI助手</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 24px; background: #f6f8fa; }
-        .card { background: #fff; border-radius: 10px; padding: 20px; max-width: 980px; margin: 0 auto; box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
-        textarea { width: 100%; height: 110px; border: 1px solid #d0d7de; border-radius: 8px; padding: 12px; font-size: 14px; }
-        button { background: #2f81f7; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; margin-top: 12px; }
-        pre { background: #0d1117; color: #c9d1d9; border-radius: 8px; padding: 14px; overflow-x: auto; }
-        .muted { color: #57606a; font-size: 13px; }
-        ul { padding-left: 18px; }
+        :root {
+            --bg: #f5f7f2;
+            --panel: #fffdf9;
+            --panel-soft: #f4f0e8;
+            --text: #22303a;
+            --muted: #667785;
+            --line: #d8e0dc;
+            --brand: #0f8b8d;
+            --brand-2: #ff8f3f;
+            --user: #ecfbf9;
+            --assistant: #ffffff;
+            --danger: #d64545;
+            --shadow: 0 20px 45px rgba(20, 37, 44, 0.11);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Space Grotesk", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 15%, rgba(15, 139, 141, 0.17), transparent 35%),
+                radial-gradient(circle at 88% 85%, rgba(255, 143, 63, 0.18), transparent 35%),
+                linear-gradient(125deg, #f4f8f7 0%, #fff9f0 100%);
+            overflow: auto;
+        }
+
+        .layout {
+            max-width: 1280px;
+            margin: 24px auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 18px;
+            padding: 0 16px;
+            min-height: calc(100vh - 48px);
+            align-items: start;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            padding: 18px;
+            gap: 14px;
+        }
+
+        .brand {
+            padding: 12px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #0f8b8d, #3bb9b1);
+            color: white;
+            transform-origin: left center;
+            animation: slideIn .55s ease;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 20px;
+            letter-spacing: .3px;
+        }
+
+        .brand p {
+            margin: 8px 0 0;
+            font-size: 13px;
+            opacity: .94;
+            line-height: 1.45;
+        }
+
+        .status {
+            background: var(--panel-soft);
+            border: 1px solid #e8dfcf;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 13px;
+            color: #5e6a75;
+        }
+
+        .status .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            background: #45b649;
+            box-shadow: 0 0 0 5px rgba(69, 182, 73, 0.15);
+            animation: pulse 1.8s infinite;
+        }
+
+        .quick h3,
+        .models h3,
+        .prompt-examples h3 {
+            margin: 4px 0 10px;
+            font-size: 14px;
+            color: #3a4a56;
+        }
+
+        .chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip {
+            border: 1px solid #cfe0da;
+            background: #f8fffd;
+            color: #32606a;
+            border-radius: 999px;
+            font-size: 12px;
+            padding: 7px 12px;
+            cursor: pointer;
+            transition: .18s ease;
+        }
+
+        .chip:hover {
+            transform: translateY(-1px);
+            background: #e8faf7;
+            border-color: #8ecdc4;
+        }
+
+        .models {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prompt-examples {
+            background: #f8faf6;
+            border: 1px solid #d8e4dc;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .prompt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 190px;
+            overflow: auto;
+        }
+
+        .prompt-btn {
+            text-align: left;
+            border: 1px solid #d6e6e0;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 12px;
+            color: #3f5562;
+            cursor: pointer;
+            transition: .15s ease;
+        }
+
+        .prompt-btn:hover {
+            border-color: #7ec7bc;
+            background: #f2fffb;
+            transform: translateX(1px);
+        }
+
+        .model-list {
+            margin: 0;
+            padding: 0 0 0 16px;
+            overflow: auto;
+            color: #5d6b76;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .chat {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-head {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(90deg, #ffffff 0%, #f4fbfb 100%);
+        }
+
+        .chat-head h2 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 600;
+        }
+
+        .chat-head p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .messages {
+            overflow: auto;
+            padding: 18px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: clamp(260px, 42vh, 460px);
+            background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95));
+        }
+
+        .msg {
+            max-width: min(760px, 88%);
+            border-radius: 14px;
+            padding: 11px 14px;
+            border: 1px solid var(--line);
+            animation: rise .22s ease;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 14px;
+            line-height: 1.56;
+        }
+
+        .msg.assistant {
+            align-self: flex-start;
+            background: var(--assistant);
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: var(--user);
+            border-color: #bfe4de;
+        }
+
+        .meta {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #80909b;
+        }
+
+        .script-card {
+            margin-top: 10px;
+            border: 1px solid #cad7da;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fcfeff;
+        }
+
+        .script-card .title {
+            background: #eef6f8;
+            padding: 8px 10px;
+            font-size: 12px;
+            color: #4c5d67;
+            border-bottom: 1px solid #d7e2e7;
+        }
+
+        .script-card pre {
+            margin: 0;
+            padding: 10px 12px;
+            max-height: 260px;
+            overflow: auto;
+            background: #0f1720;
+            color: #e7eff5;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .typing {
+            align-self: flex-start;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            gap: 5px;
+            width: 56px;
+        }
+
+        .typing span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #83949f;
+            animation: bounce 1s infinite;
+        }
+        .typing span:nth-child(2) { animation-delay: .1s; }
+        .typing span:nth-child(3) { animation-delay: .2s; }
+
+        .composer {
+            border-top: 1px solid var(--line);
+            padding: 14px 16px calc(20px + env(safe-area-inset-bottom));
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .composer textarea {
+            width: 100%;
+            resize: none;
+            border: 1px solid #cfd9d5;
+            border-radius: 12px;
+            min-height: 132px;
+            max-height: 320px;
+            padding: 12px 14px;
+            font: inherit;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #263946;
+            background: #f9fffd;
+        }
+
+        .composer textarea:focus {
+            outline: none;
+            border-color: #77c8bd;
+            box-shadow: 0 0 0 3px rgba(119, 200, 189, 0.2);
+        }
+
+        .btns {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 11px;
+            cursor: pointer;
+            width: auto;
+            flex: 0 0 auto;
+            min-width: 112px;
+            padding: 12px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .18s ease;
+        }
+
+        .btn.send {
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand), #17a2a4);
+        }
+
+        .btn.send:hover { transform: translateY(-1px); }
+
+        .btn.soft {
+            background: #f2f5f5;
+            color: #50606a;
+        }
+
+        .btn.soft:hover { background: #e8efee; }
+
+        .error-text {
+            color: var(--danger);
+            font-size: 12px;
+        }
+
+        @keyframes rise {
+            from { transform: translateY(6px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: .7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+            40% { transform: translateY(-4px); opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-8px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 980px) {
+            body { overflow: auto; }
+            .layout {
+                height: auto;
+                min-height: 100vh;
+                grid-template-columns: 1fr;
+                margin: 12px auto;
+            }
+            .sidebar { order: 2; }
+            .chat { min-height: 68vh; }
+            .msg { max-width: 95%; }
+            .btns {
+                flex-direction: row;
+                justify-content: stretch;
+            }
+            .btn { width: auto; flex: 1 1 120px; }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>MATLAB模型生成助手</h2>
-        <p class="muted">输入模型描述，系统会生成并保存对应的 <code>.m</code> 文件。</p>
-        <textarea id="prompt" placeholder="示例：构建一个PID闭环控制的Simulink模型，kp=1.5, ki=0.8, kd=0.02"></textarea>
-        <br>
-        <button onclick="generate()">生成 .m 文件</button>
-        <button onclick="loadModels()">查看支持模型</button>
+    <div class="layout">
+        <aside class="panel sidebar">
+            <section class="brand">
+                <h1>对话式 AI 助手</h1>
+                <p>支持多轮对话、会话重置，并可按意图直接生成 MATLAB `.m` 文件。</p>
+            </section>
 
-        <h3>结果</h3>
-        <div id="message" class="muted">尚未生成</div>
-        <h4>脚本内容</h4>
-        <pre id="script">--</pre>
+            <section class="status" id="statusBlock">
+                <span class="dot"></span><span id="statusText">正在检查服务状态...</span>
+            </section>
 
-        <h4>支持模型</h4>
-        <ul id="models"></ul>
+            <section class="quick">
+                <h3>快捷提问</h3>
+                <div class="chip-list">
+                    <button class="chip" onclick="usePrompt('介绍一下你可以帮我做什么')">能力介绍</button>
+                    <button class="chip" onclick="usePrompt('请列出支持的MATLAB模型')">模型列表</button>
+                    <button class="chip" onclick="usePrompt('生成一个PID闭环控制模型，kp=1.5, ki=0.8, kd=0.02')">生成PID模型</button>
+                    <button class="chip" onclick="usePrompt('/new')">重置会话</button>
+                </div>
+            </section>
+
+            <section class="prompt-examples">
+                <h3>推荐建模语句</h3>
+                <div class="prompt-list">
+                    <button class="prompt-btn" onclick="usePrompt('构建一个二阶传递函数阶跃响应模型，分子[1]，分母[1 3 2]，仿真10秒')">传递函数阶跃响应（含分子分母）</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成状态空间模型，A=[0 1;-2 -3]，B=[0;1]，C=[1 0]，D=0，并绘制输出曲线')">状态空间仿真（A/B/C/D）</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成PID闭环Simulink模型，kp=1.6，ki=0.7，kd=0.03，仿真30秒')">PID闭环Simulink（含参数）</button>
+                    <button class="prompt-btn" onclick="usePrompt('构建质量弹簧阻尼系统，m=2，c=0.4，k=18，初始状态[0;0]，仿真15秒')">质量弹簧阻尼（ODE）</button>
+                    <button class="prompt-btn" onclick="usePrompt('构建卡尔曼滤波跟踪模型，dt=0.1，steps=200，过程噪声0.01，观测噪声0.1')">卡尔曼滤波（噪声参数）</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成MPC控制示例，采样时间0.1，预测域20，控制域5，仿真30秒')">MPC控制（采样与预测域）</button>
+                </div>
+            </section>
+
+            <section class="models">
+                <h3>支持模板</h3>
+                <ul class="model-list" id="modelList"></ul>
+            </section>
+        </aside>
+
+        <main class="panel chat">
+            <header class="chat-head">
+                <h2>会话窗口</h2>
+                <p>输入自然语言即可聊天；当你描述 MATLAB 建模需求时，助手会自动生成 `.m` 文件。</p>
+            </header>
+
+            <section class="messages" id="messages"></section>
+
+            <footer class="composer">
+                <div>
+                    <textarea id="input" placeholder="建议句式：动作 + 模型类型 + 关键参数 + 输出要求。例如：生成PID闭环Simulink模型，kp=1.5，ki=0.8，kd=0.02，仿真20秒并保存.m文件"></textarea>
+                    <div id="errorText" class="error-text"></div>
+                </div>
+                <div class="btns">
+                    <button class="btn soft" onclick="resetSession()">重置会话</button>
+                    <button class="btn send" id="sendBtn" onclick="sendMessage()">发送</button>
+                </div>
+            </footer>
+        </main>
     </div>
 
     <script>
-        const BASE = "http://127.0.0.1:8000";
+        const API_BASE = "http://127.0.0.1:8000";
+        const CHAT_API = `${API_BASE}/api/chat`;
+        const MODELS_API = `${API_BASE}/api/models`;
+        const HEALTH_API = `${API_BASE}/api/health`;
 
-        async function generate() {
-            const q = document.getElementById("prompt").value.trim();
-            if (!q) return alert("请输入描述");
-            const res = await fetch(`${BASE}/api/query`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ question: q, user_id: "web_user", session_id: "web_session" }),
-            });
-            const data = await res.json();
-            document.getElementById("message").innerText = data.message || "完成";
-            const script = data?.data?.script || "--";
-            document.getElementById("script").innerText = script;
+        const inputEl = document.getElementById("input");
+        const messagesEl = document.getElementById("messages");
+        const sendBtn = document.getElementById("sendBtn");
+        const errorTextEl = document.getElementById("errorText");
+        const statusTextEl = document.getElementById("statusText");
+        const modelListEl = document.getElementById("modelList");
+
+        const sessionId = localStorage.getItem("assistant_session_id") || `web_${Date.now()}`;
+        localStorage.setItem("assistant_session_id", sessionId);
+
+        function nowTime() {
+            return new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" });
+        }
+
+        function scrollBottom() {
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function addMessage(role, text, data = null) {
+            const wrapper = document.createElement("article");
+            wrapper.className = `msg ${role}`;
+            wrapper.innerHTML = `<div>${escapeHtml(text).replace(/\n/g, "<br>")}</div><div class="meta">${role === "user" ? "你" : "助手"} · ${nowTime()}</div>`;
+
+            if (data && data.script) {
+                const scriptCard = document.createElement("section");
+                scriptCard.className = "script-card";
+                scriptCard.innerHTML = `
+                    <div class="title">生成脚本预览 · ${escapeHtml(data.generated_file || "untitled.m")}</div>
+                    <pre>${escapeHtml(data.script)}</pre>
+                `;
+                wrapper.appendChild(scriptCard);
+            }
+
+            messagesEl.appendChild(wrapper);
+            scrollBottom();
+        }
+
+        function addTyping() {
+            const typing = document.createElement("div");
+            typing.id = "typing";
+            typing.className = "typing";
+            typing.innerHTML = "<span></span><span></span><span></span>";
+            messagesEl.appendChild(typing);
+            scrollBottom();
+        }
+
+        function removeTyping() {
+            const el = document.getElementById("typing");
+            if (el) el.remove();
+        }
+
+        function setBusy(busy) {
+            sendBtn.disabled = busy;
+            inputEl.disabled = busy;
+            sendBtn.textContent = busy ? "处理中..." : "发送";
+        }
+
+        function escapeHtml(s) {
+            return (s || "").replace(/[&<>"']/g, (c) => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+            }[c]));
+        }
+
+        async function checkHealth() {
+            try {
+                const res = await fetch(HEALTH_API);
+                if (!res.ok) throw new Error("health failed");
+                const data = await res.json();
+                if (data.agent_initialized) {
+                    statusTextEl.textContent = "服务在线，智能体已初始化";
+                } else {
+                    statusTextEl.textContent = "服务在线，但智能体未初始化";
+                }
+            } catch (err) {
+                statusTextEl.textContent = "无法连接到后端服务";
+            }
         }
 
         async function loadModels() {
-            const res = await fetch(`${BASE}/api/models`);
-            const text = await res.text();
-            let parsed = {};
-            try { parsed = JSON.parse(text); } catch (e) { parsed = {}; }
-            const models = parsed.models || [];
-            const ul = document.getElementById("models");
-            ul.innerHTML = "";
-            models.forEach(m => {
-                const li = document.createElement("li");
-                li.innerText = `${m.model_id} - ${m.name}`;
-                ul.appendChild(li);
-            });
+            try {
+                const res = await fetch(MODELS_API);
+                if (!res.ok) throw new Error("models failed");
+                const data = await res.json();
+                const models = data.models || [];
+                modelListEl.innerHTML = "";
+                models.forEach((m) => {
+                    const li = document.createElement("li");
+                    li.textContent = `${m.model_id} · ${m.name}`;
+                    modelListEl.appendChild(li);
+                });
+            } catch (err) {
+                modelListEl.innerHTML = "<li>加载失败</li>";
+            }
         }
+
+        async function sendMessage() {
+            errorTextEl.textContent = "";
+            const message = inputEl.value.trim();
+            if (!message) return;
+
+            addMessage("user", message);
+            inputEl.value = "";
+            setBusy(true);
+            addTyping();
+
+            try {
+                const res = await fetch(CHAT_API, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        message,
+                        user_id: "web_user",
+                        session_id: sessionId
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.detail || data.message || "请求失败");
+                }
+                addMessage("assistant", data.message || "已处理", data.data || null);
+                if (data?.data?.used_fallback) {
+                    errorTextEl.textContent = `提示：当前回答来自本地兜底流程（${data?.data?.fallback_reason || "unknown"}）`;
+                }
+            } catch (err) {
+                addMessage("assistant", "请求失败，请检查后端服务是否已启动（python main.py api）。");
+                errorTextEl.textContent = String(err.message || err);
+            } finally {
+                removeTyping();
+                setBusy(false);
+                inputEl.focus();
+            }
+        }
+
+        function usePrompt(text) {
+            inputEl.value = text;
+            sendMessage();
+        }
+
+        function resetSession() {
+            inputEl.value = "/new";
+            sendMessage();
+        }
+
+        inputEl.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        addMessage("assistant", "你好，我已准备好。你可以先问我：你能做什么？或者直接描述一个 MATLAB 建模需求。");
+        checkHealth();
+        loadModels();
+        inputEl.focus();
     </script>
 </body>
 </html>
-

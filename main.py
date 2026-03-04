@@ -5,29 +5,10 @@ import sys
 import argparse
 from pathlib import Path
 
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-import os
-
-app = FastAPI()
-
-
-# 添加前端页面路由
-@app.get("/")
-async def get_frontend():
-    return FileResponse("web_ui.html")
-
-# 或者如果您想同时提供API和前端
-@app.get("/ui")
-async def get_ui():
-    return FileResponse("web_ui.html")
-
-
 sys.path.append(str(Path(__file__).parent))
 
 def main():
-    parser = argparse.ArgumentParser(description="MATLAB模型知识库与脚本生成助手")
+    parser = argparse.ArgumentParser(description="对话式AI助手（支持MATLAB建模与.m文件生成）")
     parser.add_argument(
         "mode",
         choices=["build", "run", "test", "api"],
