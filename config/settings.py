@@ -2,8 +2,9 @@ import os
 from typing import Any, Dict, Type
 
 try:
-    from pydantic_settings import BaseSettings
+    from pydantic_settings import BaseSettings, SettingsConfigDict
 except ImportError:  # 兼容未安装 pydantic-settings 的环境
+    SettingsConfigDict = None  # type: ignore
     try:
         from pydantic import BaseSettings  # type: ignore
     except ImportError:
@@ -19,6 +20,23 @@ DEFAULTS: Dict[str, Any] = {
     "OLLAMA_NUM_PREDICT": 128,
     "EMBEDDING_MODEL": "BAAI/bge-large-zh-v1.5",
     "EMBEDDING_DEVICE": "cpu",
+    "RETRIEVAL_VECTOR_BACKEND": "auto",
+    "RETRIEVAL_BM25_WEIGHT": 0.55,
+    "RETRIEVAL_VECTOR_WEIGHT": 0.45,
+    "RETRIEVAL_RERANK_BLEND": 0.35,
+    "RETRIEVAL_CANDIDATE_MULTIPLIER": 4,
+    "MODEL_SPEC_REPAIR_MAX_ROUNDS": 2,
+    "SESSION_STORE_BACKEND": "memory",
+    "SESSION_HISTORY_SIZE": 50,
+    "CHAT_HISTORY_WINDOW": 12,
+    "FALLBACK_HISTORY_WINDOW": 6,
+    "PLANNER_HISTORY_WINDOW": 4,
+    "SESSION_TTL_SEC": 604800,
+    "REDIS_HOST": "localhost",
+    "REDIS_PORT": 6379,
+    "REDIS_DB": 0,
+    "REDIS_PASSWORD": "",
+    "REDIS_KEY_PREFIX": "rag_crm_agent:session",
     "API_HOST": "0.0.0.0",
     "API_PORT": 8000,
     "DATABASE_URL": "sqlite:///crm_database.db",
@@ -56,31 +74,100 @@ def _read_env_file(path: str) -> Dict[str, str]:
 
 
 if BaseSettings is not None:
-    class Settings(BaseSettings):
-        # Qdrant配置
-        QDRANT_HOST: str = DEFAULTS["QDRANT_HOST"]
-        QDRANT_PORT: int = DEFAULTS["QDRANT_PORT"]
-        QDRANT_COLLECTION: str = DEFAULTS["QDRANT_COLLECTION"]
-        
-        # Ollama配置
-        OLLAMA_BASE_URL: str = DEFAULTS["OLLAMA_BASE_URL"]
-        OLLAMA_MODEL: str = DEFAULTS["OLLAMA_MODEL"]
-        OLLAMA_TIMEOUT_SEC: int = DEFAULTS["OLLAMA_TIMEOUT_SEC"]
-        OLLAMA_NUM_PREDICT: int = DEFAULTS["OLLAMA_NUM_PREDICT"]
-        
-        # 嵌入模型配置
-        EMBEDDING_MODEL: str = DEFAULTS["EMBEDDING_MODEL"]
-        EMBEDDING_DEVICE: str = DEFAULTS["EMBEDDING_DEVICE"]
-        
-        # API配置
-        API_HOST: str = DEFAULTS["API_HOST"]
-        API_PORT: int = DEFAULTS["API_PORT"]
+    if SettingsConfigDict is not None:
+        class Settings(BaseSettings):
+            model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-        # 数据库配置
-        DATABASE_URL: str = DEFAULTS["DATABASE_URL"]
-        
-        class Config:
-            env_file = ".env"
+            # Qdrant配置
+            QDRANT_HOST: str = DEFAULTS["QDRANT_HOST"]
+            QDRANT_PORT: int = DEFAULTS["QDRANT_PORT"]
+            QDRANT_COLLECTION: str = DEFAULTS["QDRANT_COLLECTION"]
+            
+            # Ollama配置
+            OLLAMA_BASE_URL: str = DEFAULTS["OLLAMA_BASE_URL"]
+            OLLAMA_MODEL: str = DEFAULTS["OLLAMA_MODEL"]
+            OLLAMA_TIMEOUT_SEC: int = DEFAULTS["OLLAMA_TIMEOUT_SEC"]
+            OLLAMA_NUM_PREDICT: int = DEFAULTS["OLLAMA_NUM_PREDICT"]
+            
+            # 嵌入模型配置
+            EMBEDDING_MODEL: str = DEFAULTS["EMBEDDING_MODEL"]
+            EMBEDDING_DEVICE: str = DEFAULTS["EMBEDDING_DEVICE"]
+            RETRIEVAL_VECTOR_BACKEND: str = DEFAULTS["RETRIEVAL_VECTOR_BACKEND"]
+            RETRIEVAL_BM25_WEIGHT: float = DEFAULTS["RETRIEVAL_BM25_WEIGHT"]
+            RETRIEVAL_VECTOR_WEIGHT: float = DEFAULTS["RETRIEVAL_VECTOR_WEIGHT"]
+            RETRIEVAL_RERANK_BLEND: float = DEFAULTS["RETRIEVAL_RERANK_BLEND"]
+            RETRIEVAL_CANDIDATE_MULTIPLIER: int = DEFAULTS["RETRIEVAL_CANDIDATE_MULTIPLIER"]
+            MODEL_SPEC_REPAIR_MAX_ROUNDS: int = DEFAULTS["MODEL_SPEC_REPAIR_MAX_ROUNDS"]
+
+            # 会话缓存配置
+            SESSION_STORE_BACKEND: str = DEFAULTS["SESSION_STORE_BACKEND"]
+            SESSION_HISTORY_SIZE: int = DEFAULTS["SESSION_HISTORY_SIZE"]
+            CHAT_HISTORY_WINDOW: int = DEFAULTS["CHAT_HISTORY_WINDOW"]
+            FALLBACK_HISTORY_WINDOW: int = DEFAULTS["FALLBACK_HISTORY_WINDOW"]
+            PLANNER_HISTORY_WINDOW: int = DEFAULTS["PLANNER_HISTORY_WINDOW"]
+            SESSION_TTL_SEC: int = DEFAULTS["SESSION_TTL_SEC"]
+
+            # Redis配置
+            REDIS_HOST: str = DEFAULTS["REDIS_HOST"]
+            REDIS_PORT: int = DEFAULTS["REDIS_PORT"]
+            REDIS_DB: int = DEFAULTS["REDIS_DB"]
+            REDIS_PASSWORD: str = DEFAULTS["REDIS_PASSWORD"]
+            REDIS_KEY_PREFIX: str = DEFAULTS["REDIS_KEY_PREFIX"]
+
+            # API配置
+            API_HOST: str = DEFAULTS["API_HOST"]
+            API_PORT: int = DEFAULTS["API_PORT"]
+
+            # 数据库配置
+            DATABASE_URL: str = DEFAULTS["DATABASE_URL"]
+    else:
+        class Settings(BaseSettings):
+            # Qdrant配置
+            QDRANT_HOST: str = DEFAULTS["QDRANT_HOST"]
+            QDRANT_PORT: int = DEFAULTS["QDRANT_PORT"]
+            QDRANT_COLLECTION: str = DEFAULTS["QDRANT_COLLECTION"]
+            
+            # Ollama配置
+            OLLAMA_BASE_URL: str = DEFAULTS["OLLAMA_BASE_URL"]
+            OLLAMA_MODEL: str = DEFAULTS["OLLAMA_MODEL"]
+            OLLAMA_TIMEOUT_SEC: int = DEFAULTS["OLLAMA_TIMEOUT_SEC"]
+            OLLAMA_NUM_PREDICT: int = DEFAULTS["OLLAMA_NUM_PREDICT"]
+            
+            # 嵌入模型配置
+            EMBEDDING_MODEL: str = DEFAULTS["EMBEDDING_MODEL"]
+            EMBEDDING_DEVICE: str = DEFAULTS["EMBEDDING_DEVICE"]
+            RETRIEVAL_VECTOR_BACKEND: str = DEFAULTS["RETRIEVAL_VECTOR_BACKEND"]
+            RETRIEVAL_BM25_WEIGHT: float = DEFAULTS["RETRIEVAL_BM25_WEIGHT"]
+            RETRIEVAL_VECTOR_WEIGHT: float = DEFAULTS["RETRIEVAL_VECTOR_WEIGHT"]
+            RETRIEVAL_RERANK_BLEND: float = DEFAULTS["RETRIEVAL_RERANK_BLEND"]
+            RETRIEVAL_CANDIDATE_MULTIPLIER: int = DEFAULTS["RETRIEVAL_CANDIDATE_MULTIPLIER"]
+            MODEL_SPEC_REPAIR_MAX_ROUNDS: int = DEFAULTS["MODEL_SPEC_REPAIR_MAX_ROUNDS"]
+
+            # 会话缓存配置
+            SESSION_STORE_BACKEND: str = DEFAULTS["SESSION_STORE_BACKEND"]
+            SESSION_HISTORY_SIZE: int = DEFAULTS["SESSION_HISTORY_SIZE"]
+            CHAT_HISTORY_WINDOW: int = DEFAULTS["CHAT_HISTORY_WINDOW"]
+            FALLBACK_HISTORY_WINDOW: int = DEFAULTS["FALLBACK_HISTORY_WINDOW"]
+            PLANNER_HISTORY_WINDOW: int = DEFAULTS["PLANNER_HISTORY_WINDOW"]
+            SESSION_TTL_SEC: int = DEFAULTS["SESSION_TTL_SEC"]
+
+            # Redis配置
+            REDIS_HOST: str = DEFAULTS["REDIS_HOST"]
+            REDIS_PORT: int = DEFAULTS["REDIS_PORT"]
+            REDIS_DB: int = DEFAULTS["REDIS_DB"]
+            REDIS_PASSWORD: str = DEFAULTS["REDIS_PASSWORD"]
+            REDIS_KEY_PREFIX: str = DEFAULTS["REDIS_KEY_PREFIX"]
+
+            # API配置
+            API_HOST: str = DEFAULTS["API_HOST"]
+            API_PORT: int = DEFAULTS["API_PORT"]
+
+            # 数据库配置
+            DATABASE_URL: str = DEFAULTS["DATABASE_URL"]
+            
+            class Config:
+                env_file = ".env"
+                extra = "ignore"
 
     settings = Settings()
 else:

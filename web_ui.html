@@ -213,7 +213,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            height: clamp(260px, 42vh, 460px);
+            height: clamp(440px, calc(42vh + 180px), 640px);
             background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.95));
         }
 
@@ -244,6 +244,36 @@
             margin-top: 8px;
             font-size: 11px;
             color: #80909b;
+        }
+
+        .trace-badges {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .trace-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid #d7e5e3;
+            background: #f5fbfa;
+            color: #36535b;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .trace-badge .label {
+            color: #6f818b;
+        }
+
+        .trace-badge.warn {
+            border-color: #ffd9b7;
+            background: #fff7ef;
+            color: #8b5a23;
         }
 
         .script-card {
@@ -435,6 +465,7 @@
                     <button class="prompt-btn" onclick="usePrompt('生成PID闭环Simulink模型，kp=1.6，ki=0.7，kd=0.03，仿真30秒')">PID闭环Simulink（含参数）</button>
                     <button class="prompt-btn" onclick="usePrompt('构建质量弹簧阻尼系统，m=2，c=0.4，k=18，初始状态[0;0]，仿真15秒')">质量弹簧阻尼（ODE）</button>
                     <button class="prompt-btn" onclick="usePrompt('构建卡尔曼滤波跟踪模型，dt=0.1，steps=200，过程噪声0.01，观测噪声0.1')">卡尔曼滤波（噪声参数）</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成一个火箭发射模型，mass0=650,fuel_mass=220,burn_rate=2.8,thrust=19000,drag_coeff=0.52,area=0.9,stop_time=140')">火箭发射模型（1D动力学）</button>
                     <button class="prompt-btn" onclick="usePrompt('生成MPC控制示例，采样时间0.1，预测域20，控制域5，仿真30秒')">MPC控制（采样与预测域）</button>
                 </div>
             </section>
@@ -495,6 +526,13 @@
             wrapper.className = `msg ${role}`;
             wrapper.innerHTML = `<div>${escapeHtml(text).replace(/\n/g, "<br>")}</div><div class="meta">${role === "user" ? "你" : "助手"} · ${nowTime()}</div>`;
 
+            if (role === "assistant" && data) {
+                const traceBadges = renderTraceBadges(data);
+                if (traceBadges) {
+                    wrapper.appendChild(traceBadges);
+                }
+            }
+
             if (data && data.script) {
                 const scriptCard = document.createElement("section");
                 scriptCard.className = "script-card";
@@ -533,6 +571,65 @@
             return (s || "").replace(/[&<>"']/g, (c) => ({
                 "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
             }[c]));
+        }
+
+        function getRetrievalBackend(data) {
+            const docs = Array.isArray(data?.retrieved_knowledge) ? data.retrieved_knowledge : [];
+            const backend = docs
+                .map((item) => item?.score_detail?.backend)
+                .find((value) => typeof value === "string" && value.trim());
+
+            if (backend === "qdrant") return "Qdrant";
+            if (backend === "local") return "local";
+            if (docs.length) return "BM25";
+            return "";
+        }
+
+        function getSpecSource(data) {
+            const buildSource = String(data?.spec_build_source || "").toLowerCase();
+            if (buildSource.startsWith("llm")) return "LLM";
+            if (buildSource.startsWith("heuristic")) return "规则推导";
+            if (typeof data?.spec_used_llm === "boolean") {
+                return data.spec_used_llm ? "LLM" : "规则推导";
+            }
+            return "";
+        }
+
+        function buildTraceItems(data) {
+            const items = [];
+            const retrievalBackend = getRetrievalBackend(data);
+            const specSource = getSpecSource(data);
+
+            if (retrievalBackend) {
+                items.push({ label: "检索后端", value: retrievalBackend });
+            }
+
+            if (specSource) {
+                items.push({ label: "规格来源", value: specSource });
+            }
+
+            if (data?.used_legacy_fallback) {
+                items.push({ label: "生成链路", value: "模板兜底", tone: "warn" });
+            }
+
+            return items;
+        }
+
+        function renderTraceBadges(data) {
+            const items = buildTraceItems(data);
+            if (!items.length) return null;
+
+            const container = document.createElement("section");
+            container.className = "trace-badges";
+
+            items.forEach((item) => {
+                const badge = document.createElement("div");
+                badge.className = `trace-badge${item.tone ? ` ${item.tone}` : ""}`;
+                badge.innerHTML = `<span class="label">${escapeHtml(item.label)}：</span><span>${escapeHtml(item.value)}</span>`;
+                container.appendChild(badge);
+            });
+
+            return container;
         }
 
         async function checkHealth() {

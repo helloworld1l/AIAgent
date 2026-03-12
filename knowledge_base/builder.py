@@ -17,6 +17,7 @@ from typing import Any, Dict, List
 from urllib.parse import urlparse
 
 from config.settings import settings
+from knowledge_base.document_loader import DEFAULT_DOCS_DIR, load_file_documents
 from knowledge_base.matlab_model_data import get_model_catalog
 
 logger = logging.getLogger(__name__)
@@ -25,6 +26,7 @@ logging.basicConfig(level=logging.INFO)
 class KnowledgeBaseBuilder:
     def __init__(self, enable_qdrant: bool = False):
         self.catalog = get_model_catalog()
+        self.docs_dir = DEFAULT_DOCS_DIR
         self.local_index_path = os.path.join(
             os.path.dirname(__file__), "matlab_knowledge_index.json"
         )
@@ -177,6 +179,15 @@ class KnowledgeBaseBuilder:
                         },
                     }
                 )
+
+        file_documents = load_file_documents(self.docs_dir)
+        if file_documents:
+            logger.info(
+                "Loaded external document chunks: count=%s, docs_dir=%s",
+                len(file_documents),
+                self.docs_dir,
+            )
+            documents.extend(file_documents)
         return documents
 
     def build_local_index(self, documents: List[Dict[str, Any]]) -> str:

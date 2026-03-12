@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.git/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+generated_models/
+.docker-cache/
+*.log

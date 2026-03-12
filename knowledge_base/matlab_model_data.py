@@ -198,9 +198,42 @@ MATLAB_MODEL_KNOWLEDGE: List[Dict] = [
             "build 2dof robot kinematics matlab script",
         ],
     },
+    {
+        "model_id": "rocket_launch_1d",
+        "name": "1D Rocket Launch Dynamics",
+        "category": "aerospace",
+        "keywords": [
+            "rocket",
+            "launch",
+            "fire",
+            "火箭",
+            "发射",
+            "弹道",
+            "推进",
+            "空气阻力",
+            "航天",
+        ],
+        "description": "Simulate 1D vertical rocket launch with thrust, drag, gravity and fuel consumption.",
+        "default_params": {
+            "mass0": 500.0,
+            "fuel_mass": 180.0,
+            "burn_rate": 2.5,
+            "thrust": 16000.0,
+            "drag_coeff": 0.55,
+            "area": 0.8,
+            "air_density": 1.225,
+            "g": 9.81,
+            "dt": 0.05,
+            "stop_time": 120.0,
+        },
+        "examples": [
+            "生成一个火箭发射模型",
+            "构建一维火箭垂直发射仿真，考虑推力和阻力",
+            "build rocket launch dynamics model in matlab",
+        ],
+    },
 ]
 
 
 def get_model_catalog() -> List[Dict]:
     return MATLAB_MODEL_KNOWLEDGE
-

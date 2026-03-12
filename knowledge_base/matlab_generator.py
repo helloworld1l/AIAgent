@@ -27,6 +27,7 @@ class MatlabModelGenerator:
             "battery_rc_model": self._tpl_battery_rc_model,
             "pv_iv_curve": self._tpl_pv_iv_curve,
             "robot_2dof_kinematics": self._tpl_robot_2dof_kinematics,
+            "rocket_launch_1d": self._tpl_rocket_launch_1d,
         }
 
     def retrieve_knowledge(self, description: str, top_k: int = 5) -> List[Dict[str, Any]]:
@@ -74,23 +75,13 @@ class MatlabModelGenerator:
 
         chosen = match
         params = self._infer_params(description, chosen)
-        template = self.templates.get(chosen["model_id"])
-        if template is None:
-            return {"status": "error", "message": f"No template function for {chosen['model_id']}"}
-
-        code = template(params)
-        os.makedirs(output_dir, exist_ok=True)
-
-        if not file_name:
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            file_name = f"{chosen['model_id']}_{ts}.m"
-        elif not file_name.endswith(".m"):
-            file_name = f"{file_name}.m"
-
-        safe_name = _sanitize_filename(file_name)
-        file_path = os.path.abspath(os.path.join(output_dir, safe_name))
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(code)
+        code = self.render_script(chosen["model_id"], params)
+        safe_name, file_path = self.save_script(
+            code=code,
+            model_id=chosen["model_id"],
+            output_dir=output_dir,
+            file_name=file_name,
+        )
 
         return {
             "status": "success",
@@ -103,6 +94,31 @@ class MatlabModelGenerator:
             "params": params,
             "knowledge_matches": self.retrieve_knowledge(description, top_k=3),
         }
+
+    def render_script(self, model_id: str, params: Dict[str, Any]) -> str:
+        template = self.templates.get(model_id)
+        if template is None:
+            raise ValueError(f"No template function for {model_id}")
+        return template(params)
+
+    def save_script(
+        self,
+        code: str,
+        model_id: str,
+        output_dir: str = "generated_models",
+        file_name: Optional[str] = None,
+    ) -> Tuple[str, str]:
+        os.makedirs(output_dir, exist_ok=True)
+        if not file_name:
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            file_name = f"{model_id}_{ts}.m"
+        elif not file_name.endswith(".m"):
+            file_name = f"{file_name}.m"
+        safe_name = _sanitize_filename(file_name)
+        file_path = os.path.abspath(os.path.join(output_dir, safe_name))
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(code)
+        return safe_name, file_path
 
     def _pick_model(self, description: str, model_id: Optional[str]) -> Optional[Dict[str, Any]]:
         if model_id:
@@ -139,7 +155,27 @@ class MatlabModelGenerator:
             if kd is not None:
                 params["kd"] = kd
 
-        for key in ("m", "c", "k", "dt", "steps", "fs", "cutoff_hz", "na", "nb", "nk", "ts"):
+        for key in (
+            "m",
+            "c",
+            "k",
+            "dt",
+            "steps",
+            "fs",
+            "cutoff_hz",
+            "na",
+            "nb",
+            "nk",
+            "ts",
+            "mass0",
+            "fuel_mass",
+            "burn_rate",
+            "thrust",
+            "drag_coeff",
+            "area",
+            "air_density",
+            "g",
+        ):
             if key in params:
                 val = _extract_named_number(text, [key])
                 if val is not None:
@@ -442,6 +478,60 @@ title('2-DOF Planar Robot Kinematics');
 legend('Robot links', 'Target');
 """
 
+    def _tpl_rocket_launch_1d(self, p: Dict[str, Any]) -> str:
+        return f"""%% Auto-generated MATLAB model: 1D Rocket Launch Dynamics
+clear; clc; close all;
+
+mass0 = {p['mass0']};             % initial total mass (kg)
+fuel_mass = {p['fuel_mass']};     % fuel mass (kg)
+burn_rate = {p['burn_rate']};     % fuel burn rate (kg/s)
+thrust = {p['thrust']};           % engine thrust (N)
+Cd = {p['drag_coeff']};           % drag coefficient
+A = {p['area']};                  % frontal area (m^2)
+rho = {p['air_density']};         % air density (kg/m^3)
+g = {p['g']};                     % gravity (m/s^2)
+dt = {p['dt']};                   % simulation step (s)
+T = {p['stop_time']};             % total simulation time (s)
+
+t = 0:dt:T;
+N = numel(t);
+h = zeros(N,1);   % altitude
+v = zeros(N,1);   % velocity
+a = zeros(N,1);   % acceleration
+m = zeros(N,1);   % mass
+
+for k = 1:N
+    tk = t(k);
+    burned = min(fuel_mass, burn_rate * tk);
+    m(k) = mass0 - burned;
+
+    if burned < fuel_mass
+        current_thrust = thrust;
+    else
+        current_thrust = 0;
+    end
+
+    drag = 0.5 * rho * Cd * A * v(max(k-1,1)) * abs(v(max(k-1,1)));
+    weight = m(k) * g;
+    a(k) = (current_thrust - drag - weight) / m(k);
+
+    if k > 1
+        v(k) = v(k-1) + a(k) * dt;
+        h(k) = max(0, h(k-1) + v(k) * dt);
+    end
+end
+
+[max_h, idx] = max(h);
+fprintf('Max altitude: %.2f m at t = %.2f s\\n', max_h, t(idx));
+fprintf('Final velocity: %.2f m/s\\n', v(end));
+
+figure('Name', 'Rocket Launch 1D');
+subplot(3,1,1); plot(t, h, 'LineWidth', 1.6); grid on; ylabel('Altitude (m)');
+title('1D Rocket Launch Dynamics');
+subplot(3,1,2); plot(t, v, 'LineWidth', 1.6); grid on; ylabel('Velocity (m/s)');
+subplot(3,1,3); plot(t, a, 'LineWidth', 1.6); grid on; ylabel('Acceleration (m/s^2)'); xlabel('Time (s)');
+"""
+
 
 def _token_overlap(a: str, b: str) -> int:
     tokens = set(re.split(r"[\s,;，。]+", b))
@@ -478,4 +568,3 @@ def _sanitize_filename(name: str) -> str:
     if not sanitized.endswith(".m"):
         sanitized = f"{sanitized}.m"
     return sanitized
-

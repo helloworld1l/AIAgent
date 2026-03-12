@@ -1,0 +1,207 @@
+x-app-env: &app-env
+  SESSION_STORE_BACKEND: redis
+  SESSION_HISTORY_SIZE: ${SESSION_HISTORY_SIZE:-50}
+  CHAT_HISTORY_WINDOW: ${CHAT_HISTORY_WINDOW:-12}
+  FALLBACK_HISTORY_WINDOW: ${FALLBACK_HISTORY_WINDOW:-6}
+  PLANNER_HISTORY_WINDOW: ${PLANNER_HISTORY_WINDOW:-4}
+  SESSION_TTL_SEC: ${SESSION_TTL_SEC:-604800}
+  REDIS_HOST: ${DOCKER_REDIS_HOST:-redis}
+  REDIS_PORT: ${REDIS_PORT:-6379}
+  REDIS_DB: ${REDIS_DB:-0}
+  REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+  REDIS_KEY_PREFIX: ${REDIS_KEY_PREFIX:-rag_crm_agent:session}
+  OLLAMA_BASE_URL: ${DOCKER_OLLAMA_BASE_URL:-http://ollama:11434}
+  OLLAMA_MODEL: ${OLLAMA_MODEL:-deepseek-r1:7b}
+  OLLAMA_TIMEOUT_SEC: ${OLLAMA_TIMEOUT_SEC:-300}
+  OLLAMA_NUM_PREDICT: ${OLLAMA_NUM_PREDICT:-96}
+  QDRANT_HOST: ${DOCKER_QDRANT_HOST:-qdrant}
+  QDRANT_PORT: ${QDRANT_PORT:-6333}
+  QDRANT_COLLECTION: ${QDRANT_COLLECTION:-crm_filters}
+  EMBEDDING_MODEL: ${EMBEDDING_MODEL:-BAAI/bge-large-zh-v1.5}
+  EMBEDDING_DEVICE: ${EMBEDDING_DEVICE:-cpu}
+  RETRIEVAL_VECTOR_BACKEND: ${RETRIEVAL_VECTOR_BACKEND:-auto}
+  RETRIEVAL_BM25_WEIGHT: ${RETRIEVAL_BM25_WEIGHT:-0.55}
+  RETRIEVAL_VECTOR_WEIGHT: ${RETRIEVAL_VECTOR_WEIGHT:-0.45}
+  RETRIEVAL_RERANK_BLEND: ${RETRIEVAL_RERANK_BLEND:-0.35}
+  RETRIEVAL_CANDIDATE_MULTIPLIER: ${RETRIEVAL_CANDIDATE_MULTIPLIER:-4}
+  MODEL_SPEC_REPAIR_MAX_ROUNDS: ${MODEL_SPEC_REPAIR_MAX_ROUNDS:-2}
+  SENTENCE_TRANSFORMERS_HOME: /root/.cache/torch/sentence_transformers
+
+x-app-build: &app-build
+  context: .
+  dockerfile: Dockerfile
+  args:
+    PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:-python:3.10-slim}
+
+x-app-service: &app-service
+  build: *app-build
+  image: ${APP_IMAGE_NAME:-rag-crm-agent:local}
+  restart: unless-stopped
+  environment:
+    <<: *app-env
+    API_HOST: 0.0.0.0
+    API_PORT: 8000
+  depends_on:
+    redis:
+      condition: service_started
+    qdrant:
+      condition: service_started
+    ollama:
+      condition: service_started
+    ollama-init:
+      condition: service_completed_successfully
+    kb-build:
+      condition: service_completed_successfully
+  volumes:
+    - generated_models:/app/generated_models
+    - ./knowledge_base/docs:/app/knowledge_base/docs
+    - type: bind
+      source: ${DOCKER_ST_CACHE_DIR:-./.docker-cache/sentence_transformers}
+      target: /root/.cache/torch/sentence_transformers
+  healthcheck:
+    test: ["CMD", "python", "-c", "import requests, sys; sys.exit(0 if requests.get('http://127.0.0.1:8000/api/health', timeout=5).ok else 1)"]
+    interval: 30s
+    timeout: 10s
+    retries: 5
+    start_period: 45s
+
+services:
+  redis:
+    image: redis:5.0.14
+    container_name: rag-crm-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+  qdrant:
+    image: qdrant/qdrant:v1.7.4
+    container_name: rag-crm-qdrant
+    restart: unless-stopped
+    ports:
+      - "${QDRANT_PORT:-6333}:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rag-crm-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - type: bind
+        source: ${DOCKER_OLLAMA_HOME:-./.docker-cache/ollama}
+        target: /root/.ollama
+
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: rag-crm-ollama-init
+    restart: "no"
+    depends_on:
+      ollama:
+        condition: service_started
+    environment:
+      OLLAMA_HOST: ${DOCKER_OLLAMA_BASE_URL:-http://ollama:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-deepseek-r1:7b}
+    volumes:
+      - type: bind
+        source: ${DOCKER_OLLAMA_HOME:-./.docker-cache/ollama}
+        target: /root/.ollama
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      until ollama list >/dev/null 2>&1; do
+        echo "Waiting for Ollama service..."
+        sleep 3
+      done
+      if ollama show "${OLLAMA_MODEL}" >/dev/null 2>&1; then
+        echo "Model already exists, skip pull: ${OLLAMA_MODEL}"
+        exit 0
+      fi
+      echo "Pulling model ${OLLAMA_MODEL}"
+      ollama pull "${OLLAMA_MODEL}"
+
+  kb-build:
+    build: *app-build
+    image: ${APP_IMAGE_NAME:-rag-crm-agent:local}
+    container_name: rag-crm-kb-build
+    restart: "no"
+    environment:
+      <<: *app-env
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+    depends_on:
+      qdrant:
+        condition: service_started
+    volumes:
+      - ./knowledge_base/docs:/app/knowledge_base/docs
+      - type: bind
+        source: ${DOCKER_ST_CACHE_DIR:-./.docker-cache/sentence_transformers}
+        target: /root/.cache/torch/sentence_transformers
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      python - <<'PY'
+      import os
+      import time
+      import requests
+
+      host = os.getenv("QDRANT_HOST", "qdrant")
+      port = os.getenv("QDRANT_PORT", "6333")
+      collection = os.getenv("QDRANT_COLLECTION", "crm_filters")
+      force_rebuild = os.getenv("FORCE_REBUILD_QDRANT", "0").strip().lower() in {"1", "true", "yes", "on"}
+      url = f"http://{host}:{port}/collections"
+      collection_url = f"{url}/{collection}"
+      deadline = time.time() + 180
+      last_error = ""
+
+      while time.time() < deadline:
+          try:
+              response = requests.get(url, timeout=5)
+              if response.ok:
+                  print(f"Qdrant ready: {url}")
+                  break
+              last_error = f"status={response.status_code}"
+          except Exception as exc:
+              last_error = str(exc)
+          print(f"Waiting for Qdrant: {last_error}", flush=True)
+          time.sleep(3)
+      else:
+          raise SystemExit(f"Qdrant not ready before timeout: {last_error}")
+
+      if not force_rebuild:
+          try:
+              existing = requests.get(collection_url, timeout=5)
+              if existing.ok:
+                  print(f"Qdrant collection already exists, skip rebuild: {collection}")
+                  raise SystemExit(0)
+          except Exception:
+              pass
+
+      print(f"Qdrant collection missing or force rebuild enabled: {collection}")
+      raise SystemExit(10)
+      PY
+      status=$$?
+      if [ "$$status" -eq 0 ]; then
+        exit 0
+      fi
+      if [ "$$status" -ne 10 ]; then
+        exit "$$status"
+      fi
+      python main.py build --with-qdrant
+
+  app1:
+    <<: *app-service
+    container_name: rag-crm-agent-1
+    ports:
+      - "8000:8000"
+
+  app2:
+    <<: *app-service
+    container_name: rag-crm-agent-2
+    ports:
+      - "8001:8000"
+
+volumes:
+  redis_data:
+  qdrant_data:
+  generated_models:

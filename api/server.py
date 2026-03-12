@@ -91,7 +91,11 @@ async def ui():
 @app.get("/api/health")
 async def health_check():
     runtime_agent = _ensure_agent()
-    return {"status": "healthy", "agent_initialized": runtime_agent is not None}
+    return {
+        "status": "healthy",
+        "agent_initialized": runtime_agent is not None,
+        "session_store_backend": getattr(getattr(runtime_agent, "session_store", None), "backend_name", "unknown"),
+    }
 
 
 @app.get("/api/models")
