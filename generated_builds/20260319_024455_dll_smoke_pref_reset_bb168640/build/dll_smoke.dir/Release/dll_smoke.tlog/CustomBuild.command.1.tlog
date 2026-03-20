@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\20260319_024455_DLL_SMOKE_PREF_RESET_BB168640\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/src -BD:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build --check-stamp-file D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

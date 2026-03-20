@@ -1,12 +1,15 @@
 [
   {
     "id": 0,
-    "text": "model_id: transfer_function_step; name: Transfer Function Step Response; category: control; description: Create a transfer function model and run step response.; keywords: transfer function, tf, step, 传递函数, 阶跃响应, 控制系统",
+    "text": "model_id: transfer_function_step; name: Transfer Function Step Response; category: control; template_family: ; domain_tags: ; equation_fragments: ; description: Create a transfer function model and run step response.; keywords: transfer function, tf, step, 传递函数, 阶跃响应, 控制系统",
     "payload": {
       "type": "model",
       "model_id": "transfer_function_step",
       "name": "Transfer Function Step Response",
       "category": "control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Create a transfer function model and run step response.",
       "keywords": [
         "transfer function",
@@ -25,30 +28,39 @@
   },
   {
     "id": 1,
-    "text": "example: 构建一个二阶传递函数并画阶跃响应 -> model transfer_function_step",
+    "text": "example: 构建一个二阶传递函数并画阶跃响应 -> model transfer_function_step; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "transfer_function_step",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建一个二阶传递函数并画阶跃响应"
     }
   },
   {
     "id": 2,
-    "text": "example: build tf step response with denominator [1 3 2] -> model transfer_function_step",
+    "text": "example: build tf step response with denominator [1 3 2] -> model transfer_function_step; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "transfer_function_step",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build tf step response with denominator [1 3 2]"
     }
   },
   {
     "id": 10,
-    "text": "model_id: state_space_response; name: State Space Simulation; category: control; description: Build a state-space model and simulate output with lsim.; keywords: state space, ss, 状态空间, lsim, 状态变量",
+    "text": "model_id: state_space_response; name: State Space Simulation; category: control; template_family: ; domain_tags: ; equation_fragments: ; description: Build a state-space model and simulate output with lsim.; keywords: state space, ss, 状态空间, lsim, 状态变量",
     "payload": {
       "type": "model",
       "model_id": "state_space_response",
       "name": "State Space Simulation",
       "category": "control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Build a state-space model and simulate output with lsim.",
       "keywords": [
         "state space",
@@ -68,30 +80,39 @@
   },
   {
     "id": 11,
-    "text": "example: 生成状态空间模型仿真代码 -> model state_space_response",
+    "text": "example: 生成状态空间模型仿真代码 -> model state_space_response; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "state_space_response",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "生成状态空间模型仿真代码"
     }
   },
   {
     "id": 12,
-    "text": "example: simulate state space system with lsim -> model state_space_response",
+    "text": "example: simulate state space system with lsim -> model state_space_response; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "state_space_response",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "simulate state space system with lsim"
     }
   },
   {
     "id": 20,
-    "text": "model_id: pid_simulink_loop; name: PID Closed Loop in Simulink; category: simulink_control; description: Create a Simulink closed-loop model with PID and transfer function plant.; keywords: pid, simulink, 闭环, 控制器, 调参, 直流电机",
+    "text": "model_id: pid_simulink_loop; name: PID Closed Loop in Simulink; category: simulink_control; template_family: ; domain_tags: ; equation_fragments: ; description: Create a Simulink closed-loop model with PID and transfer function plant.; keywords: pid, simulink, 闭环, 控制器, 调参, 直流电机",
     "payload": {
       "type": "model",
       "model_id": "pid_simulink_loop",
       "name": "PID Closed Loop in Simulink",
       "category": "simulink_control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Create a Simulink closed-loop model with PID and transfer function plant.",
       "keywords": [
         "pid",
@@ -113,30 +134,39 @@
   },
   {
     "id": 21,
-    "text": "example: 构建PID闭环控制的Simulink模型 -> model pid_simulink_loop",
+    "text": "example: 构建PID闭环控制的Simulink模型 -> model pid_simulink_loop; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "pid_simulink_loop",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建PID闭环控制的Simulink模型"
     }
   },
   {
     "id": 22,
-    "text": "example: build a simulink pid loop for dc motor -> model pid_simulink_loop",
+    "text": "example: build a simulink pid loop for dc motor -> model pid_simulink_loop; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "pid_simulink_loop",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build a simulink pid loop for dc motor"
     }
   },
   {
     "id": 30,
-    "text": "model_id: mass_spring_damper_ode; name: Mass-Spring-Damper ODE Model; category: physical_modeling; description: Build and simulate a mass-spring-damper model using ode45.; keywords: mass spring damper, ode45, 质量弹簧阻尼, 机械系统, 二阶系统",
+    "text": "model_id: mass_spring_damper_ode; name: Mass-Spring-Damper ODE Model; category: physical_modeling; template_family: ; domain_tags: ; equation_fragments: ; description: Build and simulate a mass-spring-damper model using ode45.; keywords: mass spring damper, ode45, 质量弹簧阻尼, 机械系统, 二阶系统",
     "payload": {
       "type": "model",
       "model_id": "mass_spring_damper_ode",
       "name": "Mass-Spring-Damper ODE Model",
       "category": "physical_modeling",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Build and simulate a mass-spring-damper model using ode45.",
       "keywords": [
         "mass spring damper",
@@ -156,30 +186,39 @@
   },
   {
     "id": 31,
-    "text": "example: 生成质量弹簧阻尼系统仿真代码 -> model mass_spring_damper_ode",
+    "text": "example: 生成质量弹簧阻尼系统仿真代码 -> model mass_spring_damper_ode; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "mass_spring_damper_ode",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "生成质量弹簧阻尼系统仿真代码"
     }
   },
   {
     "id": 32,
-    "text": "example: simulate mass spring damper with ode45 -> model mass_spring_damper_ode",
+    "text": "example: simulate mass spring damper with ode45 -> model mass_spring_damper_ode; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "mass_spring_damper_ode",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "simulate mass spring damper with ode45"
     }
   },
   {
     "id": 40,
-    "text": "model_id: kalman_tracking; name: Kalman Filter Tracking; category: estimation; description: Create a 1D constant velocity tracking example with Kalman filter.; keywords: kalman, 滤波, 状态估计, 跟踪, 观测噪声",
+    "text": "model_id: kalman_tracking; name: Kalman Filter Tracking; category: estimation; template_family: ; domain_tags: ; equation_fragments: ; description: Create a 1D constant velocity tracking example with Kalman filter.; keywords: kalman, 滤波, 状态估计, 跟踪, 观测噪声",
     "payload": {
       "type": "model",
       "model_id": "kalman_tracking",
       "name": "Kalman Filter Tracking",
       "category": "estimation",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Create a 1D constant velocity tracking example with Kalman filter.",
       "keywords": [
         "kalman",
@@ -198,30 +237,39 @@
   },
   {
     "id": 41,
-    "text": "example: 构建卡尔曼滤波跟踪模型 -> model kalman_tracking",
+    "text": "example: 构建卡尔曼滤波跟踪模型 -> model kalman_tracking; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "kalman_tracking",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建卡尔曼滤波跟踪模型"
     }
   },
   {
     "id": 42,
-    "text": "example: build kalman filter tracking script -> model kalman_tracking",
+    "text": "example: build kalman filter tracking script -> model kalman_tracking; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "kalman_tracking",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build kalman filter tracking script"
     }
   },
   {
     "id": 50,
-    "text": "model_id: arx_identification; name: ARX System Identification; category: identification; description: Generate ARX identification pipeline from synthetic data.; keywords: arx, system identification, 辨识, 输入输出建模, iddata",
+    "text": "model_id: arx_identification; name: ARX System Identification; category: identification; template_family: ; domain_tags: ; equation_fragments: ; description: Generate ARX identification pipeline from synthetic data.; keywords: arx, system identification, 辨识, 输入输出建模, iddata",
     "payload": {
       "type": "model",
       "model_id": "arx_identification",
       "name": "ARX System Identification",
       "category": "identification",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Generate ARX identification pipeline from synthetic data.",
       "keywords": [
         "arx",
@@ -240,30 +288,39 @@
   },
   {
     "id": 51,
-    "text": "example: 生成ARX系统辨识模型 -> model arx_identification",
+    "text": "example: 生成ARX系统辨识模型 -> model arx_identification; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "arx_identification",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "生成ARX系统辨识模型"
     }
   },
   {
     "id": 52,
-    "text": "example: identify system with arx model -> model arx_identification",
+    "text": "example: identify system with arx model -> model arx_identification; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "arx_identification",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "identify system with arx model"
     }
   },
   {
     "id": 60,
-    "text": "model_id: mpc_control; name: Model Predictive Control Demo; category: advanced_control; description: Create an MPC controller for a simple plant with constraints.; keywords: mpc, predictive control, 模型预测控制, 约束控制",
+    "text": "model_id: mpc_control; name: Model Predictive Control Demo; category: advanced_control; template_family: ; domain_tags: ; equation_fragments: ; description: Create an MPC controller for a simple plant with constraints.; keywords: mpc, predictive control, 模型预测控制, 约束控制",
     "payload": {
       "type": "model",
       "model_id": "mpc_control",
       "name": "Model Predictive Control Demo",
       "category": "advanced_control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Create an MPC controller for a simple plant with constraints.",
       "keywords": [
         "mpc",
@@ -281,30 +338,39 @@
   },
   {
     "id": 61,
-    "text": "example: 构建MPC控制模型 -> model mpc_control",
+    "text": "example: 构建MPC控制模型 -> model mpc_control; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "mpc_control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建MPC控制模型"
     }
   },
   {
     "id": 62,
-    "text": "example: build model predictive control demo in matlab -> model mpc_control",
+    "text": "example: build model predictive control demo in matlab -> model mpc_control; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "mpc_control",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build model predictive control demo in matlab"
     }
   },
   {
     "id": 70,
-    "text": "model_id: fft_lowpass_filter; name: FFT-based Signal Filter; category: signal_processing; description: Generate noisy signal and apply FFT low-pass filtering.; keywords: fft, signal, 滤波, 低通, 频域",
+    "text": "model_id: fft_lowpass_filter; name: FFT-based Signal Filter; category: signal_processing; template_family: ; domain_tags: ; equation_fragments: ; description: Generate noisy signal and apply FFT low-pass filtering.; keywords: fft, signal, 滤波, 低通, 频域",
     "payload": {
       "type": "model",
       "model_id": "fft_lowpass_filter",
       "name": "FFT-based Signal Filter",
       "category": "signal_processing",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Generate noisy signal and apply FFT low-pass filtering.",
       "keywords": [
         "fft",
@@ -322,30 +388,39 @@
   },
   {
     "id": 71,
-    "text": "example: 生成FFT低通滤波模型 -> model fft_lowpass_filter",
+    "text": "example: 生成FFT低通滤波模型 -> model fft_lowpass_filter; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "fft_lowpass_filter",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "生成FFT低通滤波模型"
     }
   },
   {
     "id": 72,
-    "text": "example: build frequency domain low-pass filtering script -> model fft_lowpass_filter",
+    "text": "example: build frequency domain low-pass filtering script -> model fft_lowpass_filter; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "fft_lowpass_filter",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build frequency domain low-pass filtering script"
     }
   },
   {
     "id": 80,
-    "text": "model_id: battery_rc_model; name: Battery 1-RC Equivalent Model; category: energy; description: Build a simple battery equivalent circuit simulation (1-RC model).; keywords: battery, rc model, 电池, 等效电路, soc",
+    "text": "model_id: battery_rc_model; name: Battery 1-RC Equivalent Model; category: energy; template_family: ; domain_tags: ; equation_fragments: ; description: Build a simple battery equivalent circuit simulation (1-RC model).; keywords: battery, rc model, 电池, 等效电路, soc",
     "payload": {
       "type": "model",
       "model_id": "battery_rc_model",
       "name": "Battery 1-RC Equivalent Model",
       "category": "energy",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Build a simple battery equivalent circuit simulation (1-RC model).",
       "keywords": [
         "battery",
@@ -365,30 +440,39 @@
   },
   {
     "id": 81,
-    "text": "example: 构建电池一阶RC等效模型 -> model battery_rc_model",
+    "text": "example: 构建电池一阶RC等效模型 -> model battery_rc_model; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "battery_rc_model",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建电池一阶RC等效模型"
     }
   },
   {
     "id": 82,
-    "text": "example: simulate battery rc equivalent circuit in matlab -> model battery_rc_model",
+    "text": "example: simulate battery rc equivalent circuit in matlab -> model battery_rc_model; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "battery_rc_model",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "simulate battery rc equivalent circuit in matlab"
     }
   },
   {
     "id": 90,
-    "text": "model_id: pv_iv_curve; name: PV I-V Curve Model; category: energy; description: Build a photovoltaic module I-V and P-V curve script.; keywords: pv, solar, 光伏, i-v, 组件模型",
+    "text": "model_id: pv_iv_curve; name: PV I-V Curve Model; category: energy; template_family: ; domain_tags: ; equation_fragments: ; description: Build a photovoltaic module I-V and P-V curve script.; keywords: pv, solar, 光伏, i-v, 组件模型",
     "payload": {
       "type": "model",
       "model_id": "pv_iv_curve",
       "name": "PV I-V Curve Model",
       "category": "energy",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Build a photovoltaic module I-V and P-V curve script.",
       "keywords": [
         "pv",
@@ -407,30 +491,39 @@
   },
   {
     "id": 91,
-    "text": "example: 生成光伏组件IV曲线模型 -> model pv_iv_curve",
+    "text": "example: 生成光伏组件IV曲线模型 -> model pv_iv_curve; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "pv_iv_curve",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "生成光伏组件IV曲线模型"
     }
   },
   {
     "id": 92,
-    "text": "example: build solar pv iv curve matlab model -> model pv_iv_curve",
+    "text": "example: build solar pv iv curve matlab model -> model pv_iv_curve; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "pv_iv_curve",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build solar pv iv curve matlab model"
     }
   },
   {
     "id": 100,
-    "text": "model_id: robot_2dof_kinematics; name: 2-DOF Robot Kinematics; category: robotics; description: Build forward/inverse kinematics demo for 2-link planar robot.; keywords: robot, 2dof, kinematics, 机器人, 逆解, 机械臂",
+    "text": "model_id: robot_2dof_kinematics; name: 2-DOF Robot Kinematics; category: robotics; template_family: ; domain_tags: ; equation_fragments: ; description: Build forward/inverse kinematics demo for 2-link planar robot.; keywords: robot, 2dof, kinematics, 机器人, 逆解, 机械臂",
     "payload": {
       "type": "model",
       "model_id": "robot_2dof_kinematics",
       "name": "2-DOF Robot Kinematics",
       "category": "robotics",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "description": "Build forward/inverse kinematics demo for 2-link planar robot.",
       "keywords": [
         "robot",
@@ -450,39 +543,81 @@
   },
   {
     "id": 101,
-    "text": "example: 构建二自由度机械臂运动学模型 -> model robot_2dof_kinematics",
+    "text": "example: 构建二自由度机械臂运动学模型 -> model robot_2dof_kinematics; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "robot_2dof_kinematics",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "构建二自由度机械臂运动学模型"
     }
   },
   {
     "id": 102,
-    "text": "example: build 2dof robot kinematics matlab script -> model robot_2dof_kinematics",
+    "text": "example: build 2dof robot kinematics matlab script -> model robot_2dof_kinematics; template_family: ; domain_tags: ; equation_fragments: ",
     "payload": {
       "type": "example",
       "model_id": "robot_2dof_kinematics",
+      "template_family": "",
+      "domain_tags": [],
+      "equation_fragments": [],
       "example": "build 2dof robot kinematics matlab script"
     }
   },
   {
     "id": 110,
-    "text": "model_id: rocket_launch_1d; name: 1D Rocket Launch Dynamics; category: aerospace; description: Simulate 1D vertical rocket launch with thrust, drag, gravity and fuel consumption.; keywords: rocket, launch, fire, 火箭, 发射, 弹道, 推进, 空气阻力, 航天",
+    "text": "model_id: rocket_launch_1d; name: 1D Rocket Launch Dynamics; category: aerospace; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar; description: Simulate 1D vertical rocket launch with thrust, drag, gravity and fuel consumption.; keywords: rocket, launch, vertical launch, rocket launch, launch dynamics, propulsion, fuel mass, burn rate, mass depletion, thrust-to-weight ratio, air drag, 1d launch, vertical ascent, single-axis ascent, atmospheric ascent, 火箭, 火箭发射, 垂直发射, 升空, 运载火箭, 发射动力学, 一维发射, 一维垂直发射, 垂直升空, 发射段动力学, 推进剂, 燃料质量, 燃烧速率, 质量递减, 推重比, 空气阻力, 航天",
     "payload": {
       "type": "model",
       "model_id": "rocket_launch_1d",
       "name": "1D Rocket Launch Dynamics",
       "category": "aerospace",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
       "description": "Simulate 1D vertical rocket launch with thrust, drag, gravity and fuel consumption.",
       "keywords": [
         "rocket",
         "launch",
-        "fire",
+        "vertical launch",
+        "rocket launch",
+        "launch dynamics",
+        "propulsion",
+        "fuel mass",
+        "burn rate",
+        "mass depletion",
+        "thrust-to-weight ratio",
+        "air drag",
+        "1d launch",
+        "vertical ascent",
+        "single-axis ascent",
+        "atmospheric ascent",
         "火箭",
-        "发射",
-        "弹道",
-        "推进",
+        "火箭发射",
+        "垂直发射",
+        "升空",
+        "运载火箭",
+        "发射动力学",
+        "一维发射",
+        "一维垂直发射",
+        "垂直升空",
+        "发射段动力学",
+        "推进剂",
+        "燃料质量",
+        "燃烧速率",
+        "质量递减",
+        "推重比",
         "空气阻力",
         "航天"
       ],
@@ -502,29 +637,1997 @@
   },
   {
     "id": 111,
-    "text": "example: 生成一个火箭发射模型 -> model rocket_launch_1d",
+    "text": "example: 生成一个一维火箭垂直发射模型，考虑推力、重力、空气阻力和燃料消耗 -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
     "payload": {
       "type": "example",
       "model_id": "rocket_launch_1d",
-      "example": "生成一个火箭发射模型"
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "生成一个一维火箭垂直发射模型，考虑推力、重力、空气阻力和燃料消耗"
     }
   },
   {
     "id": 112,
-    "text": "example: 构建一维火箭垂直发射仿真，考虑推力和阻力 -> model rocket_launch_1d",
+    "text": "example: 构建运载火箭起飞阶段的 MATLAB 模型，给定起飞质量、推进剂质量和燃烧速率 -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
     "payload": {
       "type": "example",
       "model_id": "rocket_launch_1d",
-      "example": "构建一维火箭垂直发射仿真，考虑推力和阻力"
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "构建运载火箭起飞阶段的 MATLAB 模型，给定起飞质量、推进剂质量和燃烧速率"
     }
   },
   {
     "id": 113,
-    "text": "example: build rocket launch dynamics model in matlab -> model rocket_launch_1d",
+    "text": "example: 建立航空航天发射模型，考虑推重比、燃料质量、燃烧速率和空气阻力 -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
     "payload": {
       "type": "example",
       "model_id": "rocket_launch_1d",
-      "example": "build rocket launch dynamics model in matlab"
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "建立航空航天发射模型，考虑推重比、燃料质量、燃烧速率和空气阻力"
+    }
+  },
+  {
+    "id": 114,
+    "text": "example: simulate 1d vertical rocket launch with thrust drag gravity and fuel burn -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "rocket_launch_1d",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "simulate 1d vertical rocket launch with thrust drag gravity and fuel burn"
+    }
+  },
+  {
+    "id": 115,
+    "text": "example: build rocket launch dynamics model in matlab with mass depletion and air drag -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "rocket_launch_1d",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "build rocket launch dynamics model in matlab with mass depletion and air drag"
+    }
+  },
+  {
+    "id": 116,
+    "text": "example: 做一个火箭一维垂直发射动力学模型，关注推重比、燃料消耗和空气阻力 -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "rocket_launch_1d",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "做一个火箭一维垂直发射动力学模型，关注推重比、燃料消耗和空气阻力"
+    }
+  },
+  {
+    "id": 117,
+    "text": "example: 构建大气层内单轴升空仿真，不是二维弹道轨迹，也不是卫星入轨后的轨道传播 -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "rocket_launch_1d",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "构建大气层内单轴升空仿真，不是二维弹道轨迹，也不是卫星入轨后的轨道传播"
+    }
+  },
+  {
+    "id": 118,
+    "text": "example: simulate vertical rocket ascent in atmosphere with thrust-to-weight and fuel burn, not planar trajectory or orbital propagation -> model rocket_launch_1d; template_family: launch_dynamics; domain_tags: aerospace, launch_dynamics, military_equipment, propulsion; equation_fragments: constant_thrust, mass_depletion, quadratic_drag_air, gravity_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "rocket_launch_1d",
+      "template_family": "launch_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "launch_dynamics",
+        "military_equipment",
+        "propulsion"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "mass_depletion",
+        "quadratic_drag_air",
+        "gravity_scalar"
+      ],
+      "example": "simulate vertical rocket ascent in atmosphere with thrust-to-weight and fuel burn, not planar trajectory or orbital propagation"
+    }
+  },
+  {
+    "id": 120,
+    "text": "model_id: missile_flight_2d; name: 2D Missile Flight Dynamics; category: aerospace_defense; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar; description: Simulate 2D missile flight with thrust, drag, gravity and launch angle.; keywords: missile, interceptor, trajectory, flight dynamics, planar trajectory, ballistic trajectory, launch angle, boost phase, intercept trajectory, air drag, 2d trajectory, planar flight, range-altitude, 导弹, 拦截弹, 导弹轨迹, 飞行轨迹, 二维弹道, 二维轨迹, 平面弹道, 弹道飞行, 射程高度轨迹, 拦截轨迹, 发射角, 仰角, 推进段, 末制导, 空气阻力, 军工",
+    "payload": {
+      "type": "model",
+      "model_id": "missile_flight_2d",
+      "name": "2D Missile Flight Dynamics",
+      "category": "aerospace_defense",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "description": "Simulate 2D missile flight with thrust, drag, gravity and launch angle.",
+      "keywords": [
+        "missile",
+        "interceptor",
+        "trajectory",
+        "flight dynamics",
+        "planar trajectory",
+        "ballistic trajectory",
+        "launch angle",
+        "boost phase",
+        "intercept trajectory",
+        "air drag",
+        "2d trajectory",
+        "planar flight",
+        "range-altitude",
+        "导弹",
+        "拦截弹",
+        "导弹轨迹",
+        "飞行轨迹",
+        "二维弹道",
+        "二维轨迹",
+        "平面弹道",
+        "弹道飞行",
+        "射程高度轨迹",
+        "拦截轨迹",
+        "发射角",
+        "仰角",
+        "推进段",
+        "末制导",
+        "空气阻力",
+        "军工"
+      ],
+      "default_params": {
+        "mass0": 120.0,
+        "thrust": 6000.0,
+        "drag_coeff": 0.32,
+        "area": 0.08,
+        "air_density": 1.225,
+        "g": 9.81,
+        "launch_angle_deg": 45.0,
+        "init_speed": 30.0,
+        "burn_time": 8.0,
+        "dt": 0.02,
+        "stop_time": 60.0
+      }
+    }
+  },
+  {
+    "id": 121,
+    "text": "example: 构建二维导弹飞行轨迹模型，考虑发射角、初速度、推力和空气阻力 -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "构建二维导弹飞行轨迹模型，考虑发射角、初速度、推力和空气阻力"
+    }
+  },
+  {
+    "id": 122,
+    "text": "example: 生成拦截弹二维飞行弹道 MATLAB 脚本，考虑推进段时间和气动阻力 -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "生成拦截弹二维飞行弹道 MATLAB 脚本，考虑推进段时间和气动阻力"
+    }
+  },
+  {
+    "id": 123,
+    "text": "example: 做一个导弹平面轨迹仿真，给定初始质量、发射仰角和发动机推力 -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "做一个导弹平面轨迹仿真，给定初始质量、发射仰角和发动机推力"
+    }
+  },
+  {
+    "id": 124,
+    "text": "example: simulate 2d missile flight with launch angle initial speed thrust and drag -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "simulate 2d missile flight with launch angle initial speed thrust and drag"
+    }
+  },
+  {
+    "id": 125,
+    "text": "example: build planar interceptor trajectory model in matlab with boost phase and gravity -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "build planar interceptor trajectory model in matlab with boost phase and gravity"
+    }
+  },
+  {
+    "id": 126,
+    "text": "example: 做一个二维导弹弹道轨迹模型，给定发射角、初速度和推力，不是垂直发射 -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "做一个二维导弹弹道轨迹模型，给定发射角、初速度和推力，不是垂直发射"
+    }
+  },
+  {
+    "id": 127,
+    "text": "example: 构建平面 x-y 弹道轨迹仿真，输出射程和高度，不是只看一维垂直升空 -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "构建平面 x-y 弹道轨迹仿真，输出射程和高度，不是只看一维垂直升空"
+    }
+  },
+  {
+    "id": 128,
+    "text": "example: build 2d planar missile trajectory with launch angle and initial speed, not 1d vertical launch -> model missile_flight_2d; template_family: trajectory_ode; domain_tags: aerospace, military_equipment, missile, flight_dynamics; equation_fragments: constant_thrust_vector, quadratic_drag_planar, gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "missile_flight_2d",
+      "template_family": "trajectory_ode",
+      "domain_tags": [
+        "aerospace",
+        "military_equipment",
+        "missile",
+        "flight_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust_vector",
+        "quadratic_drag_planar",
+        "gravity_planar"
+      ],
+      "example": "build 2d planar missile trajectory with launch angle and initial speed, not 1d vertical launch"
+    }
+  },
+  {
+    "id": 130,
+    "text": "model_id: satellite_orbit_2body; name: 2-Body Satellite Orbit; category: aerospace_orbit; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar; description: Simulate a planar two-body satellite orbit around Earth.; keywords: satellite, orbit, orbital, spacecraft, two-body, orbital dynamics, low earth orbit, gravitational parameter, orbital speed, orbital period, orbit propagation, kepler orbit, on-orbit motion, 卫星, 轨道, 轨道传播, 二体问题, 二体轨道, 航天器, 近地轨道, 引力参数, 轨道高度, 轨道速度, 轨道周期, 空间轨道, 入轨后轨道, 在轨运行, 开普勒轨道",
+    "payload": {
+      "type": "model",
+      "model_id": "satellite_orbit_2body",
+      "name": "2-Body Satellite Orbit",
+      "category": "aerospace_orbit",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "description": "Simulate a planar two-body satellite orbit around Earth.",
+      "keywords": [
+        "satellite",
+        "orbit",
+        "orbital",
+        "spacecraft",
+        "two-body",
+        "orbital dynamics",
+        "low earth orbit",
+        "gravitational parameter",
+        "orbital speed",
+        "orbital period",
+        "orbit propagation",
+        "kepler orbit",
+        "on-orbit motion",
+        "卫星",
+        "轨道",
+        "轨道传播",
+        "二体问题",
+        "二体轨道",
+        "航天器",
+        "近地轨道",
+        "引力参数",
+        "轨道高度",
+        "轨道速度",
+        "轨道周期",
+        "空间轨道",
+        "入轨后轨道",
+        "在轨运行",
+        "开普勒轨道"
+      ],
+      "default_params": {
+        "mu": 398600000000000.0,
+        "earth_radius": 6371000.0,
+        "altitude0": 400000.0,
+        "v0": 7670.0,
+        "dt": 5.0,
+        "stop_time": 5400.0
+      }
+    }
+  },
+  {
+    "id": 131,
+    "text": "example: 构建卫星二体轨道传播模型，给定轨道高度和初始轨道速度 -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "构建卫星二体轨道传播模型，给定轨道高度和初始轨道速度"
+    }
+  },
+  {
+    "id": 132,
+    "text": "example: 生成近地轨道航天器二维轨道 MATLAB 脚本，考虑地球引力参数 -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "生成近地轨道航天器二维轨道 MATLAB 脚本，考虑地球引力参数"
+    }
+  },
+  {
+    "id": 133,
+    "text": "example: 做一个卫星轨道动力学模型，输入初始高度、轨道速度和仿真时长 -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "做一个卫星轨道动力学模型，输入初始高度、轨道速度和仿真时长"
+    }
+  },
+  {
+    "id": 134,
+    "text": "example: simulate 2-body satellite orbit in matlab with altitude and orbital speed -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "simulate 2-body satellite orbit in matlab with altitude and orbital speed"
+    }
+  },
+  {
+    "id": 135,
+    "text": "example: build spacecraft orbital dynamics model with gravitational parameter and time step -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "build spacecraft orbital dynamics model with gravitational parameter and time step"
+    }
+  },
+  {
+    "id": 136,
+    "text": "example: 做一个卫星入轨后的二体轨道传播，不是火箭发射段 -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "做一个卫星入轨后的二体轨道传播，不是火箭发射段"
+    }
+  },
+  {
+    "id": 137,
+    "text": "example: 构建地心二体轨道模型，关注轨道周期和轨迹闭合，不考虑推力和空气阻力 -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "构建地心二体轨道模型，关注轨道周期和轨迹闭合，不考虑推力和空气阻力"
+    }
+  },
+  {
+    "id": 138,
+    "text": "example: simulate on-orbit two-body propagation, not launch ascent with thrust or atmospheric drag -> model satellite_orbit_2body; template_family: orbital_dynamics; domain_tags: aerospace, spacecraft, orbit, space; equation_fragments: two_body_gravity_planar",
+    "payload": {
+      "type": "example",
+      "model_id": "satellite_orbit_2body",
+      "template_family": "orbital_dynamics",
+      "domain_tags": [
+        "aerospace",
+        "spacecraft",
+        "orbit",
+        "space"
+      ],
+      "equation_fragments": [
+        "two_body_gravity_planar"
+      ],
+      "example": "simulate on-orbit two-body propagation, not launch ascent with thrust or atmospheric drag"
+    }
+  },
+  {
+    "id": 140,
+    "text": "model_id: torpedo_underwater_launch_1d; name: 1D Torpedo Underwater Launch; category: naval_weapon; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar; description: Simulate 1D torpedo underwater launch with thrust, drag, buoyancy and gravity.; keywords: torpedo, submarine, underwater, underwater launch, tube launch, buoyancy, water drag, displaced volume, naval weapon, hydrodynamic, tube ejection, submerged launch, 鱼雷, 潜艇, 水下, 水下发射, 出管, 水下出管, 浮力, 水阻, 水中阻力, 排水体积, 排开体积, 潜射出筒, 水下弹射, 管内发射, 水下推进, 军工装备",
+    "payload": {
+      "type": "model",
+      "model_id": "torpedo_underwater_launch_1d",
+      "name": "1D Torpedo Underwater Launch",
+      "category": "naval_weapon",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "description": "Simulate 1D torpedo underwater launch with thrust, drag, buoyancy and gravity.",
+      "keywords": [
+        "torpedo",
+        "submarine",
+        "underwater",
+        "underwater launch",
+        "tube launch",
+        "buoyancy",
+        "water drag",
+        "displaced volume",
+        "naval weapon",
+        "hydrodynamic",
+        "tube ejection",
+        "submerged launch",
+        "鱼雷",
+        "潜艇",
+        "水下",
+        "水下发射",
+        "出管",
+        "水下出管",
+        "浮力",
+        "水阻",
+        "水中阻力",
+        "排水体积",
+        "排开体积",
+        "潜射出筒",
+        "水下弹射",
+        "管内发射",
+        "水下推进",
+        "军工装备"
+      ],
+      "default_params": {
+        "mass": 180.0,
+        "thrust": 3200.0,
+        "drag_coeff": 0.35,
+        "area": 0.045,
+        "water_density": 1000.0,
+        "displaced_volume": 0.16,
+        "g": 9.81,
+        "dt": 0.02,
+        "stop_time": 25.0
+      }
+    }
+  },
+  {
+    "id": 141,
+    "text": "example: 构建一个潜艇水下发射鱼雷模型，考虑水下阻力、浮力和推力 -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "构建一个潜艇水下发射鱼雷模型，考虑水下阻力、浮力和推力"
+    }
+  },
+  {
+    "id": 142,
+    "text": "example: 生成鱼雷出管阶段的一维动力学仿真，给定鱼雷质量、推力和排水体积 -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "生成鱼雷出管阶段的一维动力学仿真，给定鱼雷质量、推力和排水体积"
+    }
+  },
+  {
+    "id": 143,
+    "text": "example: 做一个水下武器发射模型，考虑海水密度、水阻系数和浮力 -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "做一个水下武器发射模型，考虑海水密度、水阻系数和浮力"
+    }
+  },
+  {
+    "id": 144,
+    "text": "example: simulate torpedo underwater launch with drag buoyancy and thrust -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "simulate torpedo underwater launch with drag buoyancy and thrust"
+    }
+  },
+  {
+    "id": 145,
+    "text": "example: build 1d underwater launch model for torpedo with displaced volume and water density -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "build 1d underwater launch model for torpedo with displaced volume and water density"
+    }
+  },
+  {
+    "id": 146,
+    "text": "example: 做一个鱼雷水下出管发射模型，考虑浮力和水阻，不是火箭升空 -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "做一个鱼雷水下出管发射模型，考虑浮力和水阻，不是火箭升空"
+    }
+  },
+  {
+    "id": 147,
+    "text": "example: 构建潜艇武器出管一维动力学，关注排水体积、海水密度和浮力 -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "构建潜艇武器出管一维动力学，关注排水体积、海水密度和浮力"
+    }
+  },
+  {
+    "id": 148,
+    "text": "example: build submerged tube-ejection dynamics with buoyancy and water drag, not atmospheric rocket launch -> model torpedo_underwater_launch_1d; template_family: underwater_launch; domain_tags: military_equipment, naval_weapon, underwater, launch_dynamics; equation_fragments: constant_thrust, quadratic_drag_water, gravity_scalar, buoyancy_scalar",
+    "payload": {
+      "type": "example",
+      "model_id": "torpedo_underwater_launch_1d",
+      "template_family": "underwater_launch",
+      "domain_tags": [
+        "military_equipment",
+        "naval_weapon",
+        "underwater",
+        "launch_dynamics"
+      ],
+      "equation_fragments": [
+        "constant_thrust",
+        "quadratic_drag_water",
+        "gravity_scalar",
+        "buoyancy_scalar"
+      ],
+      "example": "build submerged tube-ejection dynamics with buoyancy and water drag, not atmospheric rocket launch"
+    }
+  },
+  {
+    "id": 150,
+    "text": "model_id: radar_target_tracking_2d; name: 2D Radar Target Tracking; category: military_sensing; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update; description: Generate 2D constant-velocity radar tracking with noisy observations and Kalman filtering.; keywords: radar, tracking, target tracking, kalman, surveillance, measurement noise, process noise, track estimation, target trajectory, single-target tracking, single-sensor tracking, state estimation, 雷达, 雷达目标, 目标跟踪, 单目标跟踪, 航迹, 航迹跟踪, 卡尔曼滤波, 观测噪声, 过程噪声, 跟踪估计, 状态估计, 预警, 探测, 态势感知",
+    "payload": {
+      "type": "model",
+      "model_id": "radar_target_tracking_2d",
+      "name": "2D Radar Target Tracking",
+      "category": "military_sensing",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "description": "Generate 2D constant-velocity radar tracking with noisy observations and Kalman filtering.",
+      "keywords": [
+        "radar",
+        "tracking",
+        "target tracking",
+        "kalman",
+        "surveillance",
+        "measurement noise",
+        "process noise",
+        "track estimation",
+        "target trajectory",
+        "single-target tracking",
+        "single-sensor tracking",
+        "state estimation",
+        "雷达",
+        "雷达目标",
+        "目标跟踪",
+        "单目标跟踪",
+        "航迹",
+        "航迹跟踪",
+        "卡尔曼滤波",
+        "观测噪声",
+        "过程噪声",
+        "跟踪估计",
+        "状态估计",
+        "预警",
+        "探测",
+        "态势感知"
+      ],
+      "default_params": {
+        "dt": 1.0,
+        "steps": 120,
+        "process_noise": 0.05,
+        "measurement_noise": 20.0,
+        "x0": 0.0,
+        "y0": 0.0,
+        "target_speed_x": 220.0,
+        "target_speed_y": 40.0,
+        "stop_time": 120.0
+      }
+    }
+  },
+  {
+    "id": 151,
+    "text": "example: 构建雷达二维目标跟踪模型，考虑观测噪声、过程噪声和目标速度 -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "构建雷达二维目标跟踪模型，考虑观测噪声、过程噪声和目标速度"
+    }
+  },
+  {
+    "id": 152,
+    "text": "example: 生成战场预警场景下的目标航迹跟踪 MATLAB 脚本，使用卡尔曼滤波 -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "生成战场预警场景下的目标航迹跟踪 MATLAB 脚本，使用卡尔曼滤波"
+    }
+  },
+  {
+    "id": 153,
+    "text": "example: 做一个雷达目标跟踪估计模型，给定横向速度、纵向速度和测量噪声 -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "做一个雷达目标跟踪估计模型，给定横向速度、纵向速度和测量噪声"
+    }
+  },
+  {
+    "id": 154,
+    "text": "example: build 2d radar target tracking with kalman filter and noisy measurements -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "build 2d radar target tracking with kalman filter and noisy measurements"
+    }
+  },
+  {
+    "id": 155,
+    "text": "example: simulate radar track estimation with process noise measurement noise and target velocity -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "simulate radar track estimation with process noise measurement noise and target velocity"
+    }
+  },
+  {
+    "id": 156,
+    "text": "example: 做一个单雷达目标跟踪与卡尔曼滤波，不是战场态势感知 -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "做一个单雷达目标跟踪与卡尔曼滤波，不是战场态势感知"
+    }
+  },
+  {
+    "id": 157,
+    "text": "example: 构建二维航迹估计模型，输出真值、量测和滤波估计，不是覆盖融合态势评估 -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "构建二维航迹估计模型，输出真值、量测和滤波估计，不是覆盖融合态势评估"
+    }
+  },
+  {
+    "id": 158,
+    "text": "example: build single-sensor radar target tracking with kalman filter, not battlefield awareness coverage fusion -> model radar_target_tracking_2d; template_family: tracking_estimation; domain_tags: military_equipment, battlefield_situation, radar, tracking; equation_fragments: cv_state_transition, noisy_measurement, kalman_filter_update",
+    "payload": {
+      "type": "example",
+      "model_id": "radar_target_tracking_2d",
+      "template_family": "tracking_estimation",
+      "domain_tags": [
+        "military_equipment",
+        "battlefield_situation",
+        "radar",
+        "tracking"
+      ],
+      "equation_fragments": [
+        "cv_state_transition",
+        "noisy_measurement",
+        "kalman_filter_update"
+      ],
+      "example": "build single-sensor radar target tracking with kalman filter, not battlefield awareness coverage fusion"
+    }
+  },
+  {
+    "id": 160,
+    "text": "model_id: lanchester_battle_attrition; name: Lanchester Battle Attrition; category: battlefield_situation; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law; description: Simulate red-blue force attrition using Lanchester combat equations.; keywords: battlefield, lanchester, attrition, red blue, combat, force comparison, battle damage, combat effectiveness, situation awareness, force attrition, kill coefficient, force depletion, 战场, 战场态势, 红蓝对抗, 红蓝兵力, 兵力消耗, 兵力对抗, 战损, 兰彻斯特, 杀伤系数, 力量对比, 作战效能, 兵力衰减, 敌我态势, 态势评估",
+    "payload": {
+      "type": "model",
+      "model_id": "lanchester_battle_attrition",
+      "name": "Lanchester Battle Attrition",
+      "category": "battlefield_situation",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "description": "Simulate red-blue force attrition using Lanchester combat equations.",
+      "keywords": [
+        "battlefield",
+        "lanchester",
+        "attrition",
+        "red blue",
+        "combat",
+        "force comparison",
+        "battle damage",
+        "combat effectiveness",
+        "situation awareness",
+        "force attrition",
+        "kill coefficient",
+        "force depletion",
+        "战场",
+        "战场态势",
+        "红蓝对抗",
+        "红蓝兵力",
+        "兵力消耗",
+        "兵力对抗",
+        "战损",
+        "兰彻斯特",
+        "杀伤系数",
+        "力量对比",
+        "作战效能",
+        "兵力衰减",
+        "敌我态势",
+        "态势评估"
+      ],
+      "default_params": {
+        "red0": 120.0,
+        "blue0": 100.0,
+        "alpha": 0.035,
+        "beta": 0.04,
+        "dt": 0.1,
+        "stop_time": 40.0
+      }
+    }
+  },
+  {
+    "id": 161,
+    "text": "example: 构建红蓝双方兵力消耗模型，分析战损与作战效能变化 -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "构建红蓝双方兵力消耗模型，分析战损与作战效能变化"
+    }
+  },
+  {
+    "id": 162,
+    "text": "example: 生成基于兰彻斯特定律的战场对抗 MATLAB 脚本，给定双方初始兵力和杀伤系数 -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "生成基于兰彻斯特定律的战场对抗 MATLAB 脚本，给定双方初始兵力和杀伤系数"
+    }
+  },
+  {
+    "id": 163,
+    "text": "example: 做一个战场态势层的兵力演化模型，分析红蓝力量对比 -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "做一个战场态势层的兵力演化模型，分析红蓝力量对比"
+    }
+  },
+  {
+    "id": 164,
+    "text": "example: simulate battlefield attrition with lanchester equations and red blue forces -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "simulate battlefield attrition with lanchester equations and red blue forces"
+    }
+  },
+  {
+    "id": 165,
+    "text": "example: build combat attrition model with initial forces and kill coefficients in matlab -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "build combat attrition model with initial forces and kill coefficients in matlab"
+    }
+  },
+  {
+    "id": 166,
+    "text": "example: 做一个红蓝兵力消耗兰彻斯特模型，不是态势感知覆盖融合 -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "做一个红蓝兵力消耗兰彻斯特模型，不是态势感知覆盖融合"
+    }
+  },
+  {
+    "id": 167,
+    "text": "example: 构建双方兵力随时间衰减的对抗模型，关注红蓝战损和杀伤系数 -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "构建双方兵力随时间衰减的对抗模型，关注红蓝战损和杀伤系数"
+    }
+  },
+  {
+    "id": 168,
+    "text": "example: simulate red-blue force attrition with Lanchester equations, not battlefield awareness coverage fusion -> model lanchester_battle_attrition; template_family: combat_attrition; domain_tags: battlefield_situation, combat, force_comparison, military_analysis; equation_fragments: lanchester_square_law",
+    "payload": {
+      "type": "example",
+      "model_id": "lanchester_battle_attrition",
+      "template_family": "combat_attrition",
+      "domain_tags": [
+        "battlefield_situation",
+        "combat",
+        "force_comparison",
+        "military_analysis"
+      ],
+      "equation_fragments": [
+        "lanchester_square_law"
+      ],
+      "example": "simulate red-blue force attrition with Lanchester equations, not battlefield awareness coverage fusion"
+    }
+  },
+  {
+    "id": 1000000,
+    "text": "title: family prototype：battlefield_awareness; source: knowledge_base/docs/family_prototypes/battlefield_awareness_family_prototype.md; content: family prototype：battlefield_awareness\n\nfamily 名称：`battlefield_awareness`\n\nfamily 层级：扩展 family（作为主干 family 反混淆参照补充）\n\nscene：战场层的覆盖度、侦察情报供给与态势感知融合，关注预警图景、侦察覆盖、信息刷新与感知水平演化。它不是单目标状态估计，也不是基于兵力损耗方程的红蓝消耗模型。\n\n典型对象词：战场态势感知、预警、侦察覆盖、情报供给、战场图景、态势融合、感知水平。\n\n关键槽位：`coverage0`、`feed0`、`decay_rate`、`fusion_gain`、`dt`、`stop_time`。\n\n反混淆词：卡尔曼滤波、单目标跟踪、量测噪声、过程噪声、航迹估计、红蓝兵力、兰彻斯特、杀伤率、火箭发射、卫星轨道。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：battlefield_awareness",
+      "source_file": "knowledge_base/docs/family_prototypes/battlefield_awareness_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000001,
+    "text": "title: family prototype：battlefield_awareness; source: knowledge_base/docs/family_prototypes/battlefield_awareness_family_prototype.md; content: 典型问法：\n- 构建一个战场态势感知 MATLAB 模型，给定初始覆盖度和情报供给。\n- 做一个预警与侦察覆盖融合仿真，分析态势感知水平随时间变化。\n- 生成战场图景融合脚本，考虑覆盖衰减与信息融合增益。\n- build a battlefield awareness model with sensor coverage, intel feed, and fusion gain.\n\n反混淆提示：\n- 如果重点是“单目标、航迹、卡尔曼、量测误差”，更接近 `tracking_estimation`。\n- 如果重点是“红蓝兵力、杀伤系数、消耗曲线、战损”，更接近 `combat_attrition`。\n- 如果用户只说“态势模型”，必须继续澄清是战场层感知融合，还是平台层跟踪估计，还是红蓝兵力对抗。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：battlefield_awareness",
+      "source_file": "knowledge_base/docs/family_prototypes/battlefield_awareness_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000002,
+    "text": "title: family prototype：combat_attrition; source: knowledge_base/docs/family_prototypes/combat_attrition_family_prototype.md; content: family prototype：combat_attrition\n\nfamily 名称：`combat_attrition`\n\nfamily 层级：主干 family（trunk）\n\nscene：红蓝双方在交战过程中的兵力消耗与战损演化，通常基于兰彻斯特平方律或类似消耗模型。核心关注双方初始兵力、杀伤率系数、兵力曲线与对抗结果，不是目标跟踪估计，也不是战场覆盖与情报融合代理。\n\n典型对象词：红蓝对抗、兵力消耗、战损、兰彻斯特、力量对比、杀伤率、交战演化。\n\n关键槽位：`red0`、`blue0`、`alpha`、`beta`、`dt`、`stop_time`。\n\n反混淆词：态势感知、预警、侦察覆盖、情报融合、目标跟踪、卡尔曼滤波、观测噪声、航迹、卫星轨道、火箭发射。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：combat_attrition",
+      "source_file": "knowledge_base/docs/family_prototypes/combat_attrition_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000003,
+    "text": "title: family prototype：combat_attrition; source: knowledge_base/docs/family_prototypes/combat_attrition_family_prototype.md; content: 典型问法：\n- 构建一个红蓝双方兵力消耗 MATLAB 模型，给定双方初始兵力和杀伤率系数。\n- 做一个兰彻斯特平方律战损仿真，分析交战后兵力剩余。\n- 生成战场对抗消耗脚本，输出红蓝兵力随时间变化曲线。\n- build a combat attrition model with red force, blue force, and kill coefficients.\n\n反混淆提示：\n- 如果重点是“红蓝兵力、战损、消耗、兰彻斯特”，优先 `combat_attrition`。\n- 如果重点是“覆盖度、情报供给、融合增益、预警图景”，更接近 `battlefield_awareness`。\n- 如果重点是“单目标雷达跟踪、量测噪声、卡尔曼滤波”，更接近 `tracking_estimation`。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：combat_attrition",
+      "source_file": "knowledge_base/docs/family_prototypes/combat_attrition_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000004,
+    "text": "title: family prototype：launch_dynamics; source: knowledge_base/docs/family_prototypes/launch_dynamics_family_prototype.md; content: family prototype：launch_dynamics\n\nfamily 名称：`launch_dynamics`\n\nfamily 层级：主干 family（trunk）\n\nscene：火箭、运载火箭或助推器在大气层内的一维垂直发射动力学。核心关注垂直升空、推力、重力、空气阻力、燃料消耗与质量递减，不强调二维平面轨迹，也不强调入轨后的轨道传播。\n\n典型对象词：火箭、运载火箭、助推器、垂直发射、垂直升空、一维发射、单轴上升、推进段。\n\n关键槽位：`mass0`、`fuel_mass`、`thrust`、`burn_rate`、`drag_coeff`、`area`、`dt`、`stop_time`。\n\n反混淆词：二维弹道、发射角、平面轨迹、拦截轨迹、卫星、二体轨道、轨道传播、入轨、水下、鱼雷、潜艇、浮力、出管。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：launch_dynamics",
+      "source_file": "knowledge_base/docs/family_prototypes/launch_dynamics_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000005,
+    "text": "title: family prototype：launch_dynamics; source: knowledge_base/docs/family_prototypes/launch_dynamics_family_prototype.md; content: 典型问法：\n- 构建一个火箭一维垂直发射 MATLAB 模型，考虑推力、重力、阻力和燃料消耗。\n- 做一个运载火箭垂直升空仿真，给定起飞质量、燃料质量和燃烧速率。\n- 生成单轴上升段动力学脚本，重点看高度、速度和加速度曲线。\n- build a 1D vertical rocket launch model with thrust, drag, gravity, and fuel burn.\n\n反混淆提示：\n- 如果问题里强调“发射角、二维、射程、弹道、拦截”，更接近 `trajectory_ode`。\n- 如果问题里强调“卫星、二体、近地点、远地点、轨道周期”，更接近 `orbital_dynamics`。\n- 如果问题里强调“鱼雷、潜艇、水阻、浮力、出管”，更接近 `underwater_launch`。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：launch_dynamics",
+      "source_file": "knowledge_base/docs/family_prototypes/launch_dynamics_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000006,
+    "text": "title: family prototype：orbital_dynamics; source: knowledge_base/docs/family_prototypes/orbital_dynamics_family_prototype.md; content: family prototype：orbital_dynamics\n\nfamily 名称：`orbital_dynamics`\n\nfamily 层级：主干 family（trunk）\n\nscene：卫星或航天器在地心平面二体模型下的轨道传播与轨道动力学。核心关注轨道高度、轨道速度、引力参数、近地点远地点、轨道周期与在轨运动，不关注大气层内发射升空段，也不关注二维导弹弹道。\n\n典型对象词：卫星、航天器、轨道、二体、在轨飞行、轨道传播、近地点、远地点、轨道周期。\n\n关键槽位：`altitude0`、`v0`、`dt`、`stop_time`。\n\n反混淆词：垂直发射、起飞质量、燃料消耗、发射角、二维弹道、射程、水下、鱼雷、浮力、卡尔曼跟踪、兰彻斯特。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：orbital_dynamics",
+      "source_file": "knowledge_base/docs/family_prototypes/orbital_dynamics_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000007,
+    "text": "title: family prototype：orbital_dynamics; source: knowledge_base/docs/family_prototypes/orbital_dynamics_family_prototype.md; content: 典型问法：\n- 生成一个卫星二体轨道传播 MATLAB 模型，给定初始轨道高度和初始轨道速度。\n- 做一个航天器平面轨道动力学仿真，分析轨道形状和周期。\n- 构建卫星在轨运行脚本，使用地心引力参数和初始轨道条件。\n- build a two-body orbital dynamics model for a satellite with initial altitude and speed.\n\n反混淆提示：\n- 如果问题强调“升空、推力、燃料质量、空气阻力”，更接近 `launch_dynamics`。\n- 如果问题强调“发射角、平面弹道、导弹射程”，更接近 `trajectory_ode`。\n- 如果问题强调“再入大气层前的轨道段”仍可能属于 `orbital_dynamics`，但一旦重点转为再入或大气层内飞行，应转向其他 family。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：orbital_dynamics",
+      "source_file": "knowledge_base/docs/family_prototypes/orbital_dynamics_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000008,
+    "text": "title: family prototype：tracking_estimation; source: knowledge_base/docs/family_prototypes/tracking_estimation_family_prototype.md; content: family prototype：tracking_estimation\n\nfamily 名称：`tracking_estimation`\n\nfamily 层级：主干 family（trunk）\n\nscene：单传感器二维目标跟踪与状态估计，通常使用常速度模型和线性卡尔曼滤波。核心关注目标位置速度估计、观测噪声、过程噪声、量测轨迹与估计轨迹，不是战场层的态势融合，也不是红蓝兵力对抗消耗。\n\n典型对象词：雷达目标跟踪、单目标跟踪、航迹跟踪、卡尔曼滤波、状态估计、量测轨迹、目标估计。\n\n关键槽位：`measurement_noise`、`target_speed_x`、`target_speed_y`、`process_noise`、`steps`、`dt`、`x0`、`y0`。\n\n反混淆词：态势感知、侦察覆盖、预警图景、情报融合、威胁评分、红蓝兵力、兵力消耗、兰彻斯特、齐射拦截。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：tracking_estimation",
+      "source_file": "knowledge_base/docs/family_prototypes/tracking_estimation_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000009,
+    "text": "title: family prototype：tracking_estimation; source: knowledge_base/docs/family_prototypes/tracking_estimation_family_prototype.md; content: 典型问法：\n- 生成一个雷达单目标卡尔曼跟踪 MATLAB 模型，给定观测噪声和过程噪声。\n- 做一个二维航迹跟踪估计仿真，分析真实轨迹、量测轨迹和估计轨迹。\n- 构建目标状态估计脚本，给定目标 x/y 方向速度和量测误差。\n- build a single-target tracking model with Kalman filter, measurement noise, and process noise.\n\n反混淆提示：\n- 如果重点是“单目标、量测、滤波、估计误差、轨迹重建”，优先 `tracking_estimation`。\n- 如果重点是“预警、侦察覆盖、多源情报融合、战场图景”，更接近 `battlefield_awareness`。\n- 如果重点是“红蓝兵力损耗、杀伤率、对抗演化”，更接近 `combat_attrition`。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：tracking_estimation",
+      "source_file": "knowledge_base/docs/family_prototypes/tracking_estimation_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000010,
+    "text": "title: family prototype：trajectory_ode; source: knowledge_base/docs/family_prototypes/trajectory_ode_family_prototype.md; content: family prototype：trajectory_ode\n\nfamily 名称：`trajectory_ode`\n\nfamily 层级：主干 family（trunk）\n\nscene：导弹、拦截弹或一般飞行器在二维平面中的飞行轨迹与弹道动力学。核心关注发射角、初速度、平面位置速度演化、射程高度关系与推进段轨迹，不是纯一维垂直升空，也不是入轨后的卫星轨道传播。\n\n典型对象词：导弹、拦截弹、飞行轨迹、二维弹道、平面轨迹、发射角、射程、弹道飞行。\n\n关键槽位：`mass0`、`thrust`、`launch_angle_deg`、`init_speed`、`burn_time`、`drag_coeff`、`dt`、`stop_time`。\n\n反混淆词：垂直升空、一维发射、推重比、卫星、轨道传播、二体、水下、鱼雷、浮力、卡尔曼、跟踪估计、红蓝兵力。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：trajectory_ode",
+      "source_file": "knowledge_base/docs/family_prototypes/trajectory_ode_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000011,
+    "text": "title: family prototype：trajectory_ode; source: knowledge_base/docs/family_prototypes/trajectory_ode_family_prototype.md; content: 典型问法：\n- 生成一个二维导弹飞行轨迹 MATLAB 模型，给定发射角和初速度。\n- 做一个拦截弹平面弹道仿真，分析射程和高度随时间的变化。\n- 构建二维飞行轨迹脚本，考虑推力、空气阻力和重力。\n- build a planar missile trajectory model with launch angle, initial speed, and drag.\n\n反混淆提示：\n- 如果重点是“垂直发射、一维升空、燃料质量、推重比”，更接近 `launch_dynamics`。\n- 如果重点是“卫星、轨道半径、引力参数、轨道周期”，更接近 `orbital_dynamics`。\n- 如果重点是“鱼雷水下出管、浮力、水阻”，更接近 `underwater_launch`。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：trajectory_ode",
+      "source_file": "knowledge_base/docs/family_prototypes/trajectory_ode_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000012,
+    "text": "title: family prototype：underwater_launch; source: knowledge_base/docs/family_prototypes/underwater_launch_family_prototype.md; content: family prototype：underwater_launch\n\nfamily 名称：`underwater_launch`\n\nfamily 层级：主干 family（trunk）\n\nscene：鱼雷或水下航行体在水下管内 / 出管过程中的一维发射动力学。核心关注推力、浮力、重力、水阻、排水体积与出管速度位移，不是空气中的火箭升空，也不是二维导弹飞行轨迹。\n\n典型对象词：鱼雷、水下发射、潜艇、出管、管内发射、水下航行体、浮力、水阻。\n\n关键槽位：`mass`、`thrust`、`displaced_volume`、`water_density`、`drag_coeff`、`area`、`dt`、`stop_time`。\n\n反混淆词：火箭、运载火箭、垂直升空、空气阻力、发射角、二维弹道、卫星、轨道、卡尔曼跟踪、红蓝兵力。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：underwater_launch",
+      "source_file": "knowledge_base/docs/family_prototypes/underwater_launch_family_prototype.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000013,
+    "text": "title: family prototype：underwater_launch; source: knowledge_base/docs/family_prototypes/underwater_launch_family_prototype.md; content: 典型问法：\n- 构建一个鱼雷水下出管发射 MATLAB 模型，考虑浮力、水阻和推力。\n- 做一个潜艇水下发射仿真，给定排水体积、推力和阻力系数。\n- 生成水下航行体一维发射动力学脚本，分析位移、速度和加速度。\n- build an underwater torpedo launch model with buoyancy, hydrodynamic drag, and thrust.\n\n反混淆提示：\n- 如果问题强调“火箭、垂直发射、空气阻力、燃料消耗”，更接近 `launch_dynamics`。\n- 如果问题强调“发射角、导弹、二维轨迹、射程”，更接近 `trajectory_ode`。\n- 如果问题只说“发射模型”但未给出介质和对象，必须先澄清是水下发射还是空中发射。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "family prototype：underwater_launch",
+      "source_file": "knowledge_base/docs/family_prototypes/underwater_launch_family_prototype.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000014,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: 三大域标签术语参数总览\n\n1. 目的\n\n本文档作为 `knowledge_base/docs/` 的跨域总览，用于统一航空航天、军工装备、战场态势三大域的：\n\n- 领域标签\n- 术语体系\n- 参数别名\n- 路由边界\n- 反误配提示\n\n该文档适合用于处理跨域请求、模糊请求和多层级请求。\n\n---\n\n2. 三大域总览映射",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000015,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: | 域 | 代表问题 | 当前核心模型 | 代表 `template_family` |\n| --- | --- | --- | --- |\n| 航空航天 | 火箭发射、导弹轨迹、卫星轨道 | `rocket_launch_1d`, `missile_flight_2d`, `satellite_orbit_2body` | `launch_dynamics`, `trajectory_ode`, `orbital_dynamics` |\n| 军工装备 | 鱼雷水下发射、导弹装备、雷达跟踪 | `torpedo_underwater_launch_1d`, `missile_flight_2d`, `radar_target_tracking_2d` | `underwater_launch`, `trajectory_ode`, `tracking_estimation` |\n| 战场态势 | 红蓝对抗、兵力消耗、态势感知 | `lanchester_battle_attrition`, `radar_target_tracking_2d` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000016,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: 势 | 红蓝对抗、兵力消耗、态势感知 | `lanchester_battle_attrition`, `radar_target_tracking_2d` | `combat_attrition`, `tracking_estimation` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 3
+    }
+  },
+  {
+    "id": 1000017,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: ---\n\n3. 跨域标签总览\n\n3.1 航空航天标签\n\n- `aerospace`\n- `space`\n- `spacecraft`\n- `orbit`\n- `launch_dynamics`\n- `trajectory_ode`\n- `orbital_dynamics`\n- `propulsion`\n- `flight_dynamics`\n- `missile`\n\n3.2 军工装备标签\n\n- `military_equipment`\n- `naval_weapon`\n- `underwater`\n- `launch_dynamics`\n- `missile`\n- `radar`\n- `tracking`\n- `tracking_estimation`\n\n3.3 战场态势标签\n\n- `battlefield_situation`\n- `combat`\n- `force_comparison`\n- `military_analysis`\n- `combat_attrition`\n- `tracking`\n- `radar`\n\n---",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 4
+    }
+  },
+  {
+    "id": 1000018,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: 4. 高混淆请求与建议路由\n\n4.1 “发射模型”\n\n可能对应：\n\n- 火箭发射\n- 导弹发射\n- 鱼雷水下发射\n\n建议先澄清：\n\n- 对象是什么？\n- 介质是空气还是水？\n- 关注的是发射段还是完整轨迹？\n\n4.2 “轨迹模型”\n\n可能对应：\n\n- 导弹二维飞行轨迹\n- 卫星轨道传播\n- 雷达估计得到的航迹\n\n建议先澄清：\n\n- 是平台真实运动轨迹，还是传感器估计航迹？\n- 是在大气层内飞行，还是轨道空间环境？\n\n4.3 “跟踪模型”\n\n可能对应：\n\n- 雷达目标跟踪\n- 战场态势感知中的目标跟踪\n\n建议先澄清：\n\n- 是否有雷达 / 传感器观测噪声？\n- 是单目标状态估计，还是态势层感知？\n\n4.4 “对抗模型”\n\n可能对应：\n\n- 红蓝兵力消耗\n- 武器平台拦截对抗\n\n建议先澄清：\n\n- 是战场层对抗，还是单平台动力学拦截？\n- 目标是兵力演化，还是轨迹与命中？\n\n---\n\n5. 统一术语别名表",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 5
+    }
+  },
+  {
+    "id": 1000019,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: | 规范术语 | 常见中文别名 | 常见英文别名 |\n| --- | --- | --- |\n| 推力 | 推进力, 发动机推力 | thrust |\n| 阻力系数 | 阻力系数, Cd | drag coefficient |\n| 发射角 | 仰角, 初始角度 | launch angle |\n| 初始速度 | 初速 | init speed, v0 |\n| 轨道高度 | 初始高度, 轨道起始高度 | altitude0, altitude |\n| 引力参数 | 地球引力参数 | mu |\n| 观测噪声 | 测量噪声 | measurement noise |\n| 过程噪声 | 状态噪声 | process noise |\n| 红方初始兵力 | 红方兵力, 红军兵力 | red0, red force |\n| 蓝方初始兵力 | 蓝方兵力, 蓝军兵力 | blue0, blue force |\n| 排水体积 | 排开体积 | displaced volume |\n| 浮力 | 上浮力 | buoyancy |\n\n---\n\n6. 统一参数归一化建议",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 6
+    }
+  },
+  {
+    "id": 1000020,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: 当用户使用自然语言描述参数时，可优先归一化到以下规范参数名：\n\n6.1 动力学参数\n\n- 质量 → `mass` 或 `mass0`\n- 推力 → `thrust`\n- 阻力系数 / Cd → `drag_coeff`\n- 面积 / 截面积 → `area`\n- 时间步长 / 步长 → `dt`\n- 仿真时长 / 总时长 → `stop_time`\n\n6.2 飞行与轨道参数\n\n- 发射角 / 仰角 → `launch_angle_deg`\n- 初始速度 / 初速 → `init_speed` 或 `v0`\n- 轨道高度 → `altitude0`\n- 引力参数 → `mu`\n- 推进时间 → `burn_time`\n\n6.3 跟踪估计参数\n\n- 横向速度 / vx → `target_speed_x`\n- 纵向速度 / vy → `target_speed_y`\n- 观测噪声 → `measurement_noise`\n- 过程噪声 → `process_noise`\n- 步数 → `steps`\n\n6.4 战场对抗参数",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 7
+    }
+  },
+  {
+    "id": 1000021,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: - 红方初始兵力 → `red0`\n- 蓝方初始兵力 → `blue0`\n- 蓝方杀伤系数 → `alpha`\n- 红方杀伤系数 → `beta`\n\n---\n\n7. 推荐澄清问题模板\n\n7.1 面向对象澄清\n\n- 你说的是火箭、导弹、鱼雷、卫星，还是战场兵力模型？\n\n7.2 面向环境澄清\n\n- 场景是在空气中、水下，还是太空轨道环境？\n\n7.3 面向层级澄清\n\n- 你要建模的是单个平台动力学，还是战场层的态势与兵力演化？\n\n7.4 面向关键参数澄清\n\n- 目前你能提供哪些关键参数，例如质量、推力、发射角、轨道高度、观测噪声、兵力规模？\n\n---\n\n8. 知识库扩展建议\n\n后续继续扩展时，优先保持以下一致性：\n\n1. 文档中的标签尽量与 `domain_tags`、`template_family` 对齐\n2. 参数名尽量与现有 `default_params`、槽位字段对齐\n3. 对每个新场景同时补：\n- 场景说明\n- 标签\n- 术语词典\n- 参数词典\n- 反误配提示\n4. 多层级请求一定加“先澄清主目标”的提示\n\n这样可以同时提升：",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 8
+    }
+  },
+  {
+    "id": 1000022,
+    "text": "title: 三大域标签术语参数总览; source: knowledge_base/docs/三大域标签术语参数总览.md; content: - BM25 词法检索命中率\n- 向量检索的语义覆盖\n- 半开放域下的匹配稳定性\n- 结构化槽位收集的自然语言兼容性",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "三大域标签术语参数总览",
+      "source_file": "knowledge_base/docs/三大域标签术语参数总览.md",
+      "chunk_index": 9
+    }
+  },
+  {
+    "id": 1000023,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: 军工装备模型扩展\n\n1. 目标\n\n本文档用于补齐军工装备域的知识检索文档、标签词典、术语词典和参数词典，重点覆盖：\n\n- 水下武器与水下发射\n- 导弹 / 拦截装备飞行建模\n- 雷达目标跟踪与跟踪估计\n\n该文档重点用于降低跨介质误配、平台误配和任务层级误配。\n\n---\n\n2. 领域边界\n\n2.1 本域核心问题\n\n军工装备域优先处理以下请求：\n\n- 鱼雷、水下发射、潜艇、浮力、水阻\n- 导弹、拦截、飞行轨迹、武器平台飞行段\n- 雷达、目标跟踪、航迹估计、观测噪声、过程噪声\n- 武器平台、制导、目标探测、火控链路中的动力学或估计问题\n\n2.2 与相近领域的边界\n\n容易混淆的场景包括：\n\n- “火箭发射、升空、轨道、卫星” → 应优先归到航空航天域\n- “红蓝兵力、战损、态势评估、战场消耗” → 应优先归到战场态势域\n- “仅提跟踪，但没有平台与传感器语义” → 需要澄清是雷达目标跟踪，还是战场态势感知层目标跟踪\n\n---\n\n3. 当前推荐模型与模板族",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000024,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: | 场景 | 推荐 `model_id` | 推荐 `template_family` | 典型 `domain_tags` |\n| --- | --- | --- | --- |\n| 鱼雷水下发射 | `torpedo_underwater_launch_1d` | `underwater_launch` | `military_equipment`, `naval_weapon`, `underwater`, `launch_dynamics` |\n| 导弹二维飞行 | `missile_flight_2d` | `trajectory_ode` | `military_equipment`, `missile`, `flight_dynamics`, `aerospace` |\n| 雷达目标跟踪 | `radar_target_tracking_2d` | `tracking_estimation` | `military_equipment`, `radar`, `tracking`, `battlefield_situation` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000025,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: ---\n\n4. 标签词典\n\n4.1 一级标签\n\n- `military_equipment`\n- `naval_weapon`\n- `underwater`\n- `launch_dynamics`\n- `missile`\n- `flight_dynamics`\n- `radar`\n- `tracking`\n- `tracking_estimation`\n\n4.2 水下发射标签\n\n- 鱼雷\n- 潜艇\n- 水下发射\n- 水阻\n- 浮力\n- 排水体积\n- 水下推进\n- 直航段\n- 出管速度\n\n4.3 导弹装备标签\n\n- 导弹\n- 拦截弹\n- 制导段\n- 发射平台\n- 飞行轨迹\n- 推进段\n- 发射角\n- 末制导\n- 弹道控制\n\n4.4 雷达跟踪标签\n\n- 雷达\n- 目标跟踪\n- 航迹\n- 观测噪声\n- 过程噪声\n- 卡尔曼滤波\n- 匀速模型\n- 目标速度\n- 测量误差\n- 探测更新\n\n4.5 冲突标签\n\n以下词出现时不应直接认为是军工装备的动力学模型：\n\n- 红蓝兵力消耗\n- 兰彻斯特\n- 战场态势评估\n- 卫星轨道\n- 二体轨道\n- 航天器轨道",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 3
+    }
+  },
+  {
+    "id": 1000026,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: ---\n\n5. 术语词典\n\n5.1 水下发射术语\n\n| 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 鱼雷 | torpedo | 水下武器平台或弹药对象 |\n| 潜艇 | submarine | 典型发射平台 |\n| 水阻 | water drag | 水中阻力，通常高于空气阻力 |\n| 浮力 | buoyancy | 由排水体积产生的向上力 |\n| 排水体积 | displaced volume | 决定浮力大小的关键参数 |\n| 出管 | tube launch | 从发射管离开发射平台的过程 |\n| 水下发射 | underwater launch | 在水介质中进行的发射过程 |\n\n5.2 导弹装备术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 4
+    }
+  },
+  {
+    "id": 1000027,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 导弹 | missile | 带推进与制导特征的武器平台 |\n| 拦截弹 | interceptor | 用于拦截来袭目标的导弹 |\n| 飞行轨迹 | trajectory | 导弹在飞行段的路径 |\n| 发射角 | launch angle | 初始发射方向 |\n| 初速度 | init speed | 离架时的起始速度 |\n| 推进段 | boost phase | 有持续推力的阶段 |\n| 末制导 | terminal guidance | 靠近目标时的制导阶段 |\n\n5.3 雷达跟踪术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 5
+    }
+  },
+  {
+    "id": 1000028,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 雷达 | radar | 提供目标观测的传感器 |\n| 目标跟踪 | target tracking | 根据连续观测估计目标状态 |\n| 航迹 | track / trajectory | 目标位置随时间变化的估计路径 |\n| 观测噪声 | measurement noise | 测量值的不确定性 |\n| 过程噪声 | process noise | 状态转移模型的不确定性 |\n| 卡尔曼滤波 | Kalman filter | 线性高斯条件下的状态估计算法 |\n| 匀速模型 | constant velocity model | 目标运动的常见状态转移模型 |\n\n---\n\n6. 参数词典\n\n6.1 水下发射参数词典",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 6
+    }
+  },
+  {
+    "id": 1000029,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: | 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `mass` | 质量 | kg | 鱼雷总质量 | `torpedo_underwater_launch_1d` |\n| `thrust` | 推力 | N | 水下推进推力 | `torpedo_underwater_launch_1d` |\n| `drag_coeff` | 阻力系数, Cd | - | 水中阻力系数 | `torpedo_underwater_launch_1d` |\n| `area` | 截面积 | m^2 | 水阻计算参考面积 | `torpedo_underwater_launch_1d` |\n| `water_density` | 水密度 | kg/m^3 | 水介质密度 | `torpedo_underwater_launch_1d` |\n| `displaced_volume` | 排水体积 | m^3 | 决定浮力大小 | `torpedo_underwater_launch",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 7
+    }
+  },
+  {
+    "id": 1000030,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: ch_1d` |\n| `displaced_volume` | 排水体积 | m^3 | 决定浮力大小 | `torpedo_underwater_launch_1d` |\n| `g` | 重力加速度 | m/s^2 | 重力常数 | `torpedo_underwater_launch_1d` |\n| `dt` | 时间步长 | s | 数值积分步长 | `torpedo_underwater_launch_1d` |\n| `stop_time` | 仿真时长 | s | 总仿真时长 | `torpedo_underwater_launch_1d` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 8
+    }
+  },
+  {
+    "id": 1000031,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: 6.2 导弹装备参数词典\n\n| 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `mass0` | 初始质量 | kg | 导弹起飞总质量 | `missile_flight_2d` |\n| `thrust` | 推力 | N | 推进段平均推力 | `missile_flight_2d` |\n| `launch_angle_deg` | 发射角 | deg | 发射初始角度 | `missile_flight_2d` |\n| `init_speed` | 初速 | m/s | 离架初始速度 | `missile_flight_2d` |\n| `drag_coeff` | 阻力系数 | - | 气动阻力强度 | `missile_flight_2d` |\n| `burn_time` | 推进时间 | s | 推进段持续时间 | `missile_flight_2d` |\n\n6.3 雷达跟踪参数词典",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 9
+    }
+  },
+  {
+    "id": 1000032,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: | 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `target_speed_x` | vx, 横向速度 | m/s | 目标 x 方向速度 | `radar_target_tracking_2d` |\n| `target_speed_y` | vy, 纵向速度 | m/s | 目标 y 方向速度 | `radar_target_tracking_2d` |\n| `measurement_noise` | 观测噪声, 测量噪声 | m | 雷达观测误差水平 | `radar_target_tracking_2d` |\n| `process_noise` | 过程噪声 | - | 状态转移过程不确定性 | `radar_target_tracking_2d` |\n| `steps` | 步数 | step | 采样与估计总步数 | `radar_target_tracking_2d` |\n\n---\n\n7. 典型建模请求与路由提示",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 10
+    }
+  },
+  {
+    "id": 1000033,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: 7.1 应优先路由到 `torpedo_underwater_launch_1d`\n\n- 构建潜艇水下发射鱼雷模型，考虑水阻和浮力\n- 做一个鱼雷出管阶段的一维动力学仿真\n- 给定鱼雷质量、推力和排水体积，生成 MATLAB 模型\n\n7.2 应优先路由到 `missile_flight_2d`\n\n- 构建导弹二维飞行轨迹模型\n- 生成拦截弹弹道仿真脚本\n- 给定发射角、初速、推力和阻力，做飞行仿真\n\n7.3 应优先路由到 `radar_target_tracking_2d`\n\n- 构建雷达目标跟踪模型，考虑测量噪声和过程噪声\n- 生成二维航迹卡尔曼滤波 MATLAB 脚本\n- 给定目标速度和观测误差，做目标跟踪估计\n\n7.4 必须先澄清的表达\n\n- 发射模型\n- 武器轨迹模型\n- 目标跟踪模型\n- 制导模型\n\n需要先澄清：\n\n- 对象是鱼雷、导弹，还是普通目标？\n- 介质是水下还是空气中？\n- 是动力学建模还是传感器跟踪估计？\n\n---\n\n8. 反误配规则\n\n8.1 水下发射不应误配为火箭发射\n\n出现以下词时，应显著提高水下发射优先级：",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 11
+    }
+  },
+  {
+    "id": 1000034,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: - 鱼雷\n- 潜艇\n- 水下\n- 浮力\n- 排水体积\n- 水阻\n\n8.2 雷达跟踪不应误配为一般发射模型\n\n出现以下词时，应优先进入跟踪估计：\n\n- 雷达\n- 航迹\n- 观测噪声\n- 过程噪声\n- 卡尔曼滤波\n- 目标跟踪\n\n8.3 武器平台动力学不应误配为战场态势消耗\n\n出现以下词但没有平台动力学描述时，应优先澄清：\n\n- 作战态势\n- 红蓝对抗\n- 战损\n- 兵力消耗\n\n---\n\n9. 扩展检索词与同义表达\n\n中文扩展词\n\n- 军工装备\n- 武器平台\n- 鱼雷发射\n- 水下发射\n- 出管动力学\n- 浮力模型\n- 导弹轨迹\n- 拦截弹飞行\n- 雷达航迹\n- 目标跟踪\n- 观测误差\n- 卡尔曼估计\n\n英文扩展词",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 12
+    }
+  },
+  {
+    "id": 1000035,
+    "text": "title: 军工装备模型扩展; source: knowledge_base/docs/军工装备模型扩展.md; content: - torpedo launch\n- underwater launch\n- buoyancy and drag\n- naval weapon dynamics\n- missile trajectory\n- interceptor flight\n- radar tracking\n- target tracking\n- measurement noise\n- process noise\n- kalman filter\n\n---\n\n10. 使用建议\n\n军工装备域最关键的判别维度有三个：\n\n1. 平台对象：鱼雷、导弹、雷达、目标\n2. 介质环境：水下、空气、传感器观测域\n3. 任务类型：发射动力学、飞行轨迹、状态估计\n\n只有当这三个维度较清晰时，才应直接进入生成；否则先澄清对象与任务层级。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "军工装备模型扩展",
+      "source_file": "knowledge_base/docs/军工装备模型扩展.md",
+      "chunk_index": 13
+    }
+  },
+  {
+    "id": 1000036,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: 战场态势模型扩展\n\n1. 目标\n\n本文档用于补齐战场态势域的知识文档、标签体系、术语词典和参数词典，重点支持：\n\n- 红蓝兵力消耗建模\n- 态势评估相关建模提示\n- 战场感知 / 目标跟踪与态势层关系辨析\n\n本域的核心不是单个平台动力学，而是作战层、编队层、兵力层与感知层的建模。\n\n---\n\n2. 领域边界\n\n2.1 本域核心问题\n\n战场态势域优先处理：\n\n- 红蓝对抗\n- 兵力消耗\n- 战损评估\n- 态势感知\n- 预警、侦察、目标发现与态势更新\n- 战场层的目标跟踪与力量变化\n\n2.2 与相近领域的边界\n\n容易与战场态势混淆的场景包括：\n\n- “导弹飞行、火箭发射、卫星轨道” → 应优先归到航空航天域\n- “鱼雷水下发射、导弹动力学、雷达滤波细节” → 应优先归到军工装备域\n- “平台运动学建模”与“战场层态势建模”不是同一层级\n\n如果用户同时提到武器平台和战场对抗，必须先澄清：\n\n- 是要建模单个平台动力学\n- 还是要建模战场层的兵力、损耗、预警、态势变化\n\n---\n\n3. 当前推荐模型与模板族",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000037,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: | 场景 | 推荐 `model_id` | 推荐 `template_family` | 典型 `domain_tags` |\n| --- | --- | --- | --- |\n| 红蓝兵力消耗 | `lanchester_battle_attrition` | `combat_attrition` | `battlefield_situation`, `combat`, `force_comparison`, `military_analysis` |\n| 战场感知中的目标跟踪 | `radar_target_tracking_2d` | `tracking_estimation` | `battlefield_situation`, `radar`, `tracking`, `military_equipment` |\n\n说明：\n\n- 当前系统对战场态势域的核心生成能力，主要集中在兵力消耗与跟踪感知两类。\n- 如果用户想做更复杂的指挥控制、协同决策、杀伤链评估，应先澄清并结合后续扩展。\n\n---\n\n4. 标签词典\n\n4.1 一级标签",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000038,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: - `battlefield_situation`\n- `combat`\n- `force_comparison`\n- `military_analysis`\n- `combat_attrition`\n- `tracking`\n- `radar`\n- `tracking_estimation`\n\n4.2 态势与对抗标签\n\n- 战场态势\n- 红蓝对抗\n- 兵力消耗\n- 战损\n- 对抗演化\n- 作战效能\n- 消耗模型\n- 力量对比\n- 敌我态势\n\n4.3 感知与预警标签\n\n- 态势感知\n- 预警\n- 侦察\n- 探测\n- 目标发现\n- 跟踪航迹\n- 雷达观测\n- 观测不确定性\n\n4.4 冲突标签\n\n以下词若占主导，不应直接路由到战场态势：\n\n- 卫星轨道\n- 发射角\n- 火箭升空\n- 浮力\n- 排水体积\n- 鱼雷出管\n\n---\n\n5. 术语词典\n\n5.1 对抗与消耗术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 3
+    }
+  },
+  {
+    "id": 1000039,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 红蓝对抗 | red-blue engagement | 双方力量对抗过程 |\n| 兵力消耗 | attrition | 随时间推移的有生力量减少 |\n| 战损 | battle loss | 在交战过程中损失的兵力或平台 |\n| 兰彻斯特定律 | Lanchester law | 描述交战双方损耗关系的经典模型 |\n| 平方律 | square law | 用于火力对抗的常见损耗关系 |\n| 作战效能 | combat effectiveness | 单位兵力造成损伤的能力 |\n| 力量对比 | force comparison | 双方兵力与效能的相对关系 |\n\n5.2 态势感知术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 4
+    }
+  },
+  {
+    "id": 1000040,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 态势感知 | situation awareness | 对战场对象、位置、威胁与演化趋势的感知 |\n| 预警 | warning | 在威胁形成前获得的探测与提示 |\n| 侦察 | reconnaissance | 获取敌情与环境信息的过程 |\n| 目标跟踪 | target tracking | 对目标运动状态进行连续估计 |\n| 观测噪声 | measurement noise | 传感器观测误差 |\n| 过程噪声 | process noise | 状态演化模型误差 |\n\n---\n\n6. 参数词典\n\n6.1 红蓝兵力消耗参数词典",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 5
+    }
+  },
+  {
+    "id": 1000041,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: | 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `red0` | 红方初始兵力, 红军初始力量 | unit | 红方初始有效兵力 | `lanchester_battle_attrition` |\n| `blue0` | 蓝方初始兵力, 蓝军初始力量 | unit | 蓝方初始有效兵力 | `lanchester_battle_attrition` |\n| `alpha` | 蓝方杀伤系数 | 1/s | 蓝方对红方造成损耗的效率 | `lanchester_battle_attrition` |\n| `beta` | 红方杀伤系数 | 1/s | 红方对蓝方造成损耗的效率 | `lanchester_battle_attrition` |\n| `dt` | 时间步长 | s | 仿真离散步长 | `lanchester_battle_attrition` |\n| `stop_time` | 仿真时长 | s | 总仿真时长 | `lanchester_ba",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 6
+    }
+  },
+  {
+    "id": 1000042,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: lanchester_battle_attrition` |\n| `stop_time` | 仿真时长 | s | 总仿真时长 | `lanchester_battle_attrition` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 7
+    }
+  },
+  {
+    "id": 1000043,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: 6.2 感知与跟踪参数词典\n\n| 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `target_speed_x` | 横向速度, vx | m/s | 目标 x 方向速度 | `radar_target_tracking_2d` |\n| `target_speed_y` | 纵向速度, vy | m/s | 目标 y 方向速度 | `radar_target_tracking_2d` |\n| `measurement_noise` | 观测噪声 | m | 探测误差水平 | `radar_target_tracking_2d` |\n| `process_noise` | 过程噪声 | - | 状态模型不确定性 | `radar_target_tracking_2d` |\n| `steps` | 仿真步数 | step | 跟踪总步数 | `radar_target_tracking_2d` |\n\n6.3 可扩展但当前未完全落地的态势参数",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 8
+    }
+  },
+  {
+    "id": 1000044,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: 以下参数适合作为未来扩展态势模型的词典储备：\n\n- 探测概率\n- 虚警率\n- 预警距离\n- 目标数量\n- 兵力补充率\n- 指挥时延\n- 侦察刷新周期\n- 目标威胁权重\n\n这些词当前可以进入知识检索，但不应在缺少对应模型族时强行生成。\n\n---\n\n7. 典型建模请求与路由提示\n\n7.1 应优先路由到 `lanchester_battle_attrition`\n\n- 构建红蓝双方兵力消耗模型\n- 生成战场对抗中的兵力损耗 MATLAB 脚本\n- 给定双方初始兵力与杀伤系数，分析作战结果\n\n7.2 应优先路由到 `radar_target_tracking_2d`\n\n- 做一个战场预警场景中的目标跟踪模型\n- 用雷达观测噪声与过程噪声构建目标跟踪\n- 生成二维航迹跟踪估计脚本\n\n7.3 应先澄清的表达\n\n- 战场态势模型\n- 作战评估模型\n- 预警模型\n- 目标感知模型\n- 对抗模型\n\n需要先澄清：\n\n- 关注的是兵力消耗、目标跟踪，还是更高层的态势推演？\n- 是想做单目标跟踪，还是群体对抗演化？\n- 是平台级模型，还是战场层模型？\n\n---",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 9
+    }
+  },
+  {
+    "id": 1000045,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: 8. 反误配规则\n\n8.1 不应把兵力消耗误配为武器平台动力学\n\n出现以下词时，应优先考虑战场态势：\n\n- 红蓝\n- 战损\n- 兵力\n- 对抗\n- 消耗\n- 兰彻斯特\n\n8.2 不应把态势感知误配为纯航空航天轨迹\n\n如果用户强调：\n\n- 预警\n- 侦察\n- 探测\n- 态势感知\n- 目标发现\n\n则需要先判断是战场层感知，还是单一平台运动学。\n\n8.3 复杂复合请求应先分层澄清\n\n例如：\n\n- 战场态势 + 导弹拦截\n- 兵力消耗 + 雷达跟踪\n- 预警探测 + 平台机动\n\n这类请求通常包含多个层级，必须先问清主建模目标。\n\n---\n\n9. 扩展检索词与同义表达\n\n中文扩展词\n\n- 战场态势\n- 红蓝对抗\n- 兵力消耗\n- 战损评估\n- 作战效能\n- 敌我力量对比\n- 预警探测\n- 态势感知\n- 目标发现\n- 航迹跟踪\n- 战场感知\n\n英文扩展词",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 10
+    }
+  },
+  {
+    "id": 1000046,
+    "text": "title: 战场态势模型扩展; source: knowledge_base/docs/战场态势模型扩展.md; content: - battlefield situation\n- combat attrition\n- lanchester model\n- force comparison\n- red blue engagement\n- situation awareness\n- warning and surveillance\n- target tracking\n- radar surveillance\n\n---\n\n10. 使用建议\n\n对于战场态势域，请优先判断用户请求处于哪一层：\n\n1. 兵力层：红蓝对抗、兵力消耗、战损演化\n2. 感知层：目标发现、雷达观测、跟踪估计\n3. 平台层：导弹、鱼雷、火箭、卫星等单平台动力学\n\n只有在主层级清晰的情况下，才应直接生成；否则先进行任务分层澄清。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "战场态势模型扩展",
+      "source_file": "knowledge_base/docs/战场态势模型扩展.md",
+      "chunk_index": 11
+    }
+  },
+  {
+    "id": 1000047,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: 航空航天模型扩展\n\n1. 目标\n\n本文档用于补齐 `knowledge_base/docs/` 中与航空航天建模相关的领域知识、标签体系、术语词典、参数词典与路由提示，重点服务以下场景：\n\n- 运载火箭与发射动力学\n- 导弹 / 拦截弹二维飞行轨迹\n- 卫星 / 航天器二体轨道建模\n\n本文档既服务知识检索，也服务“无匹配先澄清 / 拒绝误配”的领域判断。\n\n---\n\n2. 领域边界\n\n2.1 本域核心问题\n\n航空航天域优先处理以下类型的请求：\n\n- 发射、升空、推力、燃料消耗、垂直起飞\n- 导弹、拦截、飞行轨迹、发射角、弹道、空气阻力\n- 卫星、轨道、二体问题、轨道高度、近地轨道、初始速度\n- 航天器、轨道机动、空间飞行、重力参数\n\n2.2 与相近领域的边界\n\n容易与航空航天域混淆的请求包括：\n\n- “水下发射、潜艇、鱼雷、浮力、水阻” → 应优先归到军工装备域的水下发射\n- “雷达跟踪、目标航迹、观测噪声、卡尔曼滤波” → 应优先归到军工装备域或战场态势域的跟踪估计\n- “红蓝对抗、兵力消耗、战损、态势评估” → 应优先归到战场态势域",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 1
+    }
+  },
+  {
+    "id": 1000048,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: 如果用户只说“发射模型”，但没有说明对象是火箭、导弹还是鱼雷，必须先澄清对象与介质，不能直接误配。\n\n---\n\n3. 当前推荐模型与模板族\n\n3.1 模型映射",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 2
+    }
+  },
+  {
+    "id": 1000049,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 场景 | 推荐 `model_id` | 推荐 `template_family` | 典型 `domain_tags` |\n| --- | --- | --- | --- |\n| 一维火箭垂直发射 | `rocket_launch_1d` | `launch_dynamics` | `aerospace`, `launch_dynamics`, `propulsion` |\n| 二维导弹飞行轨迹 | `missile_flight_2d` | `trajectory_ode` | `aerospace`, `missile`, `flight_dynamics`, `military_equipment` |\n| 二体卫星轨道 | `satellite_orbit_2body` | `orbital_dynamics` | `aerospace`, `spacecraft`, `orbit`, `space` |\n\n3.2 推荐方程片段\n\n火箭发射",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 3
+    }
+  },
+  {
+    "id": 1000050,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: - `constant_thrust`\n- `mass_depletion`\n- `quadratic_drag_air`\n- `gravity_scalar`\n\n导弹轨迹\n\n- `constant_thrust_vector`\n- `quadratic_drag_planar`\n- `gravity_planar`\n\n卫星轨道\n\n- `two_body_gravity_planar`\n\n---\n\n4. 标签词典\n\n4.1 一级标签\n\n- `aerospace`\n- `space`\n- `spacecraft`\n- `orbit`\n- `launch_dynamics`\n- `trajectory_ode`\n- `orbital_dynamics`\n- `propulsion`\n- `flight_dynamics`\n- `missile`\n\n4.2 二级标签与检索扩展词\n\n发射动力学标签\n\n- 垂直发射\n- 运载火箭\n- 推进段\n- 燃料消耗\n- 质量递减\n- 空气阻力\n- 发射窗口\n- 推力曲线\n- 起飞质量\n\n轨迹与导弹标签",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 4
+    }
+  },
+  {
+    "id": 1000051,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: - 导弹\n- 拦截弹\n- 飞行轨迹\n- 二维弹道\n- 发射角\n- 初始速度\n- 空阻\n- 俯仰角\n- 末端速度\n- 射程\n\n轨道标签\n\n- 卫星\n- 航天器\n- 轨道\n- 二体问题\n- 近地点\n- 远地点\n- 轨道高度\n- 轨道速度\n- 地球引力参数\n- 轨道周期\n\n4.3 不应直接触发本域的冲突标签\n\n- 鱼雷\n- 潜艇\n- 水下发射\n- 浮力\n- 水阻\n- 声呐\n- 红蓝对抗\n- 兵力消耗\n- 兰彻斯特\n\n---\n\n5. 术语词典\n\n5.1 推进与发射术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 5
+    }
+  },
+  {
+    "id": 1000052,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 推力 | thrust | 发动机或推进装置沿主轴方向提供的力 |\n| 推重比 | thrust-to-weight ratio | 推力与重力的比值，决定起飞能力 |\n| 燃料质量 | fuel mass | 可消耗推进剂质量 |\n| 燃烧速率 | burn rate | 单位时间消耗的推进剂质量 |\n| 发射质量 | initial mass / mass0 | 起飞时总质量 |\n| 发射角 | launch angle | 导弹或飞行器初始方向角 |\n| 初始速度 | init speed / v0 | 初始时刻速度大小 |\n| 空气密度 | air density | 用于估计空气阻力 |\n| 阻力系数 | drag coefficient / Cd | 反映气动阻力强弱 |\n| 参考面积 | reference area / area | 阻力与升力估计常用面积参数 |\n\n5.2 轨迹与飞行动力学术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 6
+    }
+  },
+  {
+    "id": 1000053,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 飞行轨迹 | trajectory | 飞行器随时间变化的位置曲线 |\n| 弹道 | ballistic trajectory | 受初始速度、推力与重力共同影响的轨迹 |\n| 平面轨迹 | planar trajectory | 在二维平面内近似建模的轨迹 |\n| 阻力 | drag | 与速度方向相反的流体阻力 |\n| 重力 | gravity | 地球或中心天体施加的引力加速度 |\n| 推进段 | boost phase | 导弹 / 火箭有持续推力的飞行阶段 |\n| 末段 | terminal phase | 靠近目标或再入前后的飞行阶段 |\n| 射程 | range | 水平或总路径飞行距离 |\n\n5.3 轨道力学术语",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 7
+    }
+  },
+  {
+    "id": 1000054,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 术语 | 英文 / 别名 | 含义 |\n| --- | --- | --- |\n| 二体问题 | two-body problem | 只考虑中心天体与飞行器之间引力的模型 |\n| 轨道高度 | altitude | 距离中心天体表面的高度 |\n| 轨道速度 | orbital speed | 保持给定轨道所需的速度 |\n| 引力参数 | mu / gravitational parameter | 天体质量与引力常数合成参数 |\n| 近地点 | perigee | 轨道上最接近地球的位置 |\n| 远地点 | apogee | 轨道上距离地球最远的位置 |\n| 轨道周期 | orbital period | 绕中心天体一周所需时间 |\n| 近地轨道 | LEO | 近地低轨道场景 |\n\n---\n\n6. 参数词典\n\n6.1 火箭发射参数词典",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 8
+    }
+  },
+  {
+    "id": 1000055,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `mass0` | 初始质量, 发射质量 | kg | 火箭初始总质量 | `rocket_launch_1d` |\n| `fuel_mass` | 燃料质量, 推进剂质量 | kg | 可燃烧推进剂总质量 | `rocket_launch_1d` |\n| `burn_rate` | 燃烧速率 | kg/s | 单位时间燃料消耗量 | `rocket_launch_1d` |\n| `thrust` | 推力 | N | 推进系统输出推力 | `rocket_launch_1d`, `missile_flight_2d` |\n| `drag_coeff` | 阻力系数, Cd | - | 气动阻力系数 | `rocket_launch_1d`, `missile_flight_2d` |\n| `area` | 截面积, 参考面积 | m^2 | 阻力估计面积 | `rocket_launch_1d`, `missi",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 9
+    }
+  },
+  {
+    "id": 1000056,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: le_flight_2d` |\n| `area` | 截面积, 参考面积 | m^2 | 阻力估计面积 | `rocket_launch_1d`, `missile_flight_2d` |\n| `air_density` | 空气密度 | kg/m^3 | 大气密度 | `rocket_launch_1d`, `missile_flight_2d` |\n| `g` | 重力加速度 | m/s^2 | 地球表面附近重力加速度 | 多个航天模型 |\n| `dt` | 步长, 时间步长 | s | 数值积分步长 | 多个模型 |\n| `stop_time` | 仿真时长 | s | 总仿真时长 | 多个模型 |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 10
+    }
+  },
+  {
+    "id": 1000057,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: 6.2 导弹轨迹参数词典",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 11
+    }
+  },
+  {
+    "id": 1000058,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: | 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `mass0` | 初始质量 | kg | 导弹起飞质量 | `missile_flight_2d` |\n| `launch_angle_deg` | 发射角, 仰角 | deg | 初始发射角度 | `missile_flight_2d` |\n| `init_speed` | 初始速度 | m/s | 导弹离架初速 | `missile_flight_2d` |\n| `burn_time` | 推进时间 | s | 有推力持续时间 | `missile_flight_2d` |\n| `thrust` | 推力 | N | 推进段平均推力 | `missile_flight_2d` |\n| `drag_coeff` | 阻力系数 | - | 空阻系数 | `missile_flight_2d` |\n| `area` | 参考面积 | m^2 | 弹体迎风面积 | `missile_flight_2d` |",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 12
+    }
+  },
+  {
+    "id": 1000059,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: 6.3 轨道参数词典\n\n| 参数名 | 常见别名 | 单位 | 含义 | 典型关联模型 |\n| --- | --- | --- | --- | --- |\n| `mu` | 引力参数 | m^3/s^2 | 中心天体引力参数 | `satellite_orbit_2body` |\n| `earth_radius` | 地球半径 | m | 地球近似半径 | `satellite_orbit_2body` |\n| `altitude0` | 初始轨道高度 | m | 轨道起始高度 | `satellite_orbit_2body` |\n| `v0` | 轨道初速度 | m/s | 起始切向速度 | `satellite_orbit_2body` |\n| `dt` | 时间步长 | s | 数值积分步长 | `satellite_orbit_2body` |\n| `stop_time` | 仿真时长 | s | 轨道传播总时长 | `satellite_orbit_2body` |\n\n---\n\n7. 典型建模意图与路由提示",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 13
+    }
+  },
+  {
+    "id": 1000060,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: 7.1 应优先路由到 `rocket_launch_1d`\n\n- 构建一个一维火箭垂直发射模型\n- 生成运载火箭起飞阶段 MATLAB 脚本，考虑推力、阻力和质量递减\n- 做一个升空模型，给定初始质量、燃料质量和燃烧速率\n\n7.2 应优先路由到 `missile_flight_2d`\n\n- 构建导弹二维飞行轨迹模型\n- 考虑导弹发射角、初速、推力和空气阻力\n- 做一个拦截弹飞行弹道仿真\n\n7.3 应优先路由到 `satellite_orbit_2body`\n\n- 构建卫星二体轨道模型\n- 生成近地轨道航天器二维轨道脚本\n- 给定轨道高度和初速度，仿真卫星轨道\n\n7.4 应先澄清的表达\n\n- 发射模型\n- 弹道模型\n- 飞行器轨迹模型\n- 航天模型\n- 空天飞行模型\n\n以上表达如果没有明确对象、介质或任务层次，应先澄清：\n\n- 是火箭、导弹还是卫星？\n- 是发射段、飞行段还是轨道段？\n- 是空气环境还是太空轨道环境？\n\n---\n\n8. 反误配规则\n\n8.1 不应把这些请求误配为火箭发射",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 14
+    }
+  },
+  {
+    "id": 1000061,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: - 潜艇水下发射鱼雷\n- 水下阻力与浮力问题\n- 声呐跟踪目标\n\n8.2 不应把这些请求误配为导弹轨迹\n\n- 卫星轨道传播\n- 红蓝兵力消耗\n- 雷达滤波跟踪\n\n8.3 不应把这些请求误配为轨道模型\n\n- 有持续推力且关注发射角的近程弹道问题\n- 火箭起飞阶段动力学\n- 防空导弹拦截轨迹\n\n---\n\n9. 扩展检索词与同义表达\n\n中文扩展词\n\n- 航空航天\n- 航天器\n- 运载火箭\n- 火箭发射\n- 垂直起飞\n- 推进剂\n- 导弹飞行\n- 二维弹道\n- 拦截轨迹\n- 发射仰角\n- 轨道传播\n- 二体轨道\n- 卫星轨道\n- 近地轨道\n- 轨道机动\n\n英文扩展词",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 15
+    }
+  },
+  {
+    "id": 1000062,
+    "text": "title: 航空航天模型扩展; source: knowledge_base/docs/航空航天模型扩展.md; content: - rocket launch\n- launch dynamics\n- missile trajectory\n- planar flight dynamics\n- intercept trajectory\n- orbital dynamics\n- two-body orbit\n- spacecraft orbit\n- low earth orbit\n- gravitational parameter\n\n---\n\n10. 使用建议\n\n对于航空航天域请求，优先识别以下三类要素：\n\n1. 对象：火箭、导弹、卫星、航天器\n2. 环境：大气层内、近地轨道、空间飞行\n3. 目标：发射、飞行轨迹、轨道传播\n\n只有在这三个层面同时比较清晰时，才应直接进入代码生成；否则应先澄清。",
+    "payload": {
+      "type": "document",
+      "doc_type": "markdown",
+      "title": "航空航天模型扩展",
+      "source_file": "knowledge_base/docs/航空航天模型扩展.md",
+      "chunk_index": 16
     }
   }
 ]

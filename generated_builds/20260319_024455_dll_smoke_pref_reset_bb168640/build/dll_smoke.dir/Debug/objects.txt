@@ -1,0 +1,8 @@
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/dll_smoke.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/dll_smoke_initialize.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/dll_smoke_terminate.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/main.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/_coder_dll_smoke_api.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/_coder_dll_smoke_info.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/_coder_dll_smoke_mex.obj
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/dll_smoke.dir/Debug/wrapper.obj

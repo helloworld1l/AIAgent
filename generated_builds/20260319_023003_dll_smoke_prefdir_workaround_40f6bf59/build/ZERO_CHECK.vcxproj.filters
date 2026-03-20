@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\python\rag_crm_agent\generated_builds\20260319_023003_dll_smoke_prefdir_workaround_40f6bf59\build\CMakeFiles\6bfba5f161e89a2797ae62e8330703f2\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0E0824C9-D500-3C88-9672-BD81D90481C9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

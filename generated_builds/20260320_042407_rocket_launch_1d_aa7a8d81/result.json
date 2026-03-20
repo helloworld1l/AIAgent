@@ -1,0 +1,34 @@
+{
+  "status": "succeeded",
+  "artifact_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\artifacts\\rocket_launch_1d_dll.dll",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\artifacts\\rocket_launch_1d_dll.lib"
+  ],
+  "header_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\examples\\main.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\interface\\_coder_rocket_launch_1d_api.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\interface\\_coder_rocket_launch_1d_info.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\interface\\_coder_rocket_launch_1d_mex.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rocket_launch_1d.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rocket_launch_1d_data.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rocket_launch_1d_initialize.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rocket_launch_1d_terminate.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rocket_launch_1d_types.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rt_nonfinite.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rtGetInf.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rtGetNaN.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen\\dll\\rocket_launch_1d\\rtwtypes.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\src\\wrapper.h"
+  ],
+  "logs": {
+    "matlab_stdout": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\matlab_stdout.log",
+    "matlab_stderr": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\matlab_stderr.log",
+    "matlab_command": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\matlab_command.json",
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\logs\\cmake_configure.log",
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\logs\\cmake_build.log"
+  },
+  "error_summary": "",
+  "updated_at": "2026-03-20T04:26:09Z",
+  "codegen_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_042407_rocket_launch_1d_aa7a8d81\\matlab\\codegen",
+  "error_type": ""
+}

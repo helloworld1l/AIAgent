@@ -91,10 +91,12 @@ async def ui():
 @app.get("/api/health")
 async def health_check():
     runtime_agent = _ensure_agent()
+    retrieval = runtime_agent.retriever.get_retrieval_health()
     return {
-        "status": "healthy",
+        "status": "healthy" if retrieval.get("hybrid_effective") else "degraded",
         "agent_initialized": runtime_agent is not None,
         "session_store_backend": getattr(getattr(runtime_agent, "session_store", None), "backend_name", "unknown"),
+        "retrieval": retrieval,
     }
 
 

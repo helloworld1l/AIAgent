@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\20260319_025710_DLL_SMOKE_POST_FIX_6015CE6C\BUILD\CMAKEFILES\8028516E34B99C01A0BF0F9C85CA07B9\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/20260319_025710_dll_smoke_post_fix_6015ce6c/src -BD:/python/rag_crm_agent/generated_builds/20260319_025710_dll_smoke_post_fix_6015ce6c/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/python/rag_crm_agent/generated_builds/20260319_025710_dll_smoke_post_fix_6015ce6c/build/dll_smoke_post_fix.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

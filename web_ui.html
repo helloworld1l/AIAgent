@@ -303,6 +303,134 @@
             line-height: 1.5;
         }
 
+        .dll-card {
+            margin-top: 10px;
+            border: 1px solid #d6e0e3;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fcfefe;
+        }
+
+        .dll-card .title {
+            background: #eef8f7;
+            padding: 8px 10px;
+            font-size: 12px;
+            color: #45606a;
+            border-bottom: 1px solid #d7e4e4;
+        }
+
+        .dll-card-body {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dll-overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dll-status,
+        .dll-inline-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 9px;
+            border-radius: 999px;
+            font-size: 12px;
+            line-height: 1.2;
+            border: 1px solid #d7e5e3;
+            background: #f5fbfa;
+            color: #36535b;
+        }
+
+        .dll-status.success,
+        .dll-status.succeeded,
+        .dll-status.ok {
+            border-color: #bfe7cf;
+            background: #eefbf3;
+            color: #256944;
+        }
+
+        .dll-status.failed,
+        .dll-status.error {
+            border-color: #f2c0c0;
+            background: #fff2f2;
+            color: #9a2f2f;
+        }
+
+        .dll-status.planned,
+        .dll-status.running {
+            border-color: #d8d2ff;
+            background: #f5f2ff;
+            color: #5c46aa;
+        }
+
+        .dll-status.skipped {
+            border-color: #eadcc2;
+            background: #fff9ef;
+            color: #8a6532;
+        }
+
+        .dll-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+        }
+
+        .dll-meta-item {
+            border: 1px solid #e0e7e8;
+            border-radius: 10px;
+            padding: 8px 10px;
+            background: #ffffff;
+        }
+
+        .dll-meta-label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 11px;
+            color: #7b8c96;
+        }
+
+        .dll-meta-value {
+            font-size: 12px;
+            color: #31454f;
+            word-break: break-word;
+        }
+
+        .dll-artifact-list,
+        .dll-args-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 12px;
+            color: #344a54;
+            line-height: 1.5;
+        }
+
+        .dll-note {
+            border: 1px solid #e0e8ea;
+            border-radius: 10px;
+            padding: 8px 10px;
+            background: #f8fbfc;
+            font-size: 12px;
+            color: #4d626d;
+            word-break: break-word;
+        }
+
+        .dll-note.warn {
+            border-color: #ffe0be;
+            background: #fff7ee;
+            color: #8a5d28;
+        }
+
+        .dll-note.error {
+            border-color: #f3c2c2;
+            background: #fff4f4;
+            color: #983535;
+        }
+
         .typing {
             align-self: flex-start;
             background: #fff;
@@ -543,6 +671,13 @@
                 wrapper.appendChild(scriptCard);
             }
 
+            if (data) {
+                const dllCard = renderDllCard(data);
+                if (dllCard) {
+                    wrapper.appendChild(dllCard);
+                }
+            }
+
             messagesEl.appendChild(wrapper);
             scrollBottom();
         }
@@ -630,6 +765,184 @@
             });
 
             return container;
+        }
+
+        function normalizeDllStatus(status) {
+            const normalized = String(status || "").trim().toLowerCase();
+            if (!normalized) {
+                return { code: "", label: "" };
+            }
+
+            const statusLabels = {
+                success: "成功",
+                succeeded: "成功",
+                ok: "完成",
+                failed: "失败",
+                error: "失败",
+                planned: "已计划",
+                running: "进行中",
+                skipped: "已跳过"
+            };
+
+            return {
+                code: normalized,
+                label: statusLabels[normalized] || normalized
+            };
+        }
+
+        function renderDllCard(data) {
+            const build = data?.dll_build && typeof data.dll_build === "object" ? data.dll_build : {};
+            const artifactPaths = Array.isArray(data?.dll_artifact_paths)
+                ? data.dll_artifact_paths.filter((item) => typeof item === "string" && item.trim())
+                : [];
+            const entryArgs = Array.isArray(data?.dll_entry_args_schema) ? data.dll_entry_args_schema : [];
+            const hasDllData = Boolean(
+                data?.request_dynamic_library ||
+                data?.dll_build_status ||
+                artifactPaths.length ||
+                build?.job_id ||
+                build?.message
+            );
+
+            if (!hasDllData) {
+                return null;
+            }
+
+            const status = normalizeDllStatus(
+                data?.dll_build_status ||
+                build?.status ||
+                build?.job_result?.status ||
+                build?.job_status?.status
+            );
+            const selectedProfile = String(build?.selected_profile || "").trim();
+            const jobId = String(build?.job_id || "").trim();
+            const entryFunction = String(data?.dll_entry_function || "").trim();
+            const nextActionHint = String(build?.next_action_hint || build?.job_result?.next_action_hint || "").trim();
+            const buildMessage = String(build?.message || "").trim();
+            const errorSummary = String(build?.job_result?.error_summary || build?.job_status?.error_summary || "").trim();
+            const argsSummary = entryArgs
+                .map((item) => {
+                    if (!item || typeof item !== "object") return "";
+                    const name = String(item.name || "").trim();
+                    const type = String(item.type || "").trim();
+                    const shape = Array.isArray(item.shape) && item.shape.length ? ` [${item.shape.join("x")}]` : "";
+                    if (!name && !type) return "";
+                    return `${name || "arg"}${type ? ` (${type}${shape})` : shape}`;
+                })
+                .filter(Boolean);
+
+            const card = document.createElement("section");
+            card.className = "dll-card";
+
+            const title = document.createElement("div");
+            title.className = "title";
+            title.textContent = "DLL 构建结果";
+            card.appendChild(title);
+
+            const body = document.createElement("div");
+            body.className = "dll-card-body";
+
+            const overview = document.createElement("div");
+            overview.className = "dll-overview";
+            if (status.label) {
+                const statusEl = document.createElement("span");
+                statusEl.className = `dll-status ${status.code}`;
+                statusEl.textContent = `状态：${status.label}`;
+                overview.appendChild(statusEl);
+            }
+            if (selectedProfile) {
+                const profileEl = document.createElement("span");
+                profileEl.className = "dll-inline-tag";
+                profileEl.textContent = `Profile：${selectedProfile}`;
+                overview.appendChild(profileEl);
+            }
+            if (overview.childNodes.length) {
+                body.appendChild(overview);
+            }
+
+            const metaItems = [
+                { label: "任务 ID", value: jobId },
+                { label: "入口函数", value: entryFunction },
+                { label: "参数个数", value: entryArgs.length ? String(entryArgs.length) : "" }
+            ].filter((item) => item.value);
+
+            if (metaItems.length) {
+                const metaGrid = document.createElement("div");
+                metaGrid.className = "dll-meta-grid";
+                metaItems.forEach((item) => {
+                    const metaItem = document.createElement("div");
+                    metaItem.className = "dll-meta-item";
+
+                    const labelEl = document.createElement("span");
+                    labelEl.className = "dll-meta-label";
+                    labelEl.textContent = item.label;
+
+                    const valueEl = document.createElement("div");
+                    valueEl.className = "dll-meta-value";
+                    valueEl.textContent = item.value;
+
+                    metaItem.appendChild(labelEl);
+                    metaItem.appendChild(valueEl);
+                    metaGrid.appendChild(metaItem);
+                });
+                body.appendChild(metaGrid);
+            }
+
+            if (artifactPaths.length) {
+                const artifactsTitle = document.createElement("div");
+                artifactsTitle.className = "dll-meta-label";
+                artifactsTitle.textContent = "产物路径";
+                body.appendChild(artifactsTitle);
+
+                const artifactList = document.createElement("ul");
+                artifactList.className = "dll-artifact-list";
+                artifactPaths.forEach((artifactPath) => {
+                    const item = document.createElement("li");
+                    item.textContent = artifactPath;
+                    artifactList.appendChild(item);
+                });
+                body.appendChild(artifactList);
+            }
+
+            if (argsSummary.length) {
+                const argsTitle = document.createElement("div");
+                argsTitle.className = "dll-meta-label";
+                argsTitle.textContent = "入口参数";
+                body.appendChild(argsTitle);
+
+                const argsList = document.createElement("ul");
+                argsList.className = "dll-args-list";
+                argsSummary.forEach((argText) => {
+                    const item = document.createElement("li");
+                    item.textContent = argText;
+                    argsList.appendChild(item);
+                });
+                body.appendChild(argsList);
+            }
+
+            if (nextActionHint) {
+                const hint = document.createElement("div");
+                hint.className = "dll-note warn";
+                hint.textContent = `下一步：${nextActionHint}`;
+                body.appendChild(hint);
+            }
+
+            if (buildMessage && buildMessage !== nextActionHint) {
+                const message = document.createElement("div");
+                message.className = `dll-note${status.code === "failed" || status.code === "error" ? " error" : ""}`;
+                message.textContent = buildMessage;
+                body.appendChild(message);
+            }
+
+            if (errorSummary && errorSummary !== buildMessage) {
+                const error = document.createElement("div");
+                error.className = "dll-note error";
+                error.textContent = errorSummary;
+                body.appendChild(error);
+            }
+
+            card.appendChild(body);
+            return card;
         }
 
         async function checkHealth() {

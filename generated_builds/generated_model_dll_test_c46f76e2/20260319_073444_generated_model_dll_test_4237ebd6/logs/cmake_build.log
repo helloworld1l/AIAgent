@@ -1,0 +1,17 @@
+﻿适用于 .NET Framework MSBuild 版本 17.13.19+0d9f5a35a
+
+  1>Checking Build System
+  Building Custom Rule D:/python/rag_crm_agent/generated_builds/generated_model_dll_test_c46f76e2/20260319_073444_generated_model_dll_test_4237ebd6/src/CMakeLists.txt
+  rocket_launch_1d.c
+D:\python\rag_crm_agent\generated_builds\generated_model_dll_test_c46f76e2\20260319_073444_generated_model_dll_test_4237ebd6\matlab\codegen\dll\rocket_launch_1d\rocket_launch_1d.c(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [D:\python\rag_crm_agent\generated_builds\generated_model_dll_test_c46f76e2\20260319_073444_generated_model_dll_test_4237ebd6\build\rocket_launch_1d_dll_test.vcxproj]
+  rocket_launch_1d_initialize.c
+  rocket_launch_1d_terminate.c
+  rt_nonfinite.c
+  rtGetInf.c
+  rtGetNaN.c
+  正在生成代码...
+  wrapper.cpp
+  Auto build dll exports
+    正在创建库 D:/python/rag_crm_agent/generated_builds/generated_model_dll_test_c46f76e2/20260319_073444_generated_model_dll_test_4237ebd6/build/Release/rocket_launch_1d_dll_test.lib 和对象 D:/python/rag_crm_agent/generated_builds/generated_model_dll_test_c46f76e2/20260319_073444_generated_model_dll_test_4237ebd6/build/Release/rocket_launch_1d_dll_test.exp
+  rocket_launch_1d_dll_test.vcxproj -> D:\python\rag_crm_agent\generated_builds\generated_model_dll_test_c46f76e2\20260319_073444_generated_model_dll_test_4237ebd6\build\Release\rocket_launch_1d_dll_test.dll
+

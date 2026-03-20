@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "artifact_paths": [],
+  "header_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_012529_dll_smoke_test_86593fba\\src\\wrapper.h"
+  ],
+  "logs": {
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_012529_dll_smoke_test_86593fba\\logs\\cmake_build.log"
+  },
+  "error_summary": "No dynamic library found for artifact 'dll_smoke'",
+  "updated_at": "2026-03-19T01:25:57Z",
+  "error_type": "artifact_missing"
+}

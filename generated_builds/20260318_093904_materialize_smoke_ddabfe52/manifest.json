@@ -1,0 +1,47 @@
+{
+  "job_id": "20260318_093904_materialize_smoke_ddabfe52",
+  "status": "running",
+  "project_name": "materialize_smoke",
+  "artifact_name": "materialize_lib",
+  "profile": "windows_msvc_static",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\artifacts",
+  "created_at": "2026-03-18T09:39:04Z",
+  "updated_at": "2026-03-18T09:39:04Z",
+  "steps": [
+    {
+      "step": "materialize_inputs",
+      "status": "completed",
+      "detail": {
+        "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\inputs\\kalman_tracking_20260303_102117.m",
+        "request_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\inputs\\build_request.json"
+      },
+      "timestamp": "2026-03-18T09:39:04Z"
+    }
+  ],
+  "input_manifest": {
+    "entry_function": "demo_entry",
+    "entry_args_schema": [
+      {
+        "name": "x0",
+        "type": "double_vector",
+        "shape": [
+          4,
+          1
+        ]
+      },
+      {
+        "name": "t_end",
+        "type": "double_scalar"
+      }
+    ],
+    "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\kalman_tracking_20260303_102117.m",
+    "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\inputs\\kalman_tracking_20260303_102117.m"
+  },
+  "toolchain_snapshot": {},
+  "artifacts": [],
+  "logs": {},
+  "error_summary": "",
+  "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\inputs\\kalman_tracking_20260303_102117.m"
+}

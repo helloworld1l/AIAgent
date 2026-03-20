@@ -1,0 +1,2 @@
+DRY RUN
+C:\Program Files\CMake\bin\cmake.EXE --build D:\python\rag_crm_agent\generated_builds\20260318_103054_underwater_launch_20260313_122327_4ff26361\build --config Release --target underwater_launch_20260313_122327_static

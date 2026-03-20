@@ -1,0 +1,35 @@
+{
+  "entry_function": "rocket_launch_1d",
+  "entry_args_schema": [
+    {
+      "name": "mode",
+      "type": "double_scalar"
+    },
+    {
+      "name": "time",
+      "type": "double_scalar"
+    },
+    {
+      "name": "Ts",
+      "type": "double_scalar"
+    },
+    {
+      "name": "x",
+      "type": "double_vector",
+      "shape": [
+        3,
+        1
+      ]
+    },
+    {
+      "name": "u",
+      "type": "double_vector",
+      "shape": [
+        2,
+        1
+      ]
+    }
+  ],
+  "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\generated_model_dll_test_c46f76e2\\rocket_launch_1d.m",
+  "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\inputs\\rocket_launch_1d.m"
+}

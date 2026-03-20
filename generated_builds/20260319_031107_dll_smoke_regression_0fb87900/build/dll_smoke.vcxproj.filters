@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\matlab\codegen\dll\dll_smoke\dll_smoke.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\matlab\codegen\dll\dll_smoke\dll_smoke_initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\matlab\codegen\dll\dll_smoke\dll_smoke_terminate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\src\wrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{96016A5E-7160-356B-B930-7C5E13A7317B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

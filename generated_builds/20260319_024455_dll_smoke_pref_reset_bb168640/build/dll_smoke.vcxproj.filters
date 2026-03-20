@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\dll_smoke.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\dll_smoke_initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\dll_smoke_terminate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\examples\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\interface\_coder_dll_smoke_api.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\interface\_coder_dll_smoke_info.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\matlab\codegen\dll\dll_smoke\interface\_coder_dll_smoke_mex.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\src\wrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\python\rag_crm_agent\generated_builds\20260319_024455_dll_smoke_pref_reset_bb168640\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D772C425-28A9-35CE-B1DE-FD59ECCB02CD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

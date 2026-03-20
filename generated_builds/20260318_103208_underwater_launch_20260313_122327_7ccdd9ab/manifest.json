@@ -1,0 +1,128 @@
+{
+  "job_id": "20260318_103208_underwater_launch_20260313_122327_7ccdd9ab",
+  "status": "running",
+  "project_name": "underwater_launch_20260313_122327",
+  "artifact_name": "underwater_launch_20260313_122327_static",
+  "profile": "windows_msvc_static",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\artifacts",
+  "created_at": "2026-03-18T10:32:08Z",
+  "updated_at": "2026-03-18T10:32:08Z",
+  "steps": [
+    {
+      "step": "materialize_inputs",
+      "status": "completed",
+      "detail": {
+        "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\inputs\\underwater_launch_20260313_122327.m",
+        "request_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\inputs\\build_request.json"
+      },
+      "timestamp": "2026-03-18T10:32:08Z"
+    },
+    {
+      "step": "matlab_generate_cpp",
+      "status": "planned",
+      "detail": {
+        "runner_script": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\matlab\\matlab_codegen_runner.m",
+        "target_lang": "C++",
+        "matlab_codegen_mode": "matlab_coder",
+        "generate_report": true,
+        "dry_run": true,
+        "command": [
+          "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe",
+          "-batch",
+          "run('D:/python/rag_crm_agent/generated_builds/20260318_103208_underwater_launch_20260313_122327_7ccdd9ab/matlab/matlab_codegen_runner.m')"
+        ],
+        "codegen_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\matlab\\codegen"
+      },
+      "timestamp": "2026-03-18T10:32:08Z"
+    },
+    {
+      "step": "cmake_configure",
+      "status": "planned",
+      "detail": {
+        "generator": "Visual Studio 17 2022",
+        "platform": "x64",
+        "build_type": "Release",
+        "dry_run": true,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "-S",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\src",
+          "-B",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\build",
+          "-G",
+          "Visual Studio 17 2022",
+          "-A",
+          "x64",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DBUILD_SHARED_LIBS=OFF"
+        ],
+        "cmakelists_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\src\\CMakeLists.txt"
+      },
+      "timestamp": "2026-03-18T10:32:08Z"
+    },
+    {
+      "step": "cmake_build_static",
+      "status": "planned",
+      "detail": {
+        "target": "underwater_launch_20260313_122327_static",
+        "config": "Release",
+        "dry_run": true,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\build",
+          "--config",
+          "Release",
+          "--target",
+          "underwater_launch_20260313_122327_static"
+        ]
+      },
+      "timestamp": "2026-03-18T10:32:08Z"
+    }
+  ],
+  "input_manifest": {
+    "entry_function": "underwater_launch_main",
+    "entry_args_schema": [],
+    "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\underwater_launch_20260313_122327.m",
+    "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\inputs\\underwater_launch_20260313_122327.m"
+  },
+  "toolchain_snapshot": {
+    "matlab": {
+      "available": true,
+      "path": "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe"
+    },
+    "cmake": {
+      "available": true,
+      "path": "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+      "version": "cmake version 3.30.2"
+    },
+    "visual_studio": {
+      "available": true,
+      "installation_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+      "cl_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\cl.exe",
+      "lib_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\lib.exe",
+      "msbuild_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe"
+    },
+    "gcc": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\gcc.EXE",
+      "version": "gcc.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "gxx": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\g++.EXE",
+      "version": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "ar": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\ar.EXE"
+    }
+  },
+  "artifacts": [],
+  "logs": {},
+  "error_summary": "",
+  "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\inputs\\underwater_launch_20260313_122327.m"
+}

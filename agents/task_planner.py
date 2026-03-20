@@ -10,6 +10,7 @@ from typing import Any, Dict, List
 
 import requests
 
+from agents.dll_build_support import mentions_dynamic_library
 from config.settings import settings
 
 
@@ -27,7 +28,7 @@ class RAGTaskPlanner:
             task_type = llm_plan.get("task_type", "")
             confidence = _to_float(llm_plan.get("confidence"), default=0.5)
             reason = str(llm_plan.get("reason", "")).strip()
-            if task_type in {"matlab_generation", "chat", "clarify"}:
+            if task_type in {"matlab_generation", "matlab_generation_dll", "chat", "clarify"}:
                 return {
                     "task_type": task_type,
                     "confidence": confidence,
@@ -35,6 +36,8 @@ class RAGTaskPlanner:
                     "source": "llm",
                     "llm_error": "",
                     "rule_fallback": rule_plan,
+                    "wants_dynamic_library": bool(llm_plan.get("wants_dynamic_library", False))
+                    or task_type == "matlab_generation_dll",
                 }
 
         merged = dict(rule_plan)
@@ -44,33 +47,85 @@ class RAGTaskPlanner:
 
     def _rule_based_plan(self, query: str, retrieved_docs: List[Dict[str, Any]]) -> Dict[str, Any]:
         lowered = query.lower()
-        generation_actions = ["生成", "构建", "建立", "创建", "设计", "实现", "写", "build", "generate", "做个"]
+        generation_actions = [
+            "build",
+            "generate",
+            "create",
+            "model",
+            "simulate",
+            "compile",
+            "export",
+            "\u751f\u6210",
+            "\u6784\u5efa",
+            "\u5efa\u7acb",
+            "\u521b\u5efa",
+            "\u8bbe\u8ba1",
+            "\u5b9e\u73b0",
+            "\u4eff\u771f",
+            "\u5efa\u6a21",
+            "\u7f16\u8bd1",
+            "\u5bfc\u51fa",
+            "\u505a\u4e2a",
+        ]
         has_action = any(a in lowered for a in generation_actions)
         model_markers = [
             "matlab",
             ".m",
             "simulink",
-            "模型",
-            "传递函数",
-            "状态空间",
             "pid",
             "kalman",
-            "卡尔曼",
-            "火箭",
-            "发射",
             "mpc",
             "ode45",
-            "辨识",
-            "机械臂",
-            "光伏",
+            "missile",
+            "torpedo",
+            "submarine",
+            "satellite",
+            "orbit",
+            "radar",
+            "tracking",
+            "battlefield",
+            "lanchester",
+            "\u6a21\u578b",
+            "\u4f20\u9012\u51fd\u6570",
+            "\u72b6\u6001\u7a7a\u95f4",
+            "\u706b\u7bad",
+            "\u53d1\u5c04",
+            "\u5bfc\u5f39",
+            "\u9c7c\u96f7",
+            "\u6f5c\u8247",
+            "\u6c34\u4e0b",
+            "\u536b\u661f",
+            "\u8f68\u9053",
+            "\u96f7\u8fbe",
+            "\u8ddf\u8e2a",
+            "\u6218\u573a",
+            "\u6001\u52bf",
+            "\u7ea2\u84dd\u5bf9\u6297",
+            "\u5175\u529b\u6d88\u8017",
         ]
-        ask_markers = ["解释", "区别", "是什么", "为什么", "如何", "怎么", "原理", "介绍", "对比", "含义"]
+        ask_markers = [
+            "\u89e3\u91ca",
+            "\u533a\u522b",
+            "\u662f\u4ec0\u4e48",
+            "\u4e3a\u4ec0\u4e48",
+            "\u5982\u4f55",
+            "\u600e\u4e48",
+            "\u539f\u7406",
+            "\u4ecb\u7ecd",
+            "\u5bf9\u6bd4",
+            "\u542b\u4e49",
+            "what is",
+            "why",
+            "how",
+        ]
+        wants_dynamic_library = mentions_dynamic_library(query)
         if not has_action and any(m in query for m in ask_markers):
             return {
                 "task_type": "chat",
                 "confidence": 0.9,
                 "reason": "rule_question_without_generation_action",
                 "has_generation_action": False,
+                "wants_dynamic_library": wants_dynamic_library,
             }
 
         action_score = 0.4 if has_action else 0.0
@@ -81,16 +136,18 @@ class RAGTaskPlanner:
 
         if confidence >= 0.55:
             return {
-                "task_type": "matlab_generation",
+                "task_type": "matlab_generation_dll" if wants_dynamic_library else "matlab_generation",
                 "confidence": confidence,
                 "reason": "rule_generation_confident",
                 "has_generation_action": has_action,
+                "wants_dynamic_library": wants_dynamic_library,
             }
         return {
             "task_type": "chat",
             "confidence": max(0.35, 1.0 - confidence),
             "reason": "rule_chat_default",
             "has_generation_action": has_action,
+            "wants_dynamic_library": wants_dynamic_library,
         }
 
     def _llm_plan(
@@ -113,14 +170,14 @@ class RAGTaskPlanner:
         system_prompt = (
             "你是任务路由器。"
             "只输出JSON，不要其他文本。"
-            "根据用户输入和证据，判断任务类型：matlab_generation/chat/clarify。"
+            "根据用户输入和证据，判断任务类型：matlab_generation/matlab_generation_dll/chat/clarify。"
         )
         user_prompt = (
             f"用户输入: {query}\n"
             f"最近对话:\n{history_text}\n"
             f"检索证据:\n" + "\n".join(evidence_lines) + "\n\n"
             "输出JSON:\n"
-            '{ "task_type": "matlab_generation|chat|clarify", "confidence": 0.0, "reason": "..." }'
+            '{ "task_type": "matlab_generation|matlab_generation_dll|chat|clarify", "confidence": 0.0, "reason": "...", "wants_dynamic_library": false }'
         )
 
         payload = {

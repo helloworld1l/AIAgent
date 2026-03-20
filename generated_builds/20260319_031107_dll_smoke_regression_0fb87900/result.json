@@ -1,0 +1,31 @@
+{
+  "status": "succeeded",
+  "artifact_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\artifacts\\dll_smoke.dll",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\artifacts\\dll_smoke.lib"
+  ],
+  "header_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_data.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_initialize.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_terminate.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_types.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\examples\\main.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_api.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_info.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_mex.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen\\dll\\dll_smoke\\rtwtypes.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\src\\wrapper.h"
+  ],
+  "logs": {
+    "matlab_stdout": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\matlab_stdout.log",
+    "matlab_stderr": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\matlab_stderr.log",
+    "matlab_command": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\matlab_command.json",
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\logs\\cmake_configure.log",
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\logs\\cmake_build.log"
+  },
+  "error_summary": "",
+  "updated_at": "2026-03-19T03:13:23Z",
+  "codegen_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_031107_dll_smoke_regression_0fb87900\\matlab\\codegen",
+  "error_type": ""
+}

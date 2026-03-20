@@ -1,0 +1,16 @@
+------------------------------------------------------------------------
+拒绝访问。
+
+Microsoft (R) 程序维护实用工具 14.43.34810.0 版
+版权所有 (C) Microsoft Corporation。  保留所有权利。
+
+dll_smoke_rtw.mk(242) : fatal error U1052: 未找到文件“\rtw\c\tools\vcdefs.mak”
+Stop.
+The make command returned an error of 2
+
+编译 "dll_smoke" 时遇到错误
+------------------------------------------------------------------------
+编译错误: C 编译器产生了错误。 有关详细信息，请查看编译日志。
+helpview('coder','msginfo_Coder_FE_TargetBuildError');
+代码生成失败: 要查看报告，请执行 open('codegen\dll\dll_smoke\html\report.mldatx')
+

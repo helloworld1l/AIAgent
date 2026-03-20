@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from collections import defaultdict, deque
-from typing import Deque, Dict, List, Protocol
+from typing import Any, Deque, Dict, List, Protocol
 
 from config.settings import settings
 
@@ -25,6 +25,15 @@ class SessionStore(Protocol):
     def count(self, session_id: str) -> int:
         ...
 
+    def get_state(self, session_id: str, state_key: str) -> Dict[str, Any] | None:
+        ...
+
+    def set_state(self, session_id: str, state_key: str, value: Dict[str, Any]) -> None:
+        ...
+
+    def clear_state(self, session_id: str, state_key: str | None = None) -> None:
+        ...
+
 
 class InMemorySessionStore:
     backend_name = "memory"
@@ -34,6 +43,7 @@ class InMemorySessionStore:
         self._session_histories: Dict[str, Deque[Dict[str, str]]] = defaultdict(
             lambda: deque(maxlen=self.history_size)
         )
+        self._session_states: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(dict)
 
     def get_history(self, session_id: str) -> List[Dict[str, str]]:
         return list(self._session_histories[session_id])
@@ -43,9 +53,28 @@ class InMemorySessionStore:
 
     def clear(self, session_id: str) -> None:
         self._session_histories[session_id].clear()
+        self._session_states.pop(session_id, None)
 
     def count(self, session_id: str) -> int:
         return len(self._session_histories[session_id])
+
+    def get_state(self, session_id: str, state_key: str) -> Dict[str, Any] | None:
+        value = self._session_states.get(session_id, {}).get(state_key)
+        return dict(value) if isinstance(value, dict) else None
+
+    def set_state(self, session_id: str, state_key: str, value: Dict[str, Any]) -> None:
+        self._session_states[session_id][state_key] = dict(value)
+
+    def clear_state(self, session_id: str, state_key: str | None = None) -> None:
+        if state_key is None:
+            self._session_states.pop(session_id, None)
+            return
+        state_map = self._session_states.get(session_id)
+        if not state_map:
+            return
+        state_map.pop(state_key, None)
+        if not state_map:
+            self._session_states.pop(session_id, None)
 
 
 class RedisSessionStore:
@@ -79,7 +108,7 @@ class RedisSessionStore:
         self._client.ping()
 
     def get_history(self, session_id: str) -> List[Dict[str, str]]:
-        values = self._client.lrange(self._key(session_id), 0, -1)
+        values = self._client.lrange(self._history_key(session_id), 0, -1)
         history: List[Dict[str, str]] = []
         for item in values:
             try:
@@ -94,7 +123,7 @@ class RedisSessionStore:
 
     def append(self, session_id: str, role: str, content: str) -> None:
         payload = json.dumps({"role": role, "content": content}, ensure_ascii=False)
-        key = self._key(session_id)
+        key = self._history_key(session_id)
         pipe = self._client.pipeline()
         pipe.rpush(key, payload)
         pipe.ltrim(key, -self.history_size, -1)
@@ -103,13 +132,46 @@ class RedisSessionStore:
         pipe.execute()
 
     def clear(self, session_id: str) -> None:
-        self._client.delete(self._key(session_id))
+        self._client.delete(self._history_key(session_id))
+        for key in self._client.scan_iter(match=f"{self._state_prefix(session_id)}*"):
+            self._client.delete(key)
 
     def count(self, session_id: str) -> int:
-        return int(self._client.llen(self._key(session_id)))
+        return int(self._client.llen(self._history_key(session_id)))
 
-    def _key(self, session_id: str) -> str:
-        return f"{self.key_prefix}:{session_id}"
+    def get_state(self, session_id: str, state_key: str) -> Dict[str, Any] | None:
+        raw = self._client.get(self._state_key(session_id, state_key))
+        if not raw:
+            return None
+        try:
+            parsed = json.loads(raw)
+        except Exception:
+            return None
+        return parsed if isinstance(parsed, dict) else None
+
+    def set_state(self, session_id: str, state_key: str, value: Dict[str, Any]) -> None:
+        payload = json.dumps(value, ensure_ascii=False)
+        key = self._state_key(session_id, state_key)
+        if self.ttl_sec > 0:
+            self._client.setex(key, self.ttl_sec, payload)
+        else:
+            self._client.set(key, payload)
+
+    def clear_state(self, session_id: str, state_key: str | None = None) -> None:
+        if state_key is None:
+            for key in self._client.scan_iter(match=f"{self._state_prefix(session_id)}*"):
+                self._client.delete(key)
+            return
+        self._client.delete(self._state_key(session_id, state_key))
+
+    def _history_key(self, session_id: str) -> str:
+        return f"{self.key_prefix}:{session_id}:history"
+
+    def _state_prefix(self, session_id: str) -> str:
+        return f"{self.key_prefix}:{session_id}:state:"
+
+    def _state_key(self, session_id: str, state_key: str) -> str:
+        return f"{self._state_prefix(session_id)}{state_key}"
 
 
 def build_session_store(history_size: int) -> SessionStore:

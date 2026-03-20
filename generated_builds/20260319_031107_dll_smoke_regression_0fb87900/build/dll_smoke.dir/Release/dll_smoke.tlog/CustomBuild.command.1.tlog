@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\20260319_031107_DLL_SMOKE_REGRESSION_0FB87900\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/src -BD:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/build --check-stamp-file D:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

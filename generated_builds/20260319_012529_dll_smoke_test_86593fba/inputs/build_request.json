@@ -1,0 +1,11 @@
+{
+  "entry_function": "dll_smoke",
+  "entry_args_schema": [
+    {
+      "name": "x",
+      "type": "double_scalar"
+    }
+  ],
+  "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\dll_smoke.m",
+  "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_012529_dll_smoke_test_86593fba\\inputs\\dll_smoke.m"
+}

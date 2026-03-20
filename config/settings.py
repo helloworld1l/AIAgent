@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Type
+from typing import Any, Dict, MutableMapping, Type
 
 try:
     from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -39,6 +39,7 @@ DEFAULTS: Dict[str, Any] = {
     "REDIS_KEY_PREFIX": "rag_crm_agent:session",
     "API_HOST": "0.0.0.0",
     "API_PORT": 8000,
+    "LOCAL_BUILD_MCP_DRY_RUN": False,
     "DATABASE_URL": "sqlite:///crm_database.db",
 }
 
@@ -117,6 +118,7 @@ if BaseSettings is not None:
             # API配置
             API_HOST: str = DEFAULTS["API_HOST"]
             API_PORT: int = DEFAULTS["API_PORT"]
+            LOCAL_BUILD_MCP_DRY_RUN: bool = DEFAULTS["LOCAL_BUILD_MCP_DRY_RUN"]
 
             # 数据库配置
             DATABASE_URL: str = DEFAULTS["DATABASE_URL"]
@@ -161,6 +163,7 @@ if BaseSettings is not None:
             # API配置
             API_HOST: str = DEFAULTS["API_HOST"]
             API_PORT: int = DEFAULTS["API_PORT"]
+            LOCAL_BUILD_MCP_DRY_RUN: bool = DEFAULTS["LOCAL_BUILD_MCP_DRY_RUN"]
 
             # 数据库配置
             DATABASE_URL: str = DEFAULTS["DATABASE_URL"]
@@ -187,3 +190,14 @@ else:
                 setattr(self, key, value)
 
     settings = FallbackSettings()
+
+
+def ensure_runtime_env_defaults(
+    env: MutableMapping[str, str] | None = None,
+    dry_run: bool | None = None,
+) -> None:
+    runtime_env = os.environ if env is None else env
+    configured = runtime_env.get("LOCAL_BUILD_MCP_DRY_RUN")
+    if configured is None or not str(configured).strip():
+        resolved_dry_run = bool(getattr(settings, "LOCAL_BUILD_MCP_DRY_RUN", False)) if dry_run is None else bool(dry_run)
+        runtime_env["LOCAL_BUILD_MCP_DRY_RUN"] = "1" if resolved_dry_run else "0"

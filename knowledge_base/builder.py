@@ -149,6 +149,9 @@ class KnowledgeBaseBuilder:
         for idx, item in enumerate(self.catalog):
             base = (
                 f"model_id: {item['model_id']}; name: {item['name']}; category: {item['category']}; "
+                f"template_family: {item.get('template_family', '')}; "
+                f"domain_tags: {', '.join(item.get('domain_tags', []))}; "
+                f"equation_fragments: {', '.join(item.get('equation_fragments', []))}; "
                 f"description: {item['description']}; keywords: {', '.join(item.get('keywords', []))}"
             )
             documents.append(
@@ -160,6 +163,9 @@ class KnowledgeBaseBuilder:
                         "model_id": item["model_id"],
                         "name": item["name"],
                         "category": item["category"],
+                        "template_family": item.get("template_family", ""),
+                        "domain_tags": item.get("domain_tags", []),
+                        "equation_fragments": item.get("equation_fragments", []),
                         "description": item["description"],
                         "keywords": item.get("keywords", []),
                         "default_params": item.get("default_params", {}),
@@ -171,10 +177,18 @@ class KnowledgeBaseBuilder:
                 documents.append(
                     {
                         "id": idx * 10 + e_idx,
-                        "text": f"example: {example} -> model {item['model_id']}",
+                        "text": (
+                            f"example: {example} -> model {item['model_id']}; "
+                            f"template_family: {item.get('template_family', '')}; "
+                            f"domain_tags: {', '.join(item.get('domain_tags', []))}; "
+                            f"equation_fragments: {', '.join(item.get('equation_fragments', []))}"
+                        ),
                         "payload": {
                             "type": "example",
                             "model_id": item["model_id"],
+                            "template_family": item.get("template_family", ""),
+                            "domain_tags": item.get("domain_tags", []),
+                            "equation_fragments": item.get("equation_fragments", []),
                             "example": example,
                         },
                     }

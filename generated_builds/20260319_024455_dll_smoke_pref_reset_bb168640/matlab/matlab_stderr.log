@@ -1,0 +1,22 @@
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+{错误使用 codegen
+
+
+出错 matlab_codegen_runner (第 8 行)
+codegen -config cfg dll_smoke -args {1.0};
+
+出错 run (第 112 行)
+evalin('caller', strcat(scriptStem, ';'));
+} 
+Unable to load ApplicationService for command `client-v1`
+Unable to load ApplicationService for command `client-v1`
+ERROR: MATLAB error Exit Status: 0x00000001

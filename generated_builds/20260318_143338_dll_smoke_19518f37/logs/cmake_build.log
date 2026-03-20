@@ -1,0 +1,2 @@
+DRY RUN
+C:\Program Files\CMake\bin\cmake.EXE --build D:\python\rag_crm_agent\generated_builds\20260318_143338_dll_smoke_19518f37\build --config Release --target dll_smoke

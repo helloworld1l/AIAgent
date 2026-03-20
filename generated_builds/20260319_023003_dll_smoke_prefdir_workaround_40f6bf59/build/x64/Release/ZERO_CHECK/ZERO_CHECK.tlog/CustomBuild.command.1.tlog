@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\20260319_023003_DLL_SMOKE_PREFDIR_WORKAROUND_40F6BF59\BUILD\CMAKEFILES\6BFBA5F161E89A2797AE62E8330703F2\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/20260319_023003_dll_smoke_prefdir_workaround_40f6bf59/src -BD:/python/rag_crm_agent/generated_builds/20260319_023003_dll_smoke_prefdir_workaround_40f6bf59/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/python/rag_crm_agent/generated_builds/20260319_023003_dll_smoke_prefdir_workaround_40f6bf59/build/dll_smoke_prefdir_workaround.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

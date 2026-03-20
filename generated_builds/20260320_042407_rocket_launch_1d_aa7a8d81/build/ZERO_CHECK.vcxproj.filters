@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\build\CMakeFiles\1e0d870f6377fd468591733dbecf5d14\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{7978CBDE-5CBF-362B-AAD1-CFFEDC1947C7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

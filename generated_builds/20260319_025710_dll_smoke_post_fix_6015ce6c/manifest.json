@@ -1,0 +1,236 @@
+{
+  "job_id": "20260319_025710_dll_smoke_post_fix_6015ce6c",
+  "status": "succeeded",
+  "project_name": "dll_smoke_post_fix",
+  "artifact_name": "dll_smoke",
+  "profile": "windows_msvc_dll",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts",
+  "created_at": "2026-03-19T02:57:10Z",
+  "updated_at": "2026-03-19T03:01:55Z",
+  "steps": [
+    {
+      "step": "materialize_inputs",
+      "status": "completed",
+      "detail": {
+        "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\inputs\\dll_smoke.m",
+        "request_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\inputs\\build_request.json"
+      },
+      "timestamp": "2026-03-19T02:57:10Z"
+    },
+    {
+      "step": "matlab_generate_cpp",
+      "status": "completed",
+      "detail": {
+        "runner_script": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\matlab\\matlab_codegen_runner.m",
+        "target_lang": "C",
+        "matlab_codegen_mode": "matlab_coder",
+        "generate_report": false,
+        "dry_run": false,
+        "command": [
+          "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe",
+          "-batch",
+          "run('D:/python/rag_crm_agent/generated_builds/20260319_025710_dll_smoke_post_fix_6015ce6c/matlab/matlab_codegen_runner.m')"
+        ],
+        "codegen_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\matlab\\codegen"
+      },
+      "timestamp": "2026-03-19T02:59:14Z"
+    },
+    {
+      "step": "cmake_configure",
+      "status": "completed",
+      "detail": {
+        "generator": "Visual Studio 17 2022",
+        "platform": "x64",
+        "build_type": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "-S",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\src",
+          "-B",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\build",
+          "-G",
+          "Visual Studio 17 2022",
+          "-A",
+          "x64",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DBUILD_SHARED_LIBS=ON"
+        ],
+        "cmakelists_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\src\\CMakeLists.txt"
+      },
+      "timestamp": "2026-03-19T02:59:20Z"
+    },
+    {
+      "step": "cmake_build_dynamic",
+      "status": "failed",
+      "detail": {
+        "target": "dll_smoke",
+        "config": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\build",
+          "--config",
+          "Release",
+          "--target",
+          "dll_smoke"
+        ]
+      },
+      "timestamp": "2026-03-19T02:59:22Z"
+    },
+    {
+      "step": "inspect_artifacts",
+      "status": "failed",
+      "detail": {
+        "artifact_name": "dll_smoke"
+      },
+      "timestamp": "2026-03-19T02:59:22Z"
+    },
+    {
+      "step": "cmake_configure",
+      "status": "completed",
+      "detail": {
+        "generator": "Visual Studio 17 2022",
+        "platform": "x64",
+        "build_type": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "-S",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\src",
+          "-B",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\build",
+          "-G",
+          "Visual Studio 17 2022",
+          "-A",
+          "x64",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DBUILD_SHARED_LIBS=ON"
+        ],
+        "cmakelists_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\src\\CMakeLists.txt"
+      },
+      "timestamp": "2026-03-19T03:01:04Z"
+    },
+    {
+      "step": "cmake_build_dynamic",
+      "status": "completed",
+      "detail": {
+        "target": "dll_smoke",
+        "config": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\build",
+          "--config",
+          "Release",
+          "--target",
+          "dll_smoke"
+        ]
+      },
+      "timestamp": "2026-03-19T03:01:08Z"
+    },
+    {
+      "step": "inspect_artifacts",
+      "status": "completed",
+      "detail": {
+        "artifact_paths": [
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.dll",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.lib"
+        ],
+        "header_count": 11
+      },
+      "timestamp": "2026-03-19T03:01:08Z"
+    },
+    {
+      "step": "cmake_build_dynamic",
+      "status": "completed",
+      "detail": {
+        "target": "dll_smoke",
+        "config": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\build",
+          "--config",
+          "Release",
+          "--target",
+          "dll_smoke"
+        ]
+      },
+      "timestamp": "2026-03-19T03:01:55Z"
+    },
+    {
+      "step": "inspect_artifacts",
+      "status": "completed",
+      "detail": {
+        "artifact_paths": [
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.dll",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.lib"
+        ],
+        "header_count": 11
+      },
+      "timestamp": "2026-03-19T03:01:55Z"
+    }
+  ],
+  "input_manifest": {
+    "entry_function": "dll_smoke",
+    "entry_args_schema": [
+      {
+        "name": "x",
+        "type": "double_scalar"
+      }
+    ],
+    "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\dll_smoke.m",
+    "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\inputs\\dll_smoke.m"
+  },
+  "toolchain_snapshot": {
+    "matlab": {
+      "available": true,
+      "path": "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe"
+    },
+    "cmake": {
+      "available": true,
+      "path": "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+      "version": "cmake version 3.30.2"
+    },
+    "visual_studio": {
+      "available": true,
+      "installation_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+      "cl_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\cl.exe",
+      "link_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\link.exe",
+      "lib_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\lib.exe",
+      "msbuild_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe"
+    },
+    "gcc": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\gcc.EXE",
+      "version": "gcc.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "gxx": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\g++.EXE",
+      "version": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "ar": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\ar.EXE"
+    }
+  },
+  "artifacts": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.dll",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\artifacts\\dll_smoke.lib"
+  ],
+  "logs": {
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\logs\\cmake_build.log",
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\logs\\cmake_configure.log"
+  },
+  "error_summary": "",
+  "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_025710_dll_smoke_post_fix_6015ce6c\\inputs\\dll_smoke.m",
+  "error_type": ""
+}

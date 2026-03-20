@@ -1,0 +1,4 @@
+EXPORTS
+dll_smoke
+dll_smoke_initialize
+dll_smoke_terminate

@@ -1,0 +1,5 @@
+﻿适用于 .NET Framework MSBuild 版本 17.13.19+0d9f5a35a
+
+  Auto build dll exports
+  dll_smoke.vcxproj -> D:\python\rag_crm_agent\generated_builds\20260319_025710_dll_smoke_post_fix_6015ce6c\build\Release\dll_smoke.dll
+

@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\20260320_042407_ROCKET_LAUNCH_1D_AA7A8D81\BUILD\CMAKEFILES\1E0D870F6377FD468591733DBECF5D14\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/20260320_042407_rocket_launch_1d_aa7a8d81/src -BD:/python/rag_crm_agent/generated_builds/20260320_042407_rocket_launch_1d_aa7a8d81/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/python/rag_crm_agent/generated_builds/20260320_042407_rocket_launch_1d_aa7a8d81/build/rocket_launch_1d.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

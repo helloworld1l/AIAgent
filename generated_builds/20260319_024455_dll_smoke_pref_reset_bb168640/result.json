@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "artifact_paths": [],
+  "header_paths": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_data.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_initialize.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_terminate.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\dll_smoke_types.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\examples\\main.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_api.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_info.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\interface\\_coder_dll_smoke_mex.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\matlab\\codegen\\dll\\dll_smoke\\rtwtypes.h",
+    "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\src\\wrapper.h"
+  ],
+  "logs": {
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260319_024455_dll_smoke_pref_reset_bb168640\\logs\\cmake_build.log"
+  },
+  "error_summary": "No dynamic library found for artifact 'dll_smoke'",
+  "updated_at": "2026-03-19T02:47:08Z",
+  "error_type": "artifact_missing"
+}

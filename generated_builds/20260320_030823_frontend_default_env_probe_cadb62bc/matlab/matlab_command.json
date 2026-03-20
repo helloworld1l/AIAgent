@@ -1,0 +1,7 @@
+{
+  "command": [
+    "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe",
+    "-batch",
+    "run('D:/python/rag_crm_agent/generated_builds/20260320_030823_frontend_default_env_probe_cadb62bc/matlab/matlab_codegen_runner.m')"
+  ]
+}

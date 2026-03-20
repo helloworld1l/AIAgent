@@ -1,0 +1,3 @@
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/CMakeFiles/dll_smoke.dir
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/CMakeFiles/ALL_BUILD.dir
+D:/python/rag_crm_agent/generated_builds/20260319_024455_dll_smoke_pref_reset_bb168640/build/CMakeFiles/ZERO_CHECK.dir

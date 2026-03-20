@@ -219,12 +219,50 @@ class ModelSpecBuilder:
         params = dict(defaults)
         text = query
 
-        for key in ("kp", "ki", "kd", "m", "c", "k", "dt", "ts", "na", "nb", "nk", "samples"):
-            found = _extract_named_number(text, key)
-            if found is not None:
-                params[key] = found
-
-        for key in ("process_noise", "measurement_noise", "prediction_horizon", "control_horizon"):
+        numeric_keys = (
+            "kp",
+            "ki",
+            "kd",
+            "m",
+            "c",
+            "k",
+            "dt",
+            "ts",
+            "na",
+            "nb",
+            "nk",
+            "samples",
+            "steps",
+            "mass0",
+            "fuel_mass",
+            "burn_rate",
+            "thrust",
+            "drag_coeff",
+            "area",
+            "air_density",
+            "g",
+            "launch_angle_deg",
+            "init_speed",
+            "burn_time",
+            "mu",
+            "earth_radius",
+            "altitude0",
+            "v0",
+            "mass",
+            "water_density",
+            "displaced_volume",
+            "x0",
+            "y0",
+            "target_speed_x",
+            "target_speed_y",
+            "process_noise",
+            "measurement_noise",
+            "red0",
+            "blue0",
+            "alpha",
+            "beta",
+        )
+        for key in numeric_keys:
             found = _extract_named_number(text, key)
             if found is not None:
                 params[key] = found
@@ -248,31 +286,81 @@ class ModelSpecBuilder:
                 params["C"] = vectors[2]
             if len(vectors) >= 4:
                 params["D"] = vectors[3]
-        elif model_id == "rocket_launch_1d":
-            alias_map = {
-                "mass0": ["mass0", "初始质量", "总质量"],
-                "fuel_mass": ["fuel_mass", "燃料质量", "推进剂质量"],
-                "burn_rate": ["burn_rate", "燃烧速率", "耗油率", "消耗速率"],
-                "thrust": ["thrust", "推力"],
-                "drag_coeff": ["drag_coeff", "阻力系数", "cd"],
-                "area": ["area", "迎风面积", "截面积"],
-                "air_density": ["air_density", "空气密度", "rho"],
-                "g": ["g", "重力加速度"],
-                "dt": ["dt", "步长", "时间步长"],
-            }
+        else:
+            alias_map: Dict[str, List[str]] = {}
+            if model_id == "rocket_launch_1d":
+                alias_map = {
+                    "mass0": ["mass0", "initial mass", "\u521d\u59cb\u8d28\u91cf", "\u603b\u8d28\u91cf"],
+                    "fuel_mass": ["fuel_mass", "fuel mass", "\u71c3\u6599\u8d28\u91cf", "\u63a8\u8fdb\u5242\u8d28\u91cf"],
+                    "burn_rate": ["burn_rate", "burn rate", "\u71c3\u70e7\u901f\u7387", "\u6d88\u8017\u901f\u7387"],
+                    "thrust": ["thrust", "\u63a8\u529b"],
+                    "drag_coeff": ["drag_coeff", "drag coefficient", "\u963b\u529b\u7cfb\u6570", "cd"],
+                    "area": ["area", "frontal area", "\u8fce\u98ce\u9762\u79ef", "\u622a\u9762\u79ef"],
+                    "air_density": ["air_density", "air density", "\u7a7a\u6c14\u5bc6\u5ea6", "rho"],
+                    "g": ["g", "gravity", "\u91cd\u529b\u52a0\u901f\u5ea6"],
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                }
+            elif model_id == "missile_flight_2d":
+                alias_map = {
+                    "mass0": ["mass0", "initial mass", "\u521d\u59cb\u8d28\u91cf", "\u603b\u8d28\u91cf"],
+                    "thrust": ["thrust", "\u63a8\u529b"],
+                    "drag_coeff": ["drag_coeff", "drag coefficient", "\u963b\u529b\u7cfb\u6570", "cd"],
+                    "area": ["area", "frontal area", "\u8fce\u98ce\u9762\u79ef", "\u622a\u9762\u79ef"],
+                    "air_density": ["air_density", "air density", "\u7a7a\u6c14\u5bc6\u5ea6", "rho"],
+                    "launch_angle_deg": ["launch_angle_deg", "launch angle", "\u53d1\u5c04\u89d2", "\u89d2\u5ea6"],
+                    "init_speed": ["init_speed", "initial speed", "\u521d\u901f\u5ea6", "\u521d\u59cb\u901f\u5ea6"],
+                    "burn_time": ["burn_time", "burn time", "\u71c3\u70e7\u65f6\u95f4", "\u63a8\u529b\u65f6\u95f4"],
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                }
+            elif model_id == "satellite_orbit_2body":
+                alias_map = {
+                    "mu": ["mu", "gravitational parameter", "\u5f15\u529b\u53c2\u6570"],
+                    "earth_radius": ["earth_radius", "earth radius", "\u5730\u7403\u534a\u5f84"],
+                    "altitude0": ["altitude0", "altitude", "\u8f68\u9053\u9ad8\u5ea6", "\u521d\u59cb\u9ad8\u5ea6"],
+                    "v0": ["v0", "orbital speed", "initial speed", "\u8f68\u9053\u901f\u5ea6", "\u521d\u59cb\u901f\u5ea6"],
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                }
+            elif model_id == "torpedo_underwater_launch_1d":
+                alias_map = {
+                    "mass": ["mass", "\u8d28\u91cf"],
+                    "thrust": ["thrust", "\u63a8\u529b"],
+                    "drag_coeff": ["drag_coeff", "drag coefficient", "\u963b\u529b\u7cfb\u6570", "cd"],
+                    "area": ["area", "cross section", "\u622a\u9762\u79ef", "\u6a2a\u622a\u9762\u79ef"],
+                    "water_density": ["water_density", "water density", "\u6c34\u5bc6\u5ea6", "rho"],
+                    "displaced_volume": ["displaced_volume", "displaced volume", "\u6392\u6c34\u4f53\u79ef", "\u6392\u5f00\u4f53\u79ef"],
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                }
+            elif model_id == "radar_target_tracking_2d":
+                alias_map = {
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                    "steps": ["steps", "\u6b65\u6570"],
+                    "process_noise": ["process_noise", "\u8fc7\u7a0b\u566a\u58f0"],
+                    "measurement_noise": ["measurement_noise", "measurement std", "\u6d4b\u91cf\u566a\u58f0"],
+                    "x0": ["x0", "\u521d\u59cbx", "\u521d\u59cb\u6a2a\u5411\u4f4d\u7f6e"],
+                    "y0": ["y0", "\u521d\u59cby", "\u521d\u59cb\u7eb5\u5411\u4f4d\u7f6e"],
+                    "target_speed_x": ["target_speed_x", "vx", "\u76ee\u6807x\u901f\u5ea6", "\u76ee\u6807\u6a2a\u5411\u901f\u5ea6"],
+                    "target_speed_y": ["target_speed_y", "vy", "\u76ee\u6807y\u901f\u5ea6", "\u76ee\u6807\u7eb5\u5411\u901f\u5ea6"],
+                }
+            elif model_id == "lanchester_battle_attrition":
+                alias_map = {
+                    "red0": ["red0", "red force", "\u7ea2\u65b9\u5175\u529b", "\u7ea2\u65b9\u521d\u59cb\u5175\u529b"],
+                    "blue0": ["blue0", "blue force", "\u84dd\u65b9\u5175\u529b", "\u84dd\u65b9\u521d\u59cb\u5175\u529b"],
+                    "alpha": ["alpha", "blue firepower", "\u84dd\u65b9\u6740\u4f24\u7cfb\u6570"],
+                    "beta": ["beta", "red firepower", "\u7ea2\u65b9\u6740\u4f24\u7cfb\u6570"],
+                    "dt": ["dt", "\u6b65\u957f", "\u65f6\u95f4\u6b65\u957f"],
+                }
+
             for key, aliases in alias_map.items():
-                value = None
                 for alias in aliases:
                     value = _extract_named_number(text, alias)
                     if value is not None:
+                        params[key] = value
                         break
-                if value is not None:
-                    params[key] = value
 
         return {
             "task_goal": query,
             "model_id": model_id,
-            "assumptions": ["使用默认参数补全未明确指定项"],
+            "assumptions": ["\u4f7f\u7528\u9ed8\u8ba4\u53c2\u6570\u8865\u5168\u672a\u660e\u786e\u6307\u5b9a\u9879"],
             "parameters": params,
             "simulation_plan": {
                 "stop_time": params.get("stop_time", defaults.get("stop_time", 10))

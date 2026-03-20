@@ -1,0 +1,10 @@
+addpath('$inputs_dir');
+cd('$work_dir');
+
+cfg = coder.config('dll');
+cfg.TargetLang = '$target_lang';
+cfg.GenerateReport = $generate_report;
+cfg.GenCodeOnly = true;
+
+codegen -config cfg $entry_function -args {$args_literal};
+exit;

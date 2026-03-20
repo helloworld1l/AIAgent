@@ -1,0 +1,180 @@
+{
+  "job_id": "20260319_073444_generated_model_dll_test_4237ebd6",
+  "status": "succeeded",
+  "project_name": "generated_model_dll_test",
+  "artifact_name": "rocket_launch_1d_dll_test",
+  "profile": "windows_msvc_dll",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\artifacts",
+  "created_at": "2026-03-19T07:34:44Z",
+  "updated_at": "2026-03-19T07:37:00Z",
+  "steps": [
+    {
+      "step": "materialize_inputs",
+      "status": "completed",
+      "detail": {
+        "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\inputs\\rocket_launch_1d.m",
+        "request_path": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\inputs\\build_request.json"
+      },
+      "timestamp": "2026-03-19T07:34:44Z"
+    },
+    {
+      "step": "matlab_generate_cpp",
+      "status": "completed",
+      "detail": {
+        "runner_script": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\matlab\\matlab_codegen_runner.m",
+        "target_lang": "C",
+        "matlab_codegen_mode": "matlab_coder",
+        "generate_report": false,
+        "dry_run": false,
+        "command": [
+          "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe",
+          "-batch",
+          "run('D:/python/rag_crm_agent/generated_builds/generated_model_dll_test_c46f76e2/20260319_073444_generated_model_dll_test_4237ebd6/matlab/matlab_codegen_runner.m')"
+        ],
+        "codegen_dir": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\matlab\\codegen"
+      },
+      "timestamp": "2026-03-19T07:36:47Z"
+    },
+    {
+      "step": "cmake_configure",
+      "status": "completed",
+      "detail": {
+        "generator": "Visual Studio 17 2022",
+        "platform": "x64",
+        "build_type": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "-S",
+          "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\src",
+          "-B",
+          "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\build",
+          "-G",
+          "Visual Studio 17 2022",
+          "-A",
+          "x64",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DBUILD_SHARED_LIBS=ON"
+        ],
+        "cmakelists_path": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\src\\CMakeLists.txt"
+      },
+      "timestamp": "2026-03-19T07:36:54Z"
+    },
+    {
+      "step": "cmake_build_dynamic",
+      "status": "completed",
+      "detail": {
+        "target": "rocket_launch_1d_dll_test",
+        "config": "Release",
+        "dry_run": false,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\build",
+          "--config",
+          "Release",
+          "--target",
+          "rocket_launch_1d_dll_test"
+        ]
+      },
+      "timestamp": "2026-03-19T07:37:00Z"
+    },
+    {
+      "step": "inspect_artifacts",
+      "status": "completed",
+      "detail": {
+        "artifact_paths": [
+          "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\artifacts\\rocket_launch_1d_dll_test.dll",
+          "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\artifacts\\rocket_launch_1d_dll_test.lib"
+        ],
+        "header_count": 14
+      },
+      "timestamp": "2026-03-19T07:37:00Z"
+    }
+  ],
+  "input_manifest": {
+    "entry_function": "rocket_launch_1d",
+    "entry_args_schema": [
+      {
+        "name": "mode",
+        "type": "double_scalar"
+      },
+      {
+        "name": "time",
+        "type": "double_scalar"
+      },
+      {
+        "name": "Ts",
+        "type": "double_scalar"
+      },
+      {
+        "name": "x",
+        "type": "double_vector",
+        "shape": [
+          3,
+          1
+        ]
+      },
+      {
+        "name": "u",
+        "type": "double_vector",
+        "shape": [
+          2,
+          1
+        ]
+      }
+    ],
+    "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\generated_model_dll_test_c46f76e2\\rocket_launch_1d.m",
+    "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\inputs\\rocket_launch_1d.m"
+  },
+  "toolchain_snapshot": {
+    "matlab": {
+      "available": true,
+      "path": "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe"
+    },
+    "cmake": {
+      "available": true,
+      "path": "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+      "version": "cmake version 3.30.2"
+    },
+    "visual_studio": {
+      "available": true,
+      "installation_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+      "cl_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\cl.exe",
+      "link_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\link.exe",
+      "lib_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\lib.exe",
+      "msbuild_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe"
+    },
+    "gcc": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\gcc.EXE",
+      "version": "gcc.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "gxx": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\g++.EXE",
+      "version": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "ar": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\ar.EXE"
+    }
+  },
+  "artifacts": [
+    "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\artifacts\\rocket_launch_1d_dll_test.dll",
+    "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\artifacts\\rocket_launch_1d_dll_test.lib"
+  ],
+  "logs": {
+    "matlab_stdout": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\matlab\\matlab_stdout.log",
+    "matlab_stderr": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\matlab\\matlab_stderr.log",
+    "matlab_command": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\matlab\\matlab_command.json",
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\logs\\cmake_configure.log",
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\logs\\cmake_build.log"
+  },
+  "error_summary": "",
+  "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\generated_model_dll_test_c46f76e2\\20260319_073444_generated_model_dll_test_4237ebd6\\inputs\\rocket_launch_1d.m",
+  "error_type": ""
+}

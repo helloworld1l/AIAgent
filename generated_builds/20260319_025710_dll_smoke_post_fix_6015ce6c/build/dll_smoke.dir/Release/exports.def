@@ -1,0 +1,6 @@
+EXPORTS 
+	?local_build_mcp_artifact_name@@YAPEBDXZ
+	?local_build_mcp_project_name@@YAPEBDXZ
+	dll_smoke
+	dll_smoke_initialize
+	dll_smoke_terminate

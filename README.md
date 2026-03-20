@@ -1,181 +1,246 @@
-# RAG CRM Agent 项目说明
+# RAG CRM Agent
 
-## 项目简介
+## 项目定位
 
-本项目是一个面向 MATLAB 建模生成的对话式智能体系统，目标是把“自然语言建模需求”转换为可执行的 MATLAB `.m` 脚本。
+RAG CRM Agent 是一个面向 MATLAB `.m` 脚本生成的对话式建模系统。
 
-当前系统具备两类核心能力：
+当前版本的准确定位不是“任意物理系统都能自动建模”的完全开放域生成器，而是一个：
 
-1. 普通技术问答与多轮对话
-2. 根据自然语言描述生成 MATLAB 建模脚本
+- 带检索约束的建模生成系统
+- 带澄清门控的生成式助手
+- 带结构化 IR 的半开放域 MATLAB 建模平台
 
-项目内部融合了：
+相比早期“命中 `model_id` 后直接套模板”的实现，当前主链路已经升级为：
 
-- `Ollama + DeepSeek`：负责对话、任务理解、规格推断与修复
-- `Qdrant + Sentence Transformers`：负责向量检索
-- `BM25 + 向量检索 + 重排`：负责混合召回
-- `ModelSpec` 校验链路：负责结构化建模规格校验与修复
-- MATLAB 代码生成器：负责输出 `.m` 文件到 `generated_models`
+`检索与候选判断 -> 澄清门控 -> OpenModelIR / ModelSpec -> AssemblyPlan -> block renderer -> MATLAB 脚本`
 
----
-
-## 当前项目状态
-
-当前项目更适合被理解为：
-
-- **一个受知识库约束的建模生成系统**
-- **不是完全开放域的物理建模器**
-
-也就是说，当前生成效果仍然明显依赖：
-
-1. 知识库中是否存在相关领域文档
-2. 模型目录中是否存在对应模板或可近似模板
-3. 检索排序是否能把正确候选放到前面
-
-目前系统已经支持：
-
-- 混合检索
-- 多轮对话
-- 基于规则 + LLM 的任务路由
-- 基于 RAG 的 `ModelSpec` 生成
-- 自动修复与兜底
-- MATLAB 脚本落盘
-
-当前系统尚未完全支持：
-
-- 真正意义上的开放域建模自动生成
-- 对未知领域的自由方程组装与稳定落地
-- 多对象、多阶段复杂物理系统的通用代码生成
+这意味着当前系统已经具备更强的 family 级别泛化能力，但生成能力仍然受 family schema、片段库与 block 库约束。
 
 ---
 
-## 核心能力
+## 当前核心能力
 
-### 1. 对话与任务理解
+### 1. 检索增强与候选门控
 
-- 支持普通聊天与技术问答
-- 支持识别建模请求、聊天请求、澄清请求
-- 支持多轮上下文
+- 支持本地索引 + Qdrant 的混合检索
+- 支持 `BM25 + 向量召回 + 重排融合`
+- 支持候选 family / model 推断与生成前门控
+- 在 `no_candidate`、`domain_conflict`、`ambiguous_family`、`low_confidence` 等场景下优先澄清，而不是盲目生成
 
-### 2. RAG 检索增强
+### 2. 结构化生成链路
 
-- 本地知识索引 + Qdrant 向量库双层结构
-- 检索链路包含 BM25、向量召回和规则重排
-- Qdrant 不可用时可降级到本地向量或纯词法检索
+- 支持从用户自然语言抽取结构化生成信息
+- 支持 `OpenModelIR`、`ModelSpec` 与兼容转换链路
+- 支持对象级、family 级、slot 级澄清
+- 支持结构化校验、语义校验、自动修复与兜底
 
-### 3. 建模规格生成
+### 3. MATLAB 代码生成
 
-- 先检索候选知识，再推断结构化 `ModelSpec`
-- 通过 JSON Schema 和语义规则进行校验
-- 校验失败时尝试自动修复
+- 优先走 family assembler + block renderer 的组装式生成
+- 仍保留旧模板生成器作为兼容与回退路径
+- 生成结果会写入 `generated_models/`
+- 返回脚本文本、输出文件路径、装配信息和校验结果
 
-### 4. MATLAB 代码生成
+### 4. 质量与运行保障
 
-- 根据 `model_id + parameters` 生成 MATLAB 脚本
-- 生成文件写入 `generated_models`
-- 支持输出文件路径、模型名称和结构化结果
+- 支持静态校验与可选 MATLAB / Octave smoke 校验
+- 支持 `memory` / `redis` 两种会话存储后端
+- 提供健康检查接口，可查看当前检索链路是否真正处于混合检索状态
+- 提供 Golden 回归脚本用于匹配质量验证
 
 ---
 
-## 当前推荐运行方式
+## 当前支持范围
 
-当前项目**推荐使用混合模式**运行：
+当前主生成能力以 family 为核心，重点覆盖以下方向：
+
+- 航空航天：`launch_dynamics`、`trajectory_ode`、`powered_ascent`、`reentry_dynamics`、`aircraft_point_mass`、`interceptor_guidance`
+- 水下发射 / 航行：`underwater_launch`、`underwater_cruise`、`submarine_depth_control`
+- 轨道：`orbital_dynamics`、`relative_orbit`、`orbit_transfer`
+- 跟踪 / 融合：`tracking_estimation`、`sensor_fusion_tracking`、`bearing_only_tracking`
+- 战场态势：`combat_attrition`、`battlefield_awareness`、`threat_assessment`、`salvo_engagement`
+
+此外，知识目录中仍保留了一批传统模板式示例，例如控制、估计、信号处理、能源、机器人等 MATLAB/Simulink 示例模型，用于兼容与基础演示。
+
+---
+
+## 推荐运行方式
+
+当前仓库最推荐的运行方式是：
+
+### 混合部署
 
 - Docker 只启动基础设施：`redis`、`qdrant`、`ollama`、`ollama-init`
-- Python 应用层使用本机 `rag_crm` Conda 环境运行
+- Python 应用层在本机 `rag_crm` 环境中运行
 
-推荐原因：
+原因：
 
-1. 可以复用本机已配置好的 Python 依赖环境
-2. 可以复用已下载的 Ollama 与向量模型缓存
-3. 可以避开当前 Docker Python 基础镜像拉取失败问题
-4. 更贴合当前开发与调试方式
+- 更贴合当前开发和调试方式
+- 可以直接复用宿主机已安装的 Python 环境
+- 可以复用宿主机已经缓存的 Ollama / Sentence Transformers 模型
+- 可以避开 Python 基础镜像拉取失败或网络不稳定问题
 
-推荐启动命令：
+### 快速启动
+
+1. 启动基础设施
 
 ```powershell
 docker compose up -d redis qdrant ollama ollama-init
-python main.py build --with-qdrant
-python main.py api
 ```
 
-启动后访问：
+2. 构建知识索引并写入 Qdrant
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\run_in_rag_crm.ps1 main.py build --with-qdrant
+```
+
+3. 启动本机 API
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\run_in_rag_crm.ps1 main.py api
+```
+
+4. 打开页面
 
 - `http://127.0.0.1:8000/ui`
 
-如果只想启动基础设施并手动调试应用，也可以分别执行：
+如果你已经手动激活了 `rag_crm` 环境，也可以直接执行：
 
 ```powershell
-docker compose up -d redis qdrant ollama ollama-init
 python main.py build --with-qdrant
 python main.py api
 ```
 
+### 可选：全 Docker 模式
+
+仓库中的 `docker-compose.yml` 仍保留完整编排，可选一键启动：
+
+```powershell
+docker compose up -d --build
+```
+
+该模式会启动：`redis`、`qdrant`、`ollama`、`ollama-init`、`kb-build`、`app1`、`app2`。
+
 ---
 
-## 目录概览
+## 常用接口
 
-- `main.py`：项目主入口，支持 `build / run / test / api`
-- `agents/`：智能体主链路、任务路由、规格构建、规格校验、代码生成
-- `knowledge_base/`：知识库数据、检索器、索引构建器、MATLAB 模板生成器
+- `GET /ui`：Web 聊天页面
+- `GET /api/health`：健康检查
+- `GET /api/models`：查看当前支持的模型目录
+- `POST /api/chat`：主聊天接口
+- `POST /api/query`：兼容接口，行为与聊天接口一致
+- `GET /docs`：Swagger UI
+
+健康检查推荐关注：
+
+- `status`
+- `session_store_backend`
+- `retrieval.hybrid_effective`
+
+如果 `retrieval.hybrid_effective` 为 `false`，通常说明当前没有真正跑在完整混合检索状态。
+
+---
+
+## 常用命令
+
+### 构建知识库
+
+```powershell
+python main.py build
+python main.py build --with-qdrant
+```
+
+### 启动 API
+
+```powershell
+python main.py api
+```
+
+### 本地交互模式
+
+```powershell
+python main.py run
+```
+
+### Golden 回归验证
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\verify_golden.ps1
+```
+
+---
+
+## 关键目录
+
+- `main.py`：项目入口，支持 `build / run / test / api`
 - `api/`：FastAPI 服务与 HTTP 接口
-- `config/`：项目配置加载
-- `database/`：历史数据库模块与 CRM 数据结构
-- `generated_models/`：MATLAB 生成结果输出目录
-- `docker-compose.yml`：Docker 编排文件
-- `.env`：本地配置文件
+- `agents/`：主编排链路、任务规划、IR、规格校验、代码生成
+- `agents/structured_generation/`：槽位抽取、schema 注册、澄清策略
+- `knowledge_base/`：知识文档、索引构建、检索、装配规划、模板与 family 代码生成
+- `knowledge_base/blocks/`：分领域 block 渲染规则
+- `generated_models/`：生成出的 MATLAB 文件输出目录
+- `tools/`：运行包装脚本、Golden 回归脚本等辅助工具
+- `docker-compose.yml`：基础设施与全 Docker 模式编排
+- `.env`：本地运行配置
 
 ---
 
-## 项目演进方向
+## 当前设计边界
 
-当前项目下一阶段的重点方向包括：
+当前版本已经明显强于纯模板匹配系统，但仍有清晰边界：
 
-1. 扩展知识库覆盖面，降低跨领域误匹配
-2. 引入更强的开放域建模 IR（中间表示）
-3. 从固定模板生成逐步演进到“模型家族 + 方程组装”
-4. 增加“无法可靠匹配时先澄清”的保护机制
-5. 增强 MATLAB 代码生成后的验证与修复闭环
+- 仍然是半开放域，而不是完全开放域建模器
+- 主要生成能力仍依赖 `family`、`fragment`、`block` 库
+- 不具备“对任意未知物理系统自由拼装方程并稳定生成可执行 MATLAB 脚本”的能力
+- 不受原生 block 支持的草稿片段，目前可能只能降级为兼容路径或注释化输出
+- `database/` 中的 CRM 数据模块当前不属于主生成链路
+
+如果请求超出支持范围，系统的正确行为应该是优先澄清或明确拒绝，而不是误生成错误脚本。
+
+---
+
+## 关键配置项
+
+常用环境变量包括：
+
+- `OLLAMA_BASE_URL`、`OLLAMA_MODEL`
+- `QDRANT_HOST`、`QDRANT_PORT`、`QDRANT_COLLECTION`
+- `EMBEDDING_MODEL`、`EMBEDDING_DEVICE`
+- `RETRIEVAL_VECTOR_BACKEND`
+- `RETRIEVAL_BM25_WEIGHT`、`RETRIEVAL_VECTOR_WEIGHT`、`RETRIEVAL_RERANK_BLEND`
+- `RETRIEVAL_CANDIDATE_MULTIPLIER`
+- `MODEL_SPEC_REPAIR_MAX_ROUNDS`
+- `SESSION_STORE_BACKEND`
+- `SESSION_HISTORY_SIZE`、`CHAT_HISTORY_WINDOW`、`FALLBACK_HISTORY_WINDOW`、`PLANNER_HISTORY_WINDOW`
+- `SESSION_TTL_SEC`
+
+部署侧额外常用：
+
+- `PYTHON_BASE_IMAGE`
+- `APP_IMAGE_NAME`
+- `DOCKER_OLLAMA_HOME`
+- `DOCKER_ST_CACHE_DIR`
+- `FORCE_REBUILD_QDRANT`
 
 ---
 
 ## 文档索引
 
-以下文档记录了当前项目的设计、部署、操作和后续改造方向：
-
-- `项目架构说明.md`：项目总体架构、模块职责、运行链路说明
-- `详细设计文档.md`：更完整的技术设计、组件划分和运行机制说明
-- `部署说明.md`：Docker Compose 部署说明与环境配置说明
-- `操作手册.md`：推荐使用流程、首次启动、日常使用、重建索引与排错手册
-- `知识库.md`：知识库结构、容量、索引与检索机制说明
-- `任务路由.md`：任务路由器的职责、规则和判定逻辑说明
-- `上下文扩容.md`：上下文缓存与会话历史机制说明
-- `中间表示.md`：IR（中间表示）的基础说明
-- `开放模型中间表示草案.md`：适合本项目的开放域建模 IR 草案与 `ModelSpec` 映射建议
-- `改造.md`：从当前闭集模板系统演进到开放域建模生成器的思路总结
-- `汇报PPT提纲.md`：项目汇报用 PPT 提纲
+- `项目架构说明.md`：当前整体架构、分层职责与运行链路
+- `详细设计文档.md`：实现级设计细节
+- `部署说明.md`：部署方式、环境变量、启动与排错
+- `操作手册.md`：日常使用、构建、重建索引与排错
+- `知识库.md`：知识索引、文档组织与检索说明
+- `任务路由.md`：任务规划与门控逻辑
+- `中间表示.md`：IR 背景说明
+- `开放模型中间表示草案.md`：开放域 IR 演进思路
+- `强半开放域.md`：当前“强半开放域”定位说明
+- `强半开放域验收清单_当前差距_最短改造路径.md`：当前差距与最短改造路径
+- `阶段二_开放域IR_Planner_验收对照清单.md`：阶段性验收对照
 
 ---
 
-## 适用场景
+## 一句话总结
 
-本项目适合：
-
-- MATLAB 建模脚本自动生成原型验证
-- RAG + LLM + 代码生成的一体化实验
-- 面向特定领域知识库的对话式建模助手
-- 后续扩展为半开放域建模平台的基础底座
-
-不建议把当前版本直接视为：
-
-- 通用工业级开放域建模平台
-- 任意物理系统都能稳定正确生成的自动建模器
-
----
-
-## 快速提示
-
-- 如果 `python main.py build --with-qdrant` 报 `ConnectError`，通常说明 Qdrant 没启动
-- 如果 `python main.py api` 无法连接 LLM，先检查 `ollama` 是否已启动，以及 `.env` 中 `OLLAMA_BASE_URL` 是否正确
-- 如果某个领域总被错误映射到别的模板，优先检查知识库覆盖、检索候选和重排逻辑
-
+当前版本已经不是简单的“模板检索 + 文本生成”，而是一个带检索、澄清、结构化 IR、family 装配和多层校验的半开放域 MATLAB 建模系统。

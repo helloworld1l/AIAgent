@@ -1,0 +1,2 @@
+﻿DRY RUN
+C:\Program Files\CMake\bin\cmake.EXE --build D:\python\rag_crm_agent\generated_builds\20260320_030823_frontend_default_env_probe_cadb62bc\build --config Release --target frontend_default_env_probe

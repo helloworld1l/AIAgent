@@ -1,0 +1,4 @@
+EXPORTS
+rocket_launch_1d
+rocket_launch_1d_initialize
+rocket_launch_1d_terminate

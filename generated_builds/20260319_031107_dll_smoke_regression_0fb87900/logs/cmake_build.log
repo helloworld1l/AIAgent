@@ -1,0 +1,13 @@
+﻿适用于 .NET Framework MSBuild 版本 17.13.19+0d9f5a35a
+
+  1>Checking Build System
+  Building Custom Rule D:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/src/CMakeLists.txt
+  dll_smoke.c
+  dll_smoke_initialize.c
+  dll_smoke_terminate.c
+  正在生成代码...
+  wrapper.cpp
+  Auto build dll exports
+    正在创建库 D:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/build/Release/dll_smoke.lib 和对象 D:/python/rag_crm_agent/generated_builds/20260319_031107_dll_smoke_regression_0fb87900/build/Release/dll_smoke.exp
+  dll_smoke.vcxproj -> D:\python\rag_crm_agent\generated_builds\20260319_031107_dll_smoke_regression_0fb87900\build\Release\dll_smoke.dll
+

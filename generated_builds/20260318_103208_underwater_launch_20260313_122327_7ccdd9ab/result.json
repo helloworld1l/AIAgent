@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "artifact_paths": [],
+  "header_paths": [],
+  "logs": {
+    "matlab_command": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\matlab\\matlab_command.json",
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\logs\\cmake_configure.log",
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_103208_underwater_launch_20260313_122327_7ccdd9ab\\logs\\cmake_build.log"
+  },
+  "error_summary": "",
+  "updated_at": "2026-03-18T10:32:08Z",
+  "next_action_hint": "Disable LOCAL_BUILD_MCP_DRY_RUN to execute CMake build."
+}

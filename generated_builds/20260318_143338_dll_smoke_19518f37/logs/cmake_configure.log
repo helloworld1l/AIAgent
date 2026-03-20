@@ -1,0 +1,2 @@
+DRY RUN
+C:\Program Files\CMake\bin\cmake.EXE -S D:\python\rag_crm_agent\generated_builds\20260318_143338_dll_smoke_19518f37\src -B D:\python\rag_crm_agent\generated_builds\20260318_143338_dll_smoke_19518f37\build -G Visual Studio 17 2022 -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON

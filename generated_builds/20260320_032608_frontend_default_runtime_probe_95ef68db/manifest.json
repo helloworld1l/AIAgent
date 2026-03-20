@@ -1,0 +1,96 @@
+{
+  "job_id": "20260320_032608_frontend_default_runtime_probe_95ef68db",
+  "status": "running",
+  "project_name": "frontend_default_runtime_probe",
+  "artifact_name": "frontend_default_runtime_probe",
+  "profile": "windows_msvc_dll",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db\\artifacts",
+  "created_at": "2026-03-20T03:26:08Z",
+  "updated_at": "2026-03-20T03:26:08Z",
+  "steps": [
+    {
+      "step": "materialize_inputs",
+      "status": "completed",
+      "detail": {
+        "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db\\inputs\\rocket_launch_1d.m",
+        "request_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db\\inputs\\build_request.json"
+      },
+      "timestamp": "2026-03-20T03:26:08Z"
+    }
+  ],
+  "input_manifest": {
+    "entry_function": "rocket_launch_1d",
+    "entry_args_schema": [
+      {
+        "name": "mode",
+        "type": "double_scalar"
+      },
+      {
+        "name": "time",
+        "type": "double_scalar"
+      },
+      {
+        "name": "Ts",
+        "type": "double_scalar"
+      },
+      {
+        "name": "x",
+        "type": "double_vector",
+        "shape": [
+          3,
+          1
+        ]
+      },
+      {
+        "name": "u",
+        "type": "double_vector",
+        "shape": [
+          2,
+          1
+        ]
+      }
+    ],
+    "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\generated_model_dll_test_49f135a6\\rocket_launch_1d.m",
+    "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db\\inputs\\rocket_launch_1d.m"
+  },
+  "toolchain_snapshot": {
+    "matlab": {
+      "available": true,
+      "path": "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe"
+    },
+    "cmake": {
+      "available": true,
+      "path": "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+      "version": "cmake version 3.30.2"
+    },
+    "visual_studio": {
+      "available": true,
+      "installation_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+      "cl_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\cl.exe",
+      "link_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\link.exe",
+      "lib_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\lib.exe",
+      "msbuild_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe"
+    },
+    "gcc": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\gcc.EXE",
+      "version": "gcc.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "gxx": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\g++.EXE",
+      "version": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "ar": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\ar.EXE"
+    }
+  },
+  "artifacts": [],
+  "logs": {},
+  "error_summary": "",
+  "source_model": "D:\\python\\rag_crm_agent\\generated_builds\\20260320_032608_frontend_default_runtime_probe_95ef68db\\inputs\\rocket_launch_1d.m"
+}

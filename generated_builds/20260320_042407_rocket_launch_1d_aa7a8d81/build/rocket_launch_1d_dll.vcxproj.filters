@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rocket_launch_1d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rocket_launch_1d_initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rocket_launch_1d_terminate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rt_nonfinite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rtGetInf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\matlab\codegen\dll\rocket_launch_1d\rtGetNaN.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\src\wrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\python\rag_crm_agent\generated_builds\20260320_042407_rocket_launch_1d_aa7a8d81\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{35447F23-9668-33E9-8066-84D86E2FC289}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

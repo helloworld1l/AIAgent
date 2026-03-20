@@ -1,0 +1,19 @@
+{
+  "entry_function": "demo_entry",
+  "entry_args_schema": [
+    {
+      "name": "x0",
+      "type": "double_vector",
+      "shape": [
+        4,
+        1
+      ]
+    },
+    {
+      "name": "t_end",
+      "type": "double_scalar"
+    }
+  ],
+  "original_matlab_file": "D:\\python\\rag_crm_agent\\generated_models\\kalman_tracking_20260303_102117.m",
+  "copied_matlab_file": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093904_materialize_smoke_ddabfe52\\inputs\\kalman_tracking_20260303_102117.m"
+}

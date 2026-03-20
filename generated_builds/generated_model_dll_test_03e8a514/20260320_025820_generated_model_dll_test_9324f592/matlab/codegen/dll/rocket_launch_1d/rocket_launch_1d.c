@@ -1,0 +1,130 @@
+/*
+ * File: rocket_launch_1d.c
+ *
+ * MATLAB Coder version            : 24.1
+ * C/C++ source code generated on  : 2026-03-20 11:02:53
+ */
+
+/* Include Files */
+#include "rocket_launch_1d.h"
+#include "rt_nonfinite.h"
+#include "rt_nonfinite.h"
+#include <math.h>
+
+/* Function Definitions */
+/*
+ * Arguments    : double mode
+ *                double b_time
+ *                double Ts
+ *                const double x[3]
+ *                const double u[2]
+ *                double y[2]
+ *                double f[3]
+ * Return Type  : void
+ */
+void rocket_launch_1d(double mode, double b_time, double Ts, const double x[3],
+                      const double u[2], double y[2], double f[3])
+{
+  (void)b_time;
+  (void)Ts;
+  /*  初始化模式 */
+  /*  连续计算模式 */
+  /*  输出模式 */
+  /*  退出模式 */
+  switch ((int)mode) {
+  case 10102: {
+    double a;
+    double d;
+    double height;
+    double m_dot;
+    double mass;
+    double thrust_val;
+    double thrust_vertical_tmp;
+    height = fmax(x[0], 0.0);
+    mass = fmin(fmax(x[2], 320.0), 500.0);
+    thrust_val = fmax(u[0], 0.0);
+    a = 6371.0 / (height / 1000.0 + 6371.0);
+    if ((mass > 320.0) && (thrust_val > 0.0)) {
+      m_dot = 2.5;
+    } else {
+      m_dot = 0.0;
+      thrust_val = 0.0;
+    }
+    thrust_vertical_tmp =
+        sin(fmax(fmin(u[1], 90.0), 0.0) * 3.1415926535897931 / 180.0);
+    if (rtIsNaN(-x[1])) {
+      d = rtNaN;
+    } else if (-x[1] < 0.0) {
+      d = -1.0;
+    } else {
+      d = (-x[1] > 0.0);
+    }
+    f[1] = (thrust_val * thrust_vertical_tmp +
+            0.5 * (1.225 * exp(-height / 8500.0)) * 0.55 * 0.8 * (x[1] * x[1]) *
+                thrust_vertical_tmp * d) /
+               mass -
+           9.81 * (a * a);
+    y[0] = height;
+    y[1] = x[1];
+    f[0] = x[1] * thrust_vertical_tmp;
+    f[2] = -m_dot;
+  } break;
+  case 10103: {
+    double a;
+    double d;
+    double height;
+    double m_dot;
+    double mass;
+    double thrust_val;
+    double thrust_vertical_tmp;
+    height = fmax(x[0], 0.0);
+    mass = fmin(fmax(x[2], 320.0), 500.0);
+    thrust_val = fmax(u[0], 0.0);
+    a = 6371.0 / (height / 1000.0 + 6371.0);
+    if ((mass > 320.0) && (thrust_val > 0.0)) {
+      m_dot = 2.5;
+    } else {
+      m_dot = 0.0;
+      thrust_val = 0.0;
+    }
+    thrust_vertical_tmp =
+        sin(fmax(fmin(u[1], 90.0), 0.0) * 3.1415926535897931 / 180.0);
+    if (rtIsNaN(-x[1])) {
+      d = rtNaN;
+    } else if (-x[1] < 0.0) {
+      d = -1.0;
+    } else {
+      d = (-x[1] > 0.0);
+    }
+    f[1] = (thrust_val * thrust_vertical_tmp +
+            0.5 * (1.225 * exp(-height / 8500.0)) * 0.55 * 0.8 * (x[1] * x[1]) *
+                thrust_vertical_tmp * d) /
+               mass -
+           9.81 * (a * a);
+    y[0] = height;
+    y[1] = x[1];
+    f[0] = x[1] * thrust_vertical_tmp;
+    f[2] = -m_dot;
+  } break;
+  case 10111:
+    f[0] = 0.0;
+    f[1] = 0.0;
+    f[2] = 0.0;
+    y[0] = fmax(x[0], 0.0);
+    y[1] = x[1];
+    break;
+  case 10106:
+    y[0] = 0.0;
+    y[1] = 0.0;
+    f[0] = 0.0;
+    f[1] = 0.0;
+    f[2] = 0.0;
+    break;
+  }
+}
+
+/*
+ * File trailer for rocket_launch_1d.c
+ *
+ * [EOF]
+ */

@@ -1,0 +1,22 @@
+EXPORTS 
+	rtInf 	 DATA
+	rtInfF 	 DATA
+	rtMinusInf 	 DATA
+	rtMinusInfF 	 DATA
+	rtNaN 	 DATA
+	rtNaNF 	 DATA
+	?local_build_mcp_artifact_name@@YAPEBDXZ
+	?local_build_mcp_project_name@@YAPEBDXZ
+	rocket_launch_1d
+	rocket_launch_1d_initialize
+	rocket_launch_1d_terminate
+	rtGetInf
+	rtGetInfF
+	rtGetMinusInf
+	rtGetMinusInfF
+	rtGetNaN
+	rtGetNaNF
+	rtIsInf
+	rtIsInfF
+	rtIsNaN
+	rtIsNaNF

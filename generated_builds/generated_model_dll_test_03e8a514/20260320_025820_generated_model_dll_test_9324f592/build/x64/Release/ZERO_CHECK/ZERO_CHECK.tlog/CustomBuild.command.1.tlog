@@ -1,0 +1,10 @@
+^D:\PYTHON\RAG_CRM_AGENT\GENERATED_BUILDS\GENERATED_MODEL_DLL_TEST_03E8A514\20260320_025820_GENERATED_MODEL_DLL_TEST_9324F592\BUILD\CMAKEFILES\6F2BB2DF784C1DC4ECFE0880BC6D7185\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/python/rag_crm_agent/generated_builds/generated_model_dll_test_03e8a514/20260320_025820_generated_model_dll_test_9324f592/src -BD:/python/rag_crm_agent/generated_builds/generated_model_dll_test_03e8a514/20260320_025820_generated_model_dll_test_9324f592/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/python/rag_crm_agent/generated_builds/generated_model_dll_test_03e8a514/20260320_025820_generated_model_dll_test_9324f592/build/generated_model_dll_test.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

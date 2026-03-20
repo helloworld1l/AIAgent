@@ -187,17 +187,27 @@ class ModelSpecValidator:
                 if num is not None and _is_simple_number_str(val):
                     merged_params[key] = num
 
+        def ensure_numeric(keys: Tuple[str, ...], positive_only: bool = False) -> None:
+            for key in keys:
+                value = _to_float(merged_params.get(key))
+                if value is None:
+                    errors.append(f"参数 {key} 必须为数值")
+                    continue
+                merged_params[key] = value
+                if positive_only and value <= 0:
+                    errors.append(f"参数 {key} 必须大于 0")
+
         if model_id == "transfer_function_step":
             for key in ("numerator", "denominator"):
                 if key not in merged_params:
-                    errors.append(f"缺少参数: {key}")
+                    errors.append(f"缺少字段: {key}")
                 elif not _looks_like_vector(str(merged_params[key])):
-                    errors.append(f"{key} 格式应类似 [1 3 2]")
+                    errors.append(f"{key} 应类似 [1 3 2]")
 
         if model_id == "state_space_response":
             for key in ("A", "B", "C", "D"):
                 if key not in merged_params:
-                    errors.append(f"缺少参数: {key}")
+                    errors.append(f"缺少字段: {key}")
             if not errors:
                 dims_ok, dim_err = _validate_state_space_dims(
                     str(merged_params["A"]),
@@ -209,41 +219,82 @@ class ModelSpecValidator:
                     errors.append(dim_err)
 
         if model_id == "pid_simulink_loop":
-            for key in ("kp", "ki", "kd"):
-                value = _to_float(merged_params.get(key))
-                if value is None:
-                    errors.append(f"参数 {key} 需要数值")
-                else:
-                    merged_params[key] = value
+            ensure_numeric(("kp", "ki", "kd"))
             for key in ("numerator", "denominator"):
                 if key not in merged_params:
-                    errors.append(f"缺少参数: {key}")
+                    errors.append(f"缺少字段: {key}")
 
         if model_id == "rocket_launch_1d":
-            required_numeric = (
-                "mass0",
-                "fuel_mass",
-                "burn_rate",
-                "thrust",
-                "drag_coeff",
-                "area",
-                "air_density",
-                "g",
-                "dt",
+            ensure_numeric(
+                (
+                    "mass0",
+                    "fuel_mass",
+                    "burn_rate",
+                    "thrust",
+                    "drag_coeff",
+                    "area",
+                    "air_density",
+                    "g",
+                    "dt",
+                ),
+                positive_only=True,
             )
-            for key in required_numeric:
-                value = _to_float(merged_params.get(key))
-                if value is None:
-                    errors.append(f"参数 {key} 需要数值")
-                    continue
-                merged_params[key] = value
-                if value <= 0:
-                    errors.append(f"参数 {key} 必须大于0")
-
             fuel_mass = _to_float(merged_params.get("fuel_mass"))
             mass0 = _to_float(merged_params.get("mass0"))
             if fuel_mass is not None and mass0 is not None and fuel_mass >= mass0:
-                warnings.append("fuel_mass 不应大于或等于 mass0，已建议用户调整")
+                warnings.append("fuel_mass 不应大于等于 mass0，否则剩余结构质量会不合理")
+
+        if model_id == "missile_flight_2d":
+            ensure_numeric(
+                (
+                    "mass0",
+                    "thrust",
+                    "drag_coeff",
+                    "area",
+                    "air_density",
+                    "g",
+                    "launch_angle_deg",
+                    "init_speed",
+                    "burn_time",
+                    "dt",
+                ),
+                positive_only=True,
+            )
+            angle = _to_float(merged_params.get("launch_angle_deg"))
+            if angle is not None and not (0 < angle < 90):
+                errors.append("launch_angle_deg 必须在 0 到 90 度之间")
+
+        if model_id == "satellite_orbit_2body":
+            ensure_numeric(("mu", "earth_radius", "altitude0", "v0", "dt"), positive_only=True)
+
+        if model_id == "torpedo_underwater_launch_1d":
+            ensure_numeric(
+                (
+                    "mass",
+                    "thrust",
+                    "drag_coeff",
+                    "area",
+                    "water_density",
+                    "displaced_volume",
+                    "g",
+                    "dt",
+                ),
+                positive_only=True,
+            )
+
+        if model_id == "radar_target_tracking_2d":
+            ensure_numeric(("x0", "y0", "target_speed_x", "target_speed_y"))
+            ensure_numeric(("dt", "process_noise", "measurement_noise"), positive_only=True)
+            steps = _to_float(merged_params.get("steps"))
+            if steps is None:
+                errors.append("缺少 steps 参数")
+            else:
+                merged_params["steps"] = int(steps)
+                if int(steps) <= 1:
+                    errors.append("steps 必须大于 1")
+
+        if model_id == "lanchester_battle_attrition":
+            ensure_numeric(("red0", "blue0", "alpha", "beta", "dt"), positive_only=True)
 
         normalized.setdefault("assumptions", [])
         normalized.setdefault("required_outputs", ["plot"])

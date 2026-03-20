@@ -1,0 +1,96 @@
+{
+  "job_id": "20260318_143338_dll_smoke_19518f37",
+  "status": "created",
+  "project_name": "dll_smoke",
+  "artifact_name": "dll_smoke",
+  "profile": "windows_msvc_dll",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\artifacts",
+  "created_at": "2026-03-18T14:33:38Z",
+  "updated_at": "2026-03-18T14:33:38Z",
+  "steps": [
+    {
+      "step": "cmake_configure",
+      "status": "planned",
+      "detail": {
+        "generator": "Visual Studio 17 2022",
+        "platform": "x64",
+        "build_type": "Release",
+        "dry_run": true,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "-S",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\src",
+          "-B",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\build",
+          "-G",
+          "Visual Studio 17 2022",
+          "-A",
+          "x64",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DBUILD_SHARED_LIBS=ON"
+        ],
+        "cmakelists_path": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\src\\CMakeLists.txt"
+      },
+      "timestamp": "2026-03-18T14:33:38Z"
+    },
+    {
+      "step": "cmake_build_dynamic",
+      "status": "planned",
+      "detail": {
+        "target": "dll_smoke",
+        "config": "Release",
+        "dry_run": true,
+        "command": [
+          "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+          "--build",
+          "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\build",
+          "--config",
+          "Release",
+          "--target",
+          "dll_smoke"
+        ]
+      },
+      "timestamp": "2026-03-18T14:33:38Z"
+    }
+  ],
+  "input_manifest": {},
+  "toolchain_snapshot": {
+    "matlab": {
+      "available": true,
+      "path": "D:\\Program Files\\MATLAB\\R2024a\\bin\\matlab.exe"
+    },
+    "cmake": {
+      "available": true,
+      "path": "C:\\Program Files\\CMake\\bin\\cmake.EXE",
+      "version": "cmake version 3.30.2"
+    },
+    "visual_studio": {
+      "available": true,
+      "installation_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community",
+      "cl_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\cl.exe",
+      "link_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\link.exe",
+      "lib_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.43.34808\\bin\\Hostx64\\x64\\lib.exe",
+      "msbuild_path": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe"
+    },
+    "gcc": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\gcc.EXE",
+      "version": "gcc.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "gxx": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\g++.EXE",
+      "version": "g++.EXE (x86_64-posix-seh-rev0, Built by MinGW-Builds project) 15.1.0"
+    },
+    "ar": {
+      "available": true,
+      "path": "C:\\mingw64_msvc\\mingw64\\bin\\ar.EXE"
+    }
+  },
+  "artifacts": [],
+  "logs": {},
+  "error_summary": ""
+}

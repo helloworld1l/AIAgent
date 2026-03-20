@@ -1,0 +1,12 @@
+{
+  "status": "running",
+  "artifact_paths": [],
+  "header_paths": [],
+  "logs": {
+    "configure": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\logs\\cmake_configure.log",
+    "build": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_143338_dll_smoke_19518f37\\logs\\cmake_build.log"
+  },
+  "error_summary": "",
+  "updated_at": "2026-03-18T14:33:38Z",
+  "next_action_hint": "Disable LOCAL_BUILD_MCP_DRY_RUN to execute CMake build."
+}

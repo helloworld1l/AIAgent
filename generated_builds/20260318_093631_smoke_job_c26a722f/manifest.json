@@ -1,0 +1,18 @@
+{
+  "job_id": "20260318_093631_smoke_job_c26a722f",
+  "status": "created",
+  "project_name": "smoke_job",
+  "artifact_name": "smoke_lib",
+  "profile": "windows_msvc_static",
+  "build_type": "Release",
+  "workspace": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093631_smoke_job_c26a722f",
+  "artifacts_dir": "D:\\python\\rag_crm_agent\\generated_builds\\20260318_093631_smoke_job_c26a722f\\artifacts",
+  "created_at": "2026-03-18T09:36:31Z",
+  "updated_at": "2026-03-18T09:36:31Z",
+  "steps": [],
+  "input_manifest": {},
+  "toolchain_snapshot": {},
+  "artifacts": [],
+  "logs": {},
+  "error_summary": ""
+}
