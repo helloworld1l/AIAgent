@@ -21,6 +21,7 @@ class RAGTaskPlanner:
         retrieved_docs: List[Dict[str, Any]],
         recent_history: List[Dict[str, str]],
     ) -> Dict[str, Any]:
+        wants_web_research = self._wants_web_research(query)
         rule_plan = self._rule_based_plan(query, retrieved_docs)
         llm_plan, llm_error = self._llm_plan(query, retrieved_docs, recent_history)
 
@@ -38,12 +39,32 @@ class RAGTaskPlanner:
                     "rule_fallback": rule_plan,
                     "wants_dynamic_library": bool(llm_plan.get("wants_dynamic_library", False))
                     or task_type == "matlab_generation_dll",
+                    "wants_web_research": wants_web_research,
                 }
 
         merged = dict(rule_plan)
         merged["source"] = "rule"
         merged["llm_error"] = llm_error
+        merged["wants_web_research"] = wants_web_research
         return merged
+
+    def _wants_web_research(self, query: str) -> bool:
+        lowered = str(query or "").lower()
+        explicit_markers = [
+            "联网",
+            "网上",
+            "在线",
+            "网页",
+            "从网上",
+            "外部资料",
+            "搜索",
+            "搜一下",
+            "web",
+            "internet",
+        ]
+        if any(marker in lowered for marker in explicit_markers):
+            return True
+        return bool(re.search(r"查(?:一下)?资料", lowered))
 
     def _rule_based_plan(self, query: str, retrieved_docs: List[Dict[str, Any]]) -> Dict[str, Any]:
         lowered = query.lower()

@@ -9,6 +9,7 @@ Features:
 
 from __future__ import annotations
 
+import copy
 import json
 import logging
 from typing import Any, Dict, List, Tuple
@@ -24,13 +25,19 @@ from agents.dll_build_support import (
 )
 from agents.session_store import build_session_store
 from agents.structured_generation_ir import StructuredGenerationIR
-from agents.tools import DynamicLibraryBuildTool, MatlabFileGeneratorTool, list_supported_models
+from agents.tools import (
+    DynamicLibraryBuildTool,
+    MatlabFileGeneratorTool,
+    WebResearchTool,
+    list_supported_models,
+)
 from agents.matlab_codegen import MatlabCodeGenerator
 from agents.model_spec_builder import ModelSpecBuilder
 from agents.model_spec_validator import ModelSpecValidator
 from agents.task_planner import RAGTaskPlanner
 from config.settings import settings
 from knowledge_base.rag_retriever import MatlabRAGRetriever
+from knowledge_base.web_evidence_retriever import WebEvidenceRetriever
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -78,6 +85,8 @@ class CRMAgent:
         self.codegen = MatlabCodeGenerator()
         self.generation_tool = MatlabFileGeneratorTool()
         self.dynamic_library_build_tool = DynamicLibraryBuildTool()
+        self.web_research_tool = WebResearchTool()
+        self.web_evidence_retriever = WebEvidenceRetriever()
         self.history_size = max(1, int(history_size or settings.SESSION_HISTORY_SIZE))
         self.chat_history_window = max(1, int(settings.CHAT_HISTORY_WINDOW))
         self.fallback_history_window = max(1, int(settings.FALLBACK_HISTORY_WINDOW))
@@ -335,19 +344,28 @@ class CRMAgent:
         question: str,
         user_id: str = "default",
         session_id: str = "default",
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
-        return self.chat(question, user_id=user_id, session_id=session_id)
+        return self.chat(
+            question,
+            user_id=user_id,
+            session_id=session_id,
+            request_web_research=request_web_research,
+        )
 
     def chat(
         self,
         message: str,
         user_id: str = "default",
         session_id: str = "default",
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
         del user_id
         text = (message or "").strip()
         if not text:
             return self._error("请输入消息。")
+
+        explicit_web_research = bool(request_web_research)
 
         normalized = text.lower()
         if normalized in {"/new", "/reset", "重置会话", "清空会话"}:
@@ -377,6 +395,14 @@ class CRMAgent:
             self._extract_pending_generation_ir_request_dynamic_library(
                 pending_generation_ir_state
             )
+        )
+        pending_generation_ir_request_web_research = (
+            self._extract_pending_generation_ir_request_web_research(
+                pending_generation_ir_state
+            )
+        )
+        pending_generation_ir_request_web_research = bool(
+            pending_generation_ir_request_web_research or explicit_web_research
         )
         if pending_generation_ir:
             if self.structured_ir.wants_cancel(text):
@@ -408,6 +434,7 @@ class CRMAgent:
                     session_id,
                     pending_generation_ir,
                     request_dynamic_library=pending_generation_ir_request_dynamic_library,
+                    request_web_research=pending_generation_ir_request_web_research,
                 )
             if self._is_generation_intent(text):
                 self._clear_pending_generation_ir(session_id)
@@ -440,7 +467,12 @@ class CRMAgent:
                     },
                 }
             if self._looks_like_generation_match_reply(text, pending_generation_match):
-                return self._resume_pending_generation_match(text, session_id, pending_generation_match)
+                return self._resume_pending_generation_match(
+                    text,
+                    session_id,
+                    pending_generation_match,
+                    request_web_research=explicit_web_research,
+                )
             if self._is_generation_intent(text):
                 self._clear_pending_generation_match(session_id)
                 self._clear_pending_generation_ir(session_id)
@@ -460,10 +492,13 @@ class CRMAgent:
             retrieved_docs=retrieved_docs,
             recent_history=recent_history,
         )
+        planner = dict(planner)
         task_type = planner.get("task_type", "chat")
         confidence = float(planner.get("confidence", 0.0))
         has_action = self._has_generation_action(text)
         request_dynamic_library = bool(planner.get("wants_dynamic_library", False)) or mentions_dynamic_library(text)
+        request_web_research = bool(planner.get("wants_web_research", False) or explicit_web_research)
+        planner["wants_web_research"] = request_web_research
 
         if task_type in {"matlab_generation", "matlab_generation_dll"} and confidence >= 0.45 and (has_action or confidence >= 0.78):
             match_assessment = self.retriever.assess_generation_match(text, retrieved_docs)
@@ -475,6 +510,7 @@ class CRMAgent:
                     planner=planner,
                     match_assessment=match_assessment,
                     request_dynamic_library=request_dynamic_library,
+                    request_web_research=request_web_research,
                 )
 
             generation_ir = self.structured_ir.begin_collection(text, match_assessment)
@@ -489,6 +525,7 @@ class CRMAgent:
                         generation_ir=generation_ir,
                         clarify_stage=CLARIFY_STAGE_SLOT,
                         request_dynamic_library=request_dynamic_library,
+                        request_web_research=request_web_research,
                     )
                 return self._handle_generation_intent(
                     text,
@@ -499,6 +536,7 @@ class CRMAgent:
                     prefilled_spec=self.structured_ir.to_model_spec(generation_ir),
                     generation_ir=generation_ir,
                     request_dynamic_library=request_dynamic_library,
+                    request_web_research=request_web_research,
                 )
 
             return self._handle_generation_intent(
@@ -508,12 +546,25 @@ class CRMAgent:
                 planner=planner,
                 match_assessment=match_assessment,
                 request_dynamic_library=request_dynamic_library,
+                request_web_research=request_web_research,
+            )
+
+        research_result: Dict[str, Any] = {}
+        persisted_web_docs: List[Dict[str, Any]] = []
+        effective_retrieved_docs = list(retrieved_docs)
+        if request_web_research:
+            research_result = self._perform_web_research(text=text, session_id=session_id)
+            persisted_web_docs = self._retrieve_persisted_web_evidence(text=text, session_id=session_id)
+            effective_retrieved_docs = self._merge_runtime_docs(
+                research_result.get("docs", []),
+                persisted_web_docs,
+                retrieved_docs,
             )
 
         assistant_reply, used_fallback, fallback_reason = self._generate_chat_reply(
             text,
             session_id=session_id,
-            retrieved_docs=retrieved_docs,
+            retrieved_docs=effective_retrieved_docs,
             planner=planner,
         )
         self._append_history(session_id, "user", text)
@@ -529,7 +580,9 @@ class CRMAgent:
                 "fallback_reason": fallback_reason,
                 "session_store_backend": self.session_store.backend_name,
                 "planner": planner,
-                "retrieved_knowledge": retrieved_docs[:5],
+                "request_web_research": bool(request_web_research),
+                **self._build_web_research_data(research_result, persisted_web_docs),
+                "retrieved_knowledge": effective_retrieved_docs[:5],
             },
         }
 
@@ -543,6 +596,7 @@ class CRMAgent:
         generation_ir: Dict[str, Any] | None = None,
         clarify_stage: str = "",
         request_dynamic_library: bool = False,
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
         stage = self._resolve_clarify_stage(
             match_assessment=match_assessment,
@@ -558,6 +612,7 @@ class CRMAgent:
                 session_id,
                 staged_generation_ir,
                 request_dynamic_library=request_dynamic_library,
+                request_web_research=request_web_research,
             )
             self._clear_pending_generation_match(session_id)
             response_generation_ir = staged_generation_ir
@@ -575,6 +630,7 @@ class CRMAgent:
                         "match_assessment": match_assessment,
                         "clarify_stage": stage,
                         "request_dynamic_library": bool(request_dynamic_library),
+                        "request_web_research": bool(request_web_research),
                     },
                 )
         trace = self._build_generation_trace(
@@ -599,6 +655,8 @@ class CRMAgent:
                 "generation_match": match_assessment,
                 "generation_ir": response_generation_ir,
                 "request_dynamic_library": bool(request_dynamic_library),
+                "request_web_research": bool(request_web_research),
+                **self._build_web_research_data({}, []),
                 "generation_trace": trace,
                 "retrieved_knowledge": retrieved_docs[:5],
             },
@@ -614,20 +672,43 @@ class CRMAgent:
         prefilled_spec: Dict[str, Any] | None = None,
         generation_ir: Dict[str, Any] | None = None,
         request_dynamic_library: bool = False,
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
-        if prefilled_spec is not None:
+        research_result: Dict[str, Any] = {}
+        persisted_web_docs: List[Dict[str, Any]] = []
+        effective_retrieved_docs = list(retrieved_docs)
+        if request_web_research:
+            research_result = self._perform_web_research(text=text, session_id=session_id)
+            persisted_web_docs = self._retrieve_persisted_web_evidence(text=text, session_id=session_id)
+            effective_retrieved_docs = self._merge_runtime_docs(
+                research_result.get("docs", []),
+                persisted_web_docs,
+                retrieved_docs,
+            )
+
+        if prefilled_spec is not None and request_web_research:
+            researched_spec_result = self.spec_builder.build_spec(text, effective_retrieved_docs)
+            spec_result = {
+                "spec": self._merge_generation_specs(
+                    base_spec=researched_spec_result.get("spec", {}),
+                    override_spec=prefilled_spec,
+                ),
+                "used_llm": researched_spec_result.get("used_llm", False),
+                "llm_error": researched_spec_result.get("llm_error", ""),
+            }
+        elif prefilled_spec is not None:
             spec_result = {
                 "spec": prefilled_spec,
                 "used_llm": False,
                 "llm_error": "",
             }
         else:
-            spec_result = self.spec_builder.build_spec(text, retrieved_docs)
+            spec_result = self.spec_builder.build_spec(text, effective_retrieved_docs)
         raw_spec = spec_result.get("spec", {})
         repair_result = self.spec_validator.validate_with_auto_repair(
             initial_spec=raw_spec,
             query=text,
-            retrieved_docs=retrieved_docs,
+            retrieved_docs=effective_retrieved_docs,
             repair_fn=self.spec_builder.repair_spec_with_llm,
             max_repair_rounds=int(getattr(settings, "MODEL_SPEC_REPAIR_MAX_ROUNDS", 2)),
         )
@@ -641,11 +722,11 @@ class CRMAgent:
         if not repair_result.get("valid"):
             normalized_spec = raw_spec
             if prefilled_spec is None:
-                heuristic_spec = self.spec_builder.build_heuristic_spec(text, retrieved_docs)
+                heuristic_spec = self.spec_builder.build_heuristic_spec(text, effective_retrieved_docs)
                 heuristic_repair_result = self.spec_validator.validate_with_auto_repair(
                     initial_spec=heuristic_spec,
                     query=text,
-                    retrieved_docs=retrieved_docs,
+                    retrieved_docs=effective_retrieved_docs,
                     repair_fn=self.spec_builder.repair_spec_with_llm,
                     max_repair_rounds=1,
                 )
@@ -690,12 +771,14 @@ class CRMAgent:
                         "data": {
                             "query_type": "matlab_generation_validation_failed",
                             "session_id": session_id,
+                            "request_web_research": bool(request_web_research),
+                            **self._build_web_research_data(research_result, persisted_web_docs),
                             "spec": raw_spec,
                             "validation": validation,
                             "schema_validation": schema_validation,
                             "repair_trace": repair_trace,
                             "heuristic_validation": heuristic_validation,
-                            "retrieved_knowledge": retrieved_docs[:5],
+                            "retrieved_knowledge": effective_retrieved_docs[:8],
                             "generation_match": match_assessment or {},
                             "generation_ir": generation_ir or {},
                             "generation_trace": generation_trace,
@@ -725,12 +808,14 @@ class CRMAgent:
                     "data": {
                         "query_type": "matlab_generation_validation_failed",
                         "session_id": session_id,
+                        "request_web_research": bool(request_web_research),
+                        **self._build_web_research_data(research_result, persisted_web_docs),
                         "spec": raw_spec,
                         "validation": validation,
                         "schema_validation": schema_validation,
                         "repair_trace": repair_trace,
                         "heuristic_validation": heuristic_validation,
-                        "retrieved_knowledge": retrieved_docs[:5],
+                        "retrieved_knowledge": effective_retrieved_docs[:8],
                         "generation_match": match_assessment or {},
                         "generation_ir": generation_ir or {},
                         "generation_trace": generation_trace,
@@ -741,7 +826,7 @@ class CRMAgent:
 
         generated = self.codegen.generate_from_spec(
             spec=normalized_spec,
-            evidence_docs=retrieved_docs,
+            evidence_docs=effective_retrieved_docs,
             output_dir="generated_models",
         )
         used_legacy_fallback = False
@@ -770,10 +855,12 @@ class CRMAgent:
                         "query_type": "matlab_generation_failed",
                         "session_id": session_id,
                         "session_store_backend": self.session_store.backend_name,
+                        "request_web_research": bool(request_web_research),
+                        **self._build_web_research_data(research_result, persisted_web_docs),
                         "generation_match": match_assessment or {},
                         "generation_ir": generation_ir or {},
                         "generation_trace": generation_trace,
-                        "retrieved_knowledge": retrieved_docs[:5],
+                        "retrieved_knowledge": effective_retrieved_docs[:8],
                     },
                 }
 
@@ -815,6 +902,14 @@ class CRMAgent:
         elif smoke_status == "skipped":
             smoke_message = smoke_validation.get("message", "MATLAB/Octave \u8bed\u6cd5\u70df\u6d4b\u672a\u6267\u884c")
             response += f"\n\u6ce8\u610f\uff1a{smoke_message}\u3002"
+        if request_web_research:
+            research_status = str(research_result.get("status", "skipped")).strip() or "skipped"
+            if research_status == "success":
+                response += "\n已完成联网检索并落盘到本地研究目录。"
+            elif research_status == "disabled":
+                response += "\n注意：联网检索已请求，但当前环境未启用。"
+            elif research_status == "failed":
+                response += "\n注意：联网检索失败，当前结果主要基于本地知识库。"
         if generation_ir:
             response += "\n\u6ce8\u610f\uff1a\u672c\u6b21\u751f\u6210\u524d\u5df2\u5b8c\u6210\u7ed3\u6784\u5316\u69fd\u4f4d\u6536\u96c6\u3002"
         if used_legacy_fallback:
@@ -858,11 +953,13 @@ class CRMAgent:
                 "generated_file": generated.get("file_name"),
                 "generated_file_path": generated.get("file_path"),
                 "request_dynamic_library": bool(request_dynamic_library),
+                "request_web_research": bool(request_web_research),
                 "dll_build_status": dll_result.get("status", "") if request_dynamic_library else "",
                 "dll_artifact_paths": dll_result.get("artifact_paths", []) if request_dynamic_library else [],
                 "dll_entry_function": dll_result.get("entry_function", "") if request_dynamic_library else "",
                 "dll_entry_args_schema": dll_result.get("entry_args_schema", []) if request_dynamic_library else [],
                 "dll_build": dll_result.get("build_result", {}) if request_dynamic_library else {},
+                **self._build_web_research_data(research_result, persisted_web_docs),
                 "script": generated.get("script"),
                 "static_validation": generated.get("static_validation"),
                 "smoke_validation": generated.get("smoke_validation"),
@@ -874,7 +971,7 @@ class CRMAgent:
                 "validation": validation,
                 "schema_validation": schema_validation,
                 "repair_trace": repair_trace,
-                "retrieved_knowledge": retrieved_docs[:5],
+                "retrieved_knowledge": effective_retrieved_docs[:8],
                 "used_legacy_fallback": used_legacy_fallback,
                 "auto_repaired_by_llm": auto_repaired_by_llm,
                 "auto_recovered_by_heuristic": auto_recovered_by_heuristic,
@@ -890,9 +987,13 @@ class CRMAgent:
         text: str,
         session_id: str,
         pending_generation_match: Dict[str, Any],
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
         normalized_pending_match = self._normalize_pending_generation_match(pending_generation_match)
         request_dynamic_library = bool(normalized_pending_match.get("request_dynamic_library", False))
+        request_web_research = bool(
+            request_web_research or normalized_pending_match.get("request_web_research", False)
+        )
         original_query = str(normalized_pending_match.get("original_query", "")).strip()
         clarified_reply = self._materialize_match_reply(text, normalized_pending_match)
         combined_query = f"{original_query} {clarified_reply}".strip() if original_query else clarified_reply
@@ -903,6 +1004,7 @@ class CRMAgent:
             "confidence": 1.0,
             "source": "generation_match_clarify_resume",
             "wants_dynamic_library": request_dynamic_library,
+            "wants_web_research": request_web_research,
         }
         match_assessment = self.retriever.assess_generation_match(combined_query, retrieved_docs)
         if not match_assessment.get("should_generate", True):
@@ -914,6 +1016,7 @@ class CRMAgent:
                 match_assessment=match_assessment,
                 clarify_stage=self._resolve_clarify_stage(match_assessment=match_assessment),
                 request_dynamic_library=request_dynamic_library,
+                request_web_research=request_web_research,
             )
 
         generation_ir = self.structured_ir.begin_collection(combined_query, match_assessment)
@@ -927,6 +1030,7 @@ class CRMAgent:
                 generation_ir=generation_ir,
                 clarify_stage=CLARIFY_STAGE_SLOT,
                 request_dynamic_library=request_dynamic_library,
+                request_web_research=request_web_research,
             )
         return self._handle_generation_intent(
             text=combined_query,
@@ -937,6 +1041,7 @@ class CRMAgent:
             prefilled_spec=self.structured_ir.to_model_spec(generation_ir) if generation_ir else None,
             generation_ir=generation_ir,
             request_dynamic_library=request_dynamic_library,
+            request_web_research=request_web_research,
         )
 
     def _resume_pending_generation_ir(
@@ -945,11 +1050,16 @@ class CRMAgent:
         session_id: str,
         pending_generation_ir: Dict[str, Any],
         request_dynamic_library: bool = False,
+        request_web_research: bool = False,
     ) -> Dict[str, Any]:
         normalized_pending_ir = self._normalize_pending_generation_ir(pending_generation_ir)
         request_dynamic_library = bool(
             request_dynamic_library
             or self._extract_pending_generation_ir_request_dynamic_library(pending_generation_ir)
+        )
+        request_web_research = bool(
+            request_web_research
+            or self._extract_pending_generation_ir_request_web_research(pending_generation_ir)
         )
         updated_ir = self.structured_ir.continue_collection(normalized_pending_ir, text)
         combined_query = f"{updated_ir.get('task_goal', '')} {text}".strip()
@@ -959,6 +1069,7 @@ class CRMAgent:
             "confidence": 1.0,
             "source": "structured_generation_ir_resume",
             "wants_dynamic_library": request_dynamic_library,
+            "wants_web_research": request_web_research,
         }
         match_assessment = self.retriever.assess_generation_match(
             str(updated_ir.get("task_goal", "")),
@@ -974,6 +1085,7 @@ class CRMAgent:
                 generation_ir=updated_ir,
                 clarify_stage=CLARIFY_STAGE_SLOT,
                 request_dynamic_library=request_dynamic_library,
+                request_web_research=request_web_research,
             )
         return self._handle_generation_intent(
             text=combined_query,
@@ -984,6 +1096,7 @@ class CRMAgent:
             prefilled_spec=self.structured_ir.to_model_spec(updated_ir),
             generation_ir=updated_ir,
             request_dynamic_library=request_dynamic_library,
+            request_web_research=request_web_research,
         )
 
     def _looks_like_generation_match_reply(self, text: str, pending_generation_match: Dict[str, Any]) -> bool:
@@ -1030,6 +1143,7 @@ class CRMAgent:
         session_id: str,
         generation_ir: Dict[str, Any],
         request_dynamic_library: bool = False,
+        request_web_research: bool = False,
     ) -> None:
         self.session_store.set_state(
             session_id,
@@ -1037,11 +1151,125 @@ class CRMAgent:
             {
                 "generation_ir": dict(generation_ir),
                 "request_dynamic_library": bool(request_dynamic_library),
+                "request_web_research": bool(request_web_research),
             },
         )
 
     def _clear_pending_generation_ir(self, session_id: str) -> None:
         self.session_store.clear_state(session_id, PENDING_GENERATION_IR_STATE)
+
+    def _perform_web_research(self, text: str, session_id: str) -> Dict[str, Any]:
+        try:
+            result = json.loads(
+                self.web_research_tool._run(
+                    query=text,
+                    session_id=session_id,
+                    max_results=int(getattr(settings, "WEB_SEARCH_MAX_RESULTS", 5)),
+                    max_fetch=int(getattr(settings, "WEB_FETCH_MAX_SOURCES", 3)),
+                )
+            )
+        except Exception as exc:
+            logger.warning("Web research tool invocation failed: %s", exc)
+            return {
+                "status": "failed",
+                "message": str(exc),
+                "query": text,
+                "bundle_dir": "",
+                "docs": [],
+                "sources": [],
+            }
+        if not isinstance(result, dict):
+            return {
+                "status": "failed",
+                "message": "web research tool returned non-dict payload",
+                "query": text,
+                "bundle_dir": "",
+                "docs": [],
+                "sources": [],
+            }
+        return result
+
+    def _retrieve_persisted_web_evidence(self, text: str, session_id: str) -> List[Dict[str, Any]]:
+        retriever = getattr(self, "web_evidence_retriever", None)
+        if retriever is None:
+            return []
+        try:
+            docs = retriever.retrieve(query=text, session_id=session_id)
+        except Exception as exc:
+            logger.warning("Persisted web evidence retrieval failed: %s", exc)
+            return []
+        if not isinstance(docs, list):
+            return []
+        return [item for item in docs if isinstance(item, dict)]
+
+    def _build_web_research_data(
+        self,
+        research_result: Dict[str, Any] | None,
+        persisted_web_docs: List[Dict[str, Any]] | None,
+    ) -> Dict[str, Any]:
+        result = research_result if isinstance(research_result, dict) else {}
+        qdrant_index = result.get("qdrant_index", {}) if isinstance(result.get("qdrant_index", {}), dict) else {}
+        return {
+            "web_research_status": str(result.get("status", "")),
+            "web_research_bundle_dir": str(result.get("bundle_dir", "")),
+            "web_research_summary_path": str(result.get("summary_path", "")),
+            "web_research_brief_path": str(result.get("brief_path", "")),
+            "web_research_sources": list(result.get("sources", [])) if isinstance(result.get("sources", []), list) else [],
+            "persisted_web_evidence_count": len([item for item in (persisted_web_docs or []) if isinstance(item, dict)]),
+            "web_research_qdrant_index": qdrant_index,
+        }
+
+    def _merge_web_research_docs(
+        self,
+        base_docs: List[Dict[str, Any]],
+        research_result: Dict[str, Any],
+    ) -> List[Dict[str, Any]]:
+        research_docs = research_result.get("docs", []) if isinstance(research_result, dict) else []
+        return self._merge_runtime_docs(research_docs, base_docs)
+
+    def _merge_runtime_docs(self, *doc_groups: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        merged: List[Dict[str, Any]] = []
+        seen_keys: set[str] = set()
+        for group in doc_groups:
+            if not isinstance(group, list):
+                continue
+            for item in group:
+                if not isinstance(item, dict):
+                    continue
+                payload = item.get("payload", {}) if isinstance(item.get("payload", {}), dict) else {}
+                url = str(payload.get("url", "") or item.get("url", "")).strip()
+                item_id = str(item.get("id", "")).strip()
+                dedupe_key = f"url:{url}" if url else (f"id:{item_id}" if item_id else "")
+                if dedupe_key and dedupe_key in seen_keys:
+                    continue
+                if dedupe_key:
+                    seen_keys.add(dedupe_key)
+                merged.append(item)
+        return merged
+
+    def _merge_generation_specs(
+        self,
+        base_spec: Dict[str, Any],
+        override_spec: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        merged = copy.deepcopy(base_spec if isinstance(base_spec, dict) else {})
+        self._deep_merge_non_empty(merged, override_spec if isinstance(override_spec, dict) else {})
+        return merged
+
+    def _deep_merge_non_empty(self, target: Dict[str, Any], incoming: Dict[str, Any]) -> None:
+        for key, value in incoming.items():
+            if isinstance(value, dict):
+                existing = target.get(key)
+                if isinstance(existing, dict):
+                    self._deep_merge_non_empty(existing, value)
+                elif value:
+                    target[key] = copy.deepcopy(value)
+                continue
+            if value in (None, ""):
+                continue
+            if isinstance(value, list) and not value:
+                continue
+            target[key] = copy.deepcopy(value)
 
     def _normalize_pending_generation_match(
         self,
@@ -1066,6 +1294,7 @@ class CRMAgent:
             normalized = dict(pending_generation_ir)
         normalized.pop("generation_ir", None)
         normalized.pop("request_dynamic_library", None)
+        normalized.pop("request_web_research", None)
         normalized["clarify_stage"] = CLARIFY_STAGE_SLOT
         return normalized
 
@@ -1076,6 +1305,14 @@ class CRMAgent:
         if not pending_generation_ir:
             return False
         return bool(pending_generation_ir.get("request_dynamic_library", False))
+
+    def _extract_pending_generation_ir_request_web_research(
+        self,
+        pending_generation_ir: Dict[str, Any] | None,
+    ) -> bool:
+        if not pending_generation_ir:
+            return False
+        return bool(pending_generation_ir.get("request_web_research", False))
 
     def _resolve_clarify_stage(
         self,
@@ -1376,7 +1613,7 @@ class CRMAgent:
             model_id = payload.get("model_id", "")
             score = item.get("score", 0)
             txt = item.get("text", "").replace("\n", " ")
-            lines.append(f"- model={model_id}, score={score}: {txt[:180]}")
+            lines.append(f"- model={model_id}, score={score}: {txt[:800]}")
         return "\n".join(lines)
 
     def _has_generation_action(self, text: str) -> bool:

@@ -22,14 +22,24 @@ def run_command(
     cwd: str | None = None,
     env: Mapping[str, str] | None = None,
 ) -> CapturedProcess:
-    completed = subprocess.run(
-        list(command),
-        capture_output=True,
-        text=False,
-        timeout=timeout,
-        cwd=cwd,
-        env=dict(env) if env is not None else None,
-    )
+    try:
+        completed = subprocess.run(
+            list(command),
+            capture_output=True,
+            text=False,
+            timeout=timeout,
+            cwd=cwd,
+            env=dict(env) if env is not None else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        stdout = _decode_output(exc.stdout)
+        stderr = _decode_output(exc.stderr)
+        timeout_message = f"Command '{list(command)}' timed out after {timeout} seconds"
+        if stderr:
+            stderr = stderr + "\n" + timeout_message
+        else:
+            stderr = timeout_message
+        return CapturedProcess(returncode=124, stdout=stdout, stderr=stderr)
     return CapturedProcess(
         returncode=completed.returncode,
         stdout=_decode_output(completed.stdout),

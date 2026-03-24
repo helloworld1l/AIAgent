@@ -27,12 +27,14 @@ class ChatRequest(BaseModel):
     message: str
     user_id: str = "default"
     session_id: str = "default"
+    request_web_research: bool = False
 
 
 class QueryRequest(BaseModel):
     question: str
     user_id: str = "default"
     session_id: str = "default"
+    request_web_research: bool = False
 
 
 class ApiResponse(BaseModel):
@@ -115,6 +117,7 @@ async def chat(request: ChatRequest):
         message=request.message,
         user_id=request.user_id,
         session_id=request.session_id,
+        request_web_research=request.request_web_research,
     )
     return ApiResponse(success=True, message=result.get("message", ""), data=result.get("data", {}))
 
@@ -129,6 +132,7 @@ async def query(request: QueryRequest):
         question=request.question,
         user_id=request.user_id,
         session_id=request.session_id,
+        request_web_research=request.request_web_research,
     )
     return ApiResponse(success=True, message=result.get("message", ""), data=result.get("data", {}))
 

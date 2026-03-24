@@ -7,11 +7,89 @@ from __future__ import annotations
 import os
 import re
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from knowledge_base.matlab_model_data import get_model_catalog
 from knowledge_base.matlab_smoke_tester import MatlabSyntaxSmokeTester
 from knowledge_base.matlab_static_validator import MatlabStaticValidator
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_DEF_CPP_PATH = PROJECT_ROOT / "def.cpp"
+_CPP_ENUM_CACHE: Dict[str, Tuple[int, Dict[str, int]]] = {}
+
+
+def load_cpp_enum_values(path: str | Path | None = None) -> Dict[str, int]:
+    enum_path = Path(path) if path is not None else DEFAULT_DEF_CPP_PATH
+    if not enum_path.exists() or not enum_path.is_file():
+        return {}
+
+    cache_key = str(enum_path.resolve())
+    try:
+        modified_at = int(enum_path.stat().st_mtime_ns)
+    except OSError:
+        modified_at = -1
+
+    cached = _CPP_ENUM_CACHE.get(cache_key)
+    if cached and cached[0] == modified_at:
+        return dict(cached[1])
+
+    values = _parse_cpp_enum_values(_read_text_file(enum_path))
+    _CPP_ENUM_CACHE[cache_key] = (modified_at, dict(values))
+    return values
+
+
+def _read_text_file(path: Path) -> str:
+    for encoding in ("utf-8-sig", "utf-8", "gb18030", "gbk"):
+        try:
+            return path.read_text(encoding=encoding)
+        except Exception:
+            continue
+    return path.read_text(encoding="utf-8", errors="ignore")
+
+
+def _parse_cpp_enum_values(text: str) -> Dict[str, int]:
+    if not text:
+        return {}
+
+    sanitized = re.sub(r"/\*.*?\*/", "", text, flags=re.DOTALL)
+    values: Dict[str, int] = {}
+
+    for match in re.finditer(r"enum(?:\s+class)?\s+\w+\s*\{(?P<body>.*?)\}\s*;", sanitized, flags=re.DOTALL):
+        body = re.sub(r"//.*", "", match.group("body"))
+        current_value = -1
+        for raw_item in body.split(","):
+            item = raw_item.strip()
+            if not item:
+                continue
+
+            name, has_assignment, expr = item.partition("=")
+            enum_name = name.strip()
+            if not re.fullmatch(r"[A-Za-z_]\w*", enum_name):
+                continue
+
+            if has_assignment:
+                parsed_value = _parse_cpp_int_value(expr.strip())
+                if parsed_value is None:
+                    continue
+                current_value = parsed_value
+            else:
+                current_value += 1
+
+            values[enum_name] = current_value
+
+    return values
+
+
+def _parse_cpp_int_value(expr: str) -> Optional[int]:
+    normalized = re.sub(r"\b([0-9A-Fa-fxX]+)[uUlL]+\b", r"\1", expr.strip())
+    if not re.fullmatch(r"[-+]?(?:0[xX][0-9A-Fa-f]+|\d+)", normalized):
+        return None
+    try:
+        return int(normalized, 0)
+    except Exception:
+        return None
 
 
 class MatlabModelGenerator:
@@ -146,6 +224,41 @@ class MatlabModelGenerator:
         if template is None:
             raise ValueError(f"No template function for {model_id}")
         return template(params)
+
+    @staticmethod
+    def _resolve_builtin_enum_value(enum_name: str, fallback: int) -> int:
+        values = load_cpp_enum_values()
+        try:
+            return int(values.get(enum_name, fallback))
+        except Exception:
+            return int(fallback)
+
+    def _render_builtin_msg_simu_helper(self) -> str:
+        enum_values = load_cpp_enum_values()
+        if not enum_values:
+            enum_values = {
+                "SM_INITIALIZE": 10102,
+                "SM_CONTINUE": 10103,
+                "SM_STOP": 10106,
+                "SM_OUTPUT": 10124,
+            }
+
+        lines = [
+            "function mode_codes = local_builtin_msg_simu()",
+            "    persistent cached_mode_codes;",
+            "    if isempty(cached_mode_codes)",
+            "        cached_mode_codes = struct();",
+        ]
+        for enum_name, enum_value in enum_values.items():
+            lines.append(f"        cached_mode_codes.{enum_name} = {int(enum_value)};")
+        lines.extend(
+            [
+                "    end",
+                "    mode_codes = cached_mode_codes;",
+                "end",
+            ]
+        )
+        return "\n".join(lines)
 
     def get_default_params(self, model_id: str) -> Dict[str, Any]:
         for item in self.catalog:
@@ -351,13 +464,15 @@ class MatlabModelGenerator:
         cont_body = _indent_block(_join_matlab_blocks(shared_logic, y_logic, f_logic, cont_extra), 12)
         out_body = _indent_block(_join_matlab_blocks(shared_logic, y_logic, out_extra), 12)
         exit_block = _indent_block(exit_body, 12)
+        builtin_helper = _indent_block(self._render_builtin_msg_simu_helper(), 0)
 
         lines = [
             f"function [y, f] = {function_name}(mode, time, Ts, x, u)",
-            "    INIT = 10102;  % 初始化模式",
-            "    CONT = 10103;  % 连续计算模式",
-            "    OUT  = 10111;  % 输出模式",
-            "    EXIT = 10106;  % 退出模式",
+            "    mode_codes = local_builtin_msg_simu();",
+            "    INIT = mode_codes.SM_INITIALIZE;",
+            "    CONT = mode_codes.SM_CONTINUE;",
+            "    OUT  = mode_codes.SM_OUTPUT;",
+            "    EXIT = mode_codes.SM_STOP;",
             "",
         ]
         if parameter_block:
@@ -440,6 +555,8 @@ class MatlabModelGenerator:
                 "            error('Invalid mode');",
                 "    end",
                 "end",
+                "",
+                builtin_helper,
             ]
         )
         return "\n".join(lines)

@@ -133,6 +133,32 @@ class ChatApiE2ETest(unittest.TestCase):
             message="请生成一维火箭模型并编译成 DLL",
             user_id="user-e2e",
             session_id="session-e2e",
+            request_web_research=False,
+        )
+
+    def test_api_chat_forwards_explicit_web_research_flag(self) -> None:
+        mocked_result = _mock_matlab_generation_dll_result()
+        mocked_agent = Mock()
+        mocked_agent.chat.return_value = mocked_result
+
+        with patch.object(server, "_ensure_agent", return_value=mocked_agent):
+            with TestClient(server.app) as client:
+                response = client.post(
+                    "/api/chat",
+                    json={
+                        "message": "联网查询最新火箭参数",
+                        "user_id": "user-e2e",
+                        "session_id": "session-e2e",
+                        "request_web_research": True,
+                    },
+                )
+
+        self.assertEqual(response.status_code, 200)
+        mocked_agent.chat.assert_called_once_with(
+            message="联网查询最新火箭参数",
+            user_id="user-e2e",
+            session_id="session-e2e",
+            request_web_research=True,
         )
 
 

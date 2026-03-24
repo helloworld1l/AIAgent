@@ -127,16 +127,18 @@ class CMakeTool:
         completed = run_command(command, timeout=self.configure_timeout)
         configure_log.write_text((completed.stdout or "") + "\n" + (completed.stderr or ""), encoding="utf-8-sig")
         if completed.returncode != 0:
+            error_message = (completed.stderr or completed.stdout or "CMake configure failed").strip()
             self.job_manager.append_step(job_id, "cmake_configure", "failed", detail)
             self.job_manager.set_job_error(
                 job_id,
                 "cmake_configure_failed",
-                (completed.stderr or completed.stdout or "CMake configure failed").strip(),
+                error_message,
                 extra={"logs": {"configure": str(configure_log)}},
             )
             return {
                 "status": "failed",
                 "error_type": "cmake_configure_failed",
+                "message": error_message,
                 "logs": {"configure": str(configure_log)},
             }
 
@@ -198,16 +200,18 @@ class CMakeTool:
         completed = run_command(command, timeout=self.build_timeout)
         build_log.write_text((completed.stdout or "") + "\n" + (completed.stderr or ""), encoding="utf-8-sig")
         if completed.returncode != 0:
+            error_message = (completed.stderr or completed.stdout or "CMake build failed").strip()
             self.job_manager.append_step(job_id, "cmake_build_dynamic", "failed", detail)
             self.job_manager.set_job_error(
                 job_id,
                 "compile_failed",
-                (completed.stderr or completed.stdout or "CMake build failed").strip(),
+                error_message,
                 extra={"logs": {"build": str(build_log)}},
             )
             return {
                 "status": "failed",
                 "error_type": "compile_failed",
+                "message": error_message,
                 "logs": {"build": str(build_log)},
             }
 

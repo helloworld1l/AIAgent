@@ -25,6 +25,26 @@ x-app-env: &app-env
   RETRIEVAL_RERANK_BLEND: ${RETRIEVAL_RERANK_BLEND:-0.35}
   RETRIEVAL_CANDIDATE_MULTIPLIER: ${RETRIEVAL_CANDIDATE_MULTIPLIER:-4}
   MODEL_SPEC_REPAIR_MAX_ROUNDS: ${MODEL_SPEC_REPAIR_MAX_ROUNDS:-2}
+  WEB_RESEARCH_ENABLED: ${WEB_RESEARCH_ENABLED:-true}
+  WEB_SEARCH_PROVIDER: ${WEB_SEARCH_PROVIDER:-auto}
+  WEB_SEARCH_MAX_RESULTS: ${WEB_SEARCH_MAX_RESULTS:-5}
+  WEB_FETCH_MAX_SOURCES: ${WEB_FETCH_MAX_SOURCES:-3}
+  WEB_FETCH_TIMEOUT_SEC: ${WEB_FETCH_TIMEOUT_SEC:-20}
+  WEB_CONNECT_TIMEOUT_SEC: ${WEB_CONNECT_TIMEOUT_SEC:-20}
+  WEB_REQUESTS_VERIFY_SSL: ${WEB_REQUESTS_VERIFY_SSL:-true}
+  WEB_REQUESTS_CA_BUNDLE: ${WEB_REQUESTS_CA_BUNDLE:-}
+  WEB_REQUESTS_HTTP_PROXY: ${WEB_REQUESTS_HTTP_PROXY:-}
+  WEB_REQUESTS_HTTPS_PROXY: ${WEB_REQUESTS_HTTPS_PROXY:-}
+  WEB_REQUESTS_NO_PROXY: ${WEB_REQUESTS_NO_PROXY:-}
+  WEB_REQUESTS_TRUST_ENV: ${WEB_REQUESTS_TRUST_ENV:-true}
+  WEB_FETCH_MAX_CHARS: ${WEB_FETCH_MAX_CHARS:-12000}
+  WEB_RESEARCH_DIR: ${WEB_RESEARCH_DIR:-generated_research}
+  HTTP_PROXY: ${HTTP_PROXY:-}
+  HTTPS_PROXY: ${HTTPS_PROXY:-}
+  NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1,redis,qdrant,ollama,host.docker.internal}
+  REQUESTS_CA_BUNDLE: ${REQUESTS_CA_BUNDLE:-}
+  CURL_CA_BUNDLE: ${CURL_CA_BUNDLE:-}
+  SSL_CERT_FILE: ${SSL_CERT_FILE:-}
   SENTENCE_TRANSFORMERS_HOME: /root/.cache/torch/sentence_transformers
 
 x-app-build: &app-build
@@ -54,6 +74,7 @@ x-app-service: &app-service
       condition: service_completed_successfully
   volumes:
     - generated_models:/app/generated_models
+    - ./generated_research:/app/${WEB_RESEARCH_DIR:-generated_research}
     - ./knowledge_base/docs:/app/knowledge_base/docs
     - type: bind
       source: ${DOCKER_ST_CACHE_DIR:-./.docker-cache/sentence_transformers}

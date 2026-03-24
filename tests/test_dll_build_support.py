@@ -11,6 +11,7 @@ from agents.dll_build_support import (
     references_previous_artifact,
     requests_dynamic_library_build,
 )
+from agents.tools import DynamicLibraryBuildTool
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +81,53 @@ disp('hello');
 
         self.assertEqual(result["status"], "skipped")
         self.assertFalse(result["is_function"])
+
+    def test_inspect_allows_zero_length_input_vector(self) -> None:
+        matlab_source = """
+function [y, f] = satellite_orbit_2body(mode, time, Ts, x, u)
+    state_dim = max(0, 4);
+    input_dim = max(0, 0);
+    y = zeros(3, 1);
+    f = zeros(state_dim, 1);
+end
+""".strip()
+
+        matlab_file = TEST_TMP_ROOT / f"satellite_orbit_2body_{uuid4().hex[:8]}.m"
+        try:
+            matlab_file.write_text(matlab_source, encoding="utf-8")
+            result = inspect_matlab_entrypoint(matlab_file)
+        finally:
+            matlab_file.unlink(missing_ok=True)
+
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(result["entry_function"], "satellite_orbit_2body")
+        self.assertEqual(
+            result["entry_args_schema"],
+            [
+                {"name": "mode", "type": "double_scalar"},
+                {"name": "time", "type": "double_scalar"},
+                {"name": "Ts", "type": "double_scalar"},
+                {"name": "x", "type": "double_vector", "shape": [4, 1]},
+                {"name": "u", "type": "double_vector", "shape": [0, 1]},
+            ],
+        )
+
+    def test_dynamic_library_tool_accepts_zero_in_shape(self) -> None:
+        tool = DynamicLibraryBuildTool()
+        normalized = tool._normalize_entry_args_schema(
+            [
+                {"name": "x", "type": "double_vector", "shape": [4, 1]},
+                {"name": "u", "type": "double_vector", "shape": [0, 1]},
+            ]
+        )
+
+        self.assertEqual(
+            normalized,
+            [
+                {"name": "x", "type": "double_vector", "shape": [4, 1]},
+                {"name": "u", "type": "double_vector", "shape": [0, 1]},
+            ],
+        )
 
 
 if __name__ == "__main__":

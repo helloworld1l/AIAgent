@@ -19,6 +19,7 @@ class PendingGenerationIRStateTest(unittest.TestCase):
                 "status": "needs_clarify",
             },
             "request_dynamic_library": True,
+            "request_web_research": True,
         }
 
         normalized = self.agent._normalize_pending_generation_ir(state)
@@ -26,8 +27,12 @@ class PendingGenerationIRStateTest(unittest.TestCase):
         self.assertEqual(normalized["task_goal"], "生成一维火箭模型")
         self.assertEqual(normalized["clarify_stage"], CLARIFY_STAGE_SLOT)
         self.assertNotIn("request_dynamic_library", normalized)
+        self.assertNotIn("request_web_research", normalized)
         self.assertTrue(
             self.agent._extract_pending_generation_ir_request_dynamic_library(state)
+        )
+        self.assertTrue(
+            self.agent._extract_pending_generation_ir_request_web_research(state)
         )
 
         legacy_state = {
@@ -48,6 +53,7 @@ class PendingGenerationIRStateTest(unittest.TestCase):
             "session-1",
             generation_ir,
             request_dynamic_library=True,
+            request_web_research=True,
         )
 
         self.agent.session_store.set_state.assert_called_once_with(
@@ -56,6 +62,7 @@ class PendingGenerationIRStateTest(unittest.TestCase):
             {
                 "generation_ir": generation_ir,
                 "request_dynamic_library": True,
+                "request_web_research": True,
             },
         )
 
@@ -63,7 +70,10 @@ class PendingGenerationIRStateTest(unittest.TestCase):
         self.agent.structured_ir = Mock()
         self.agent.retriever = Mock()
         self.agent._handle_generation_intent = Mock(
-            return_value={"message": "ok", "data": {"request_dynamic_library": True}}
+            return_value={
+                "message": "ok",
+                "data": {"request_dynamic_library": True, "request_web_research": True},
+            }
         )
         self.agent._handle_generation_clarify = Mock()
 
@@ -83,6 +93,7 @@ class PendingGenerationIRStateTest(unittest.TestCase):
                 "clarify_stage": CLARIFY_STAGE_SLOT,
             },
             "request_dynamic_library": True,
+            "request_web_research": True,
         }
 
         self.agent._resume_pending_generation_ir(
@@ -99,6 +110,7 @@ class PendingGenerationIRStateTest(unittest.TestCase):
         self.assertNotIn("request_dynamic_library", normalized_for_codegen)
         self.assertEqual(handle_kwargs["generation_ir"], updated_ir)
         self.assertTrue(handle_kwargs["request_dynamic_library"])
+        self.assertTrue(handle_kwargs["request_web_research"])
 
 
 if __name__ == "__main__":

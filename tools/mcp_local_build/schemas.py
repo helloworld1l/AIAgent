@@ -68,7 +68,7 @@ TOOL_DEFINITIONS: Dict[str, Dict[str, Any]] = {
                             "type": {"type": "string", "minLength": 1},
                             "shape": {
                                 "type": "array",
-                                "items": {"type": "integer", "minimum": 1},
+                                "items": {"type": "integer", "minimum": 0},
                             },
                         },
                         "required": ["name", "type"],

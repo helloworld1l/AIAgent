@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>对话式AI助手</title>
+    <title>对话式 AI 助手</title>
     <style>
         :root {
             --bg: #f5f7f2;
@@ -276,6 +276,90 @@
             color: #8b5a23;
         }
 
+        .trace-badge.success {
+            border-color: #bfe7ca;
+            background: #eefaf1;
+            color: #25633d;
+        }
+
+        .trace-badge.copyable {
+            cursor: pointer;
+            user-select: none;
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+
+        .trace-badge.copyable:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 61, 0.12);
+        }
+
+        .trace-badge.copyable:focus-visible {
+            outline: 2px solid #7fc498;
+            outline-offset: 2px;
+        }
+
+        .trace-badge.copied {
+            border-color: #8fd0a3;
+            background: #e4f7ea;
+        }
+
+        .trace-badge.expanded {
+            border-color: #8fd0a3;
+            background: #e4f7ea;
+        }
+
+        .trace-expand {
+            display: none;
+            width: 100%;
+            margin-top: 2px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #dbe8dd;
+            background: #f7fcf8;
+        }
+
+        .trace-expand.show {
+            display: block;
+        }
+
+        .trace-expand-path {
+            margin: 0;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid #d8e7db;
+            color: #2f4b3d;
+            font-size: 12px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .trace-expand-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        .trace-expand-copy {
+            border: 1px solid #8fd0a3;
+            background: #eefaf1;
+            color: #25633d;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .trace-expand-copy:hover {
+            background: #e4f7ea;
+        }
+
+        .trace-expand-copy:disabled {
+            opacity: .72;
+            cursor: default;
+        }
+
         .script-card {
             margin-top: 10px;
             border: 1px solid #cad7da;
@@ -487,7 +571,15 @@
             display: flex;
             flex-direction: row;
             gap: 10px;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
             flex-wrap: wrap;
         }
 
@@ -517,6 +609,17 @@
         }
 
         .btn.soft:hover { background: #e8efee; }
+
+        .btn.toggle {
+            min-width: 132px;
+            border: 1px solid #cfd9d5;
+        }
+
+        .btn.toggle.active {
+            color: #116b66;
+            background: rgba(119, 200, 189, 0.18);
+            border-color: rgba(23, 162, 164, 0.38);
+        }
 
         .error-text {
             color: var(--danger);
@@ -559,6 +662,10 @@
                 flex-direction: row;
                 justify-content: stretch;
             }
+            .btn-group {
+                width: 100%;
+                margin-left: 0;
+            }
             .btn { width: auto; flex: 1 1 120px; }
         }
     </style>
@@ -568,7 +675,7 @@
         <aside class="panel sidebar">
             <section class="brand">
                 <h1>对话式 AI 助手</h1>
-                <p>支持多轮对话、会话重置，并可按意图直接生成 MATLAB `.m` 文件。</p>
+                <p>输入自然语言即可聊天；当你描述 MATLAB 建模需求时，助手会自动生成 `.m` 文件。</p>
             </section>
 
             <section class="status" id="statusBlock">
@@ -578,9 +685,9 @@
             <section class="quick">
                 <h3>快捷提问</h3>
                 <div class="chip-list">
-                    <button class="chip" onclick="usePrompt('介绍一下你可以帮我做什么')">能力介绍</button>
-                    <button class="chip" onclick="usePrompt('请列出支持的MATLAB模型')">模型列表</button>
-                    <button class="chip" onclick="usePrompt('生成一个PID闭环控制模型，kp=1.5, ki=0.8, kd=0.02')">生成PID模型</button>
+                    <button class="chip" onclick="usePrompt('介绍一下你能做什么？')">能力介绍</button>
+                    <button class="chip" onclick="usePrompt('给我几个 MATLAB 建模示例')">建模示例</button>
+                    <button class="chip" onclick="usePrompt('生成一个 PID 控制器 MATLAB 模型，kp=1.5, ki=0.8, kd=0.02')">PID 示例</button>
                     <button class="chip" onclick="usePrompt('/new')">重置会话</button>
                 </div>
             </section>
@@ -588,18 +695,17 @@
             <section class="prompt-examples">
                 <h3>推荐建模语句</h3>
                 <div class="prompt-list">
-                    <button class="prompt-btn" onclick="usePrompt('构建一个二阶传递函数阶跃响应模型，分子[1]，分母[1 3 2]，仿真10秒')">传递函数阶跃响应（含分子分母）</button>
-                    <button class="prompt-btn" onclick="usePrompt('生成状态空间模型，A=[0 1;-2 -3]，B=[0;1]，C=[1 0]，D=0，并绘制输出曲线')">状态空间仿真（A/B/C/D）</button>
-                    <button class="prompt-btn" onclick="usePrompt('生成PID闭环Simulink模型，kp=1.6，ki=0.7，kd=0.03，仿真30秒')">PID闭环Simulink（含参数）</button>
-                    <button class="prompt-btn" onclick="usePrompt('构建质量弹簧阻尼系统，m=2，c=0.4，k=18，初始状态[0;0]，仿真15秒')">质量弹簧阻尼（ODE）</button>
-                    <button class="prompt-btn" onclick="usePrompt('构建卡尔曼滤波跟踪模型，dt=0.1，steps=200，过程噪声0.01，观测噪声0.1')">卡尔曼滤波（噪声参数）</button>
-                    <button class="prompt-btn" onclick="usePrompt('生成一个火箭发射模型，mass0=650,fuel_mass=220,burn_rate=2.8,thrust=19000,drag_coeff=0.52,area=0.9,stop_time=140')">火箭发射模型（1D动力学）</button>
-                    <button class="prompt-btn" onclick="usePrompt('生成MPC控制示例，采样时间0.1，预测域20，控制域5，仿真30秒')">MPC控制（采样与预测域）</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成一个二维状态空间模型，A=[0 1;-3 -2]，B=[0;1]，C=[1 0]，D=0，仿真 10 秒')">状态空间 A/B/C/D 示例</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成 PID 闭环 Simulink 模型，kp=1.6，ki=0.7，kd=0.03，仿真 10 秒')">PID 闭环 Simulink</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成质量-弹簧-阻尼系统模型，m=2，c=0.4，k=18，初值 [0;0]，仿真 5 秒')">质量-弹簧-阻尼系统</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成离散时间一阶系统，dt=0.1，steps=200，输入幅值 0.01，噪声幅值 0.1')">离散系统示例</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成火箭上升段一维模型，mass0=650, fuel_mass=220, burn_rate=2.8, thrust=19000, drag_coeff=0.52, area=0.9, stop_time=140')">火箭上升段 1D 模型</button>
+                    <button class="prompt-btn" onclick="usePrompt('生成 MPC 控制器示例，dt=0.1，预测步长 20，控制步长 5，仿真 10 秒')">MPC 控制器示例</button>
                 </div>
             </section>
 
             <section class="models">
-                <h3>支持模板</h3>
+                <h3>支持模型</h3>
                 <ul class="model-list" id="modelList"></ul>
             </section>
         </aside>
@@ -614,12 +720,15 @@
 
             <footer class="composer">
                 <div>
-                    <textarea id="input" placeholder="建议句式：动作 + 模型类型 + 关键参数 + 输出要求。例如：生成PID闭环Simulink模型，kp=1.5，ki=0.8，kd=0.02，仿真20秒并保存.m文件"></textarea>
+                    <textarea id="input" placeholder="建议句式：动作 + 模型类型 + 关键参数 + 输出要求。例如：生成 PID 闭环 Simulink 模型，kp=1.5，ki=0.8，kd=0.02，仿真 10 秒并保存 .m 文件"></textarea>
                     <div id="errorText" class="error-text"></div>
                 </div>
                 <div class="btns">
-                    <button class="btn soft" onclick="resetSession()">重置会话</button>
-                    <button class="btn send" id="sendBtn" onclick="sendMessage()">发送</button>
+                    <button class="btn soft toggle" id="webResearchBtn" type="button" onclick="toggleWebResearch()">联网查询：关</button>
+                    <div class="btn-group">
+                        <button class="btn soft" onclick="resetSession()">重置会话</button>
+                        <button class="btn send" id="sendBtn" onclick="sendMessage()">发送</button>
+                    </div>
                 </div>
             </footer>
         </main>
@@ -634,12 +743,29 @@
         const inputEl = document.getElementById("input");
         const messagesEl = document.getElementById("messages");
         const sendBtn = document.getElementById("sendBtn");
+        const webResearchBtn = document.getElementById("webResearchBtn");
         const errorTextEl = document.getElementById("errorText");
         const statusTextEl = document.getElementById("statusText");
         const modelListEl = document.getElementById("modelList");
 
+        const WEB_RESEARCH_STORAGE_KEY = "assistant_web_research_enabled";
         const sessionId = localStorage.getItem("assistant_session_id") || `web_${Date.now()}`;
+        let webResearchEnabled = localStorage.getItem(WEB_RESEARCH_STORAGE_KEY) === "1";
         localStorage.setItem("assistant_session_id", sessionId);
+
+        function syncWebResearchButton() {
+            if (!webResearchBtn) return;
+            webResearchBtn.classList.toggle("active", webResearchEnabled);
+            webResearchBtn.setAttribute("aria-pressed", webResearchEnabled ? "true" : "false");
+            webResearchBtn.textContent = webResearchEnabled ? "联网查询：开" : "联网查询：关";
+        }
+
+        function toggleWebResearch() {
+            if (!webResearchBtn || webResearchBtn.disabled) return;
+            webResearchEnabled = !webResearchEnabled;
+            localStorage.setItem(WEB_RESEARCH_STORAGE_KEY, webResearchEnabled ? "1" : "0");
+            syncWebResearchButton();
+        }
 
         function nowTime() {
             return new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" });
@@ -699,7 +825,8 @@
         function setBusy(busy) {
             sendBtn.disabled = busy;
             inputEl.disabled = busy;
-            sendBtn.textContent = busy ? "处理中..." : "发送";
+            if (webResearchBtn) webResearchBtn.disabled = busy;
+            sendBtn.textContent = busy ? "发送中..." : "发送";
         }
 
         function escapeHtml(s) {
@@ -730,6 +857,45 @@
             return "";
         }
 
+        function getWebResearchTrace(data) {
+            if (!data?.request_web_research) return null;
+
+            const normalized = String(data?.web_research_status || "").trim().toLowerCase();
+            const sourceCount = Array.isArray(data?.web_research_sources) ? data.web_research_sources.length : 0;
+            const statusLabels = {
+                success: "成功",
+                disabled: "未启用",
+                failed: "失败",
+                skipped: "未执行"
+            };
+            const tone = normalized === "success" ? "success" : ((normalized === "failed" || normalized === "disabled") ? "warn" : "");
+            const baseLabel = statusLabels[normalized] || "已请求";
+            const value = sourceCount ? `${baseLabel} · ${sourceCount} 源` : baseLabel;
+            return { label: "联网查询", value, tone };
+        }
+
+        function getWebResearchPersistTrace(data) {
+            if (!data?.request_web_research) return null;
+
+            const normalized = String(data?.web_research_status || "").trim().toLowerCase();
+            if (normalized !== "success") return null;
+
+            const bundleDir = String(data?.web_research_bundle_dir || "").trim();
+            const summaryPath = String(data?.web_research_summary_path || "").trim();
+            const briefPath = String(data?.web_research_brief_path || "").trim();
+            const persistedPath = summaryPath || briefPath || bundleDir;
+
+            if (!persistedPath) return null;
+
+            return {
+                label: "\u8054\u7f51\u7ed3\u679c",
+                value: "\u5df2\u843d\u76d8",
+                tone: "success",
+                title: `\u70b9\u51fb\u5c55\u5f00\u843d\u76d8\u8def\u5f84\uff1a${persistedPath}`,
+                copyValue: persistedPath,
+            };
+        }
+
         function buildTraceItems(data) {
             const items = [];
             const retrievalBackend = getRetrievalBackend(data);
@@ -743,11 +909,74 @@
                 items.push({ label: "规格来源", value: specSource });
             }
 
+            const webResearchTrace = getWebResearchTrace(data);
+            if (webResearchTrace) {
+                items.push(webResearchTrace);
+            }
+
+            const webResearchPersistTrace = getWebResearchPersistTrace(data);
+            if (webResearchPersistTrace) {
+                items.push(webResearchPersistTrace);
+            }
+
             if (data?.used_legacy_fallback) {
                 items.push({ label: "生成链路", value: "模板兜底", tone: "warn" });
             }
 
             return items;
+        }
+
+        async function copyTextToClipboard(text) {
+            const normalized = String(text || "").trim();
+            if (!normalized) return false;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(normalized);
+                return true;
+            }
+
+            const textarea = document.createElement("textarea");
+            textarea.value = normalized;
+            textarea.setAttribute("readonly", "true");
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            textarea.style.pointerEvents = "none";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            let copied = false;
+            try {
+                copied = document.execCommand("copy");
+            } finally {
+                document.body.removeChild(textarea);
+            }
+            return copied;
+        }
+
+        async function handleTraceExpandCopy(button, text) {
+            const normalized = String(text || "").trim();
+            if (!normalized) return;
+
+            const originalText = button.textContent;
+            try {
+                const copied = await copyTextToClipboard(normalized);
+                if (!copied) throw new Error("copy failed");
+
+                button.disabled = true;
+                button.textContent = "\u5df2\u590d\u5236";
+                window.setTimeout(() => {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }, 1600);
+            } catch (error) {
+                button.disabled = true;
+                button.textContent = "\u590d\u5236\u5931\u8d25";
+                window.setTimeout(() => {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }, 1600);
+            }
         }
 
         function renderTraceBadges(data) {
@@ -757,13 +986,82 @@
             const container = document.createElement("section");
             container.className = "trace-badges";
 
+            const expandPanel = document.createElement("section");
+            expandPanel.className = "trace-expand";
+            let expandedBadge = null;
+
+            const collapseExpandPanel = () => {
+                expandPanel.classList.remove("show");
+                expandPanel.innerHTML = "";
+                if (expandedBadge) {
+                    expandedBadge.classList.remove("expanded");
+                }
+                expandedBadge = null;
+            };
+
+            const toggleExpandPanel = (badge, item) => {
+                const copyValue = String(item?.copyValue || "").trim();
+                if (!copyValue) return;
+
+                const isSameBadgeOpen = expandedBadge === badge && expandPanel.classList.contains("show");
+                if (isSameBadgeOpen) {
+                    collapseExpandPanel();
+                    return;
+                }
+
+                if (expandedBadge) {
+                    expandedBadge.classList.remove("expanded");
+                }
+
+                expandedBadge = badge;
+                expandedBadge.classList.add("expanded");
+
+                expandPanel.innerHTML = "";
+
+                const pathEl = document.createElement("pre");
+                pathEl.className = "trace-expand-path";
+                pathEl.textContent = copyValue;
+
+                const actionsEl = document.createElement("div");
+                actionsEl.className = "trace-expand-actions";
+
+                const copyButton = document.createElement("button");
+                copyButton.type = "button";
+                copyButton.className = "trace-expand-copy";
+                copyButton.textContent = "\u4e00\u952e\u590d\u5236";
+                copyButton.addEventListener("click", () => handleTraceExpandCopy(copyButton, copyValue));
+
+                actionsEl.appendChild(copyButton);
+                expandPanel.appendChild(pathEl);
+                expandPanel.appendChild(actionsEl);
+                expandPanel.classList.add("show");
+            };
+
             items.forEach((item) => {
                 const badge = document.createElement("div");
                 badge.className = `trace-badge${item.tone ? ` ${item.tone}` : ""}`;
-                badge.innerHTML = `<span class="label">${escapeHtml(item.label)}：</span><span>${escapeHtml(item.value)}</span>`;
+                if (item.title) {
+                    badge.title = item.title;
+                }
+                if (item.copyValue) {
+                    badge.classList.add("copyable");
+                    badge.tabIndex = 0;
+                    badge.setAttribute("role", "button");
+                }
+                badge.innerHTML = `<span class="label">${escapeHtml(item.label)}：</span><span class="value">${escapeHtml(item.value)}</span>`;
+                if (item.copyValue) {
+                    badge.addEventListener("click", () => toggleExpandPanel(badge, item));
+                    badge.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            toggleExpandPanel(badge, item);
+                        }
+                    });
+                }
                 container.appendChild(badge);
             });
 
+            container.appendChild(expandPanel);
             return container;
         }
 
@@ -994,14 +1292,15 @@
                     body: JSON.stringify({
                         message,
                         user_id: "web_user",
-                        session_id: sessionId
+                        session_id: sessionId,
+                        request_web_research: webResearchEnabled
                     })
                 });
                 const data = await res.json();
                 if (!res.ok || !data.success) {
                     throw new Error(data.detail || data.message || "请求失败");
                 }
-                addMessage("assistant", data.message || "已处理", data.data || null);
+                addMessage("assistant", data.message || "已处理。", data.data || null);
                 if (data?.data?.used_fallback) {
                     errorTextEl.textContent = `提示：当前回答来自本地兜底流程（${data?.data?.fallback_reason || "unknown"}）`;
                 }
@@ -1033,6 +1332,7 @@
         });
 
         addMessage("assistant", "你好，我已准备好。你可以先问我：你能做什么？或者直接描述一个 MATLAB 建模需求。");
+        syncWebResearchButton();
         checkHealth();
         loadModels();
         inputEl.focus();

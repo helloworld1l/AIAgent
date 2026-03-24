@@ -15,6 +15,7 @@ from config.settings import ensure_runtime_env_defaults
 from knowledge_base.matlab_generator import MatlabModelGenerator
 from knowledge_base.matlab_model_data import get_model_catalog
 from tools.mcp_local_build.server import LocalBuildMCPServer
+from tools.mcp_web_research.server import WebResearchMCPServer
 
 
 class MatlabKnowledgeRetrieverTool:
@@ -60,6 +61,49 @@ class MatlabFileGeneratorTool:
             model_id=model_id,
         )
         return json.dumps(result, ensure_ascii=False, indent=2)
+
+
+class WebResearchTool:
+    name = "web_research"
+    description = (
+        "Search the public web for modeling evidence, fetch top pages, persist a local bundle, "
+        "and return normalized research docs for downstream MATLAB generation."
+    )
+
+    def __init__(self):
+        self.server = WebResearchMCPServer()
+
+    def _run(
+        self,
+        query: str,
+        session_id: str = "default",
+        max_results: int = 5,
+        max_fetch: int = 3,
+        allowed_domains: Any = None,
+        bundle_name: Optional[str] = None,
+    ) -> str:
+        payload = self.server.call_tool(
+            "research_query",
+            {
+                "query": str(query or "").strip(),
+                "session_id": str(session_id or "default").strip() or "default",
+                "max_results": int(max_results),
+                "max_fetch": int(max_fetch),
+                "allowed_domains": self._normalize_string_list(allowed_domains),
+                "bundle_name": str(bundle_name or "").strip(),
+            },
+        )
+        return json.dumps(payload.get("structuredContent", {}), ensure_ascii=False, indent=2)
+
+    @staticmethod
+    def _normalize_string_list(value: Any) -> List[str]:
+        if value is None:
+            return []
+        if isinstance(value, str):
+            return [segment.strip() for segment in re.split(r"[,;\n]", value) if segment.strip()]
+        if isinstance(value, (list, tuple, set)):
+            return [str(item).strip() for item in value if str(item).strip()]
+        raise ValueError("allowed_domains must be a list or a delimited string")
 
 
 class DynamicLibraryBuildTool:
@@ -180,28 +224,6 @@ class DynamicLibraryBuildTool:
             )
             pipeline_steps.append(codegen_payload)
 
-            configure_payload = self._call_tool(
-                "cmake_configure",
-                {
-                    "job_id": job_id,
-                    "generator": generator,
-                    "platform": platform,
-                    "build_type": build_type,
-                    "extra_defines": normalized_extra_defines,
-                },
-            )
-            pipeline_steps.append(configure_payload)
-
-            build_payload = self._call_tool(
-                "cmake_build_dynamic",
-                {
-                    "job_id": job_id,
-                    "target": default_artifact_name,
-                    "config": config or build_type,
-                },
-            )
-            pipeline_steps.append(build_payload)
-
             planned_pipeline = any(
                 str(step.get("result", {}).get("status", "")).strip().lower() == "planned" for step in pipeline_steps
             )
@@ -210,6 +232,50 @@ class DynamicLibraryBuildTool:
                 or str(step.get("result", {}).get("status", "")).strip().lower() == "failed"
                 for step in pipeline_steps
             )
+
+            if not planned_pipeline and not failed_pipeline:
+                configure_payload = self._call_tool(
+                    "cmake_configure",
+                    {
+                        "job_id": job_id,
+                        "generator": generator,
+                        "platform": platform,
+                        "build_type": build_type,
+                        "extra_defines": normalized_extra_defines,
+                    },
+                )
+                pipeline_steps.append(configure_payload)
+
+                planned_pipeline = any(
+                    str(step.get("result", {}).get("status", "")).strip().lower() == "planned"
+                    for step in pipeline_steps
+                )
+                failed_pipeline = any(
+                    bool(step.get("is_error"))
+                    or str(step.get("result", {}).get("status", "")).strip().lower() == "failed"
+                    for step in pipeline_steps
+                )
+
+            if not planned_pipeline and not failed_pipeline:
+                build_payload = self._call_tool(
+                    "cmake_build_dynamic",
+                    {
+                        "job_id": job_id,
+                        "target": default_artifact_name,
+                        "config": config or build_type,
+                    },
+                )
+                pipeline_steps.append(build_payload)
+
+                planned_pipeline = any(
+                    str(step.get("result", {}).get("status", "")).strip().lower() == "planned"
+                    for step in pipeline_steps
+                )
+                failed_pipeline = any(
+                    bool(step.get("is_error"))
+                    or str(step.get("result", {}).get("status", "")).strip().lower() == "failed"
+                    for step in pipeline_steps
+                )
 
             if not planned_pipeline and not failed_pipeline:
                 inspect_payload = self._call_tool("inspect_artifacts", {"job_id": job_id})
@@ -244,6 +310,9 @@ class DynamicLibraryBuildTool:
                 "job_status": job_status,
                 "job_result": job_result,
             }
+            message = self._derive_response_message(pipeline_steps, job_status, job_result)
+            if message:
+                response["message"] = message
             if next_action_hint:
                 response["next_action_hint"] = next_action_hint
             return json.dumps(response, ensure_ascii=False, indent=2)
@@ -325,6 +394,28 @@ class DynamicLibraryBuildTool:
             return result_status or manifest_status
         return "ok"
 
+    @staticmethod
+    def _derive_response_message(
+        pipeline_steps: List[Dict[str, Any]], job_status: Dict[str, Any], job_result: Dict[str, Any]
+    ) -> str:
+        for step in pipeline_steps:
+            result = step.get("result", {}) if isinstance(step.get("result", {}), dict) else {}
+            status = str(result.get("status", "")).strip().lower()
+            if step.get("is_error") or status == "failed":
+                message = str(result.get("message", "")).strip()
+                if message:
+                    return message
+
+        result_error = str(job_result.get("error_summary", "")).strip()
+        if result_error:
+            return result_error
+
+        status_error = str(job_status.get("error_summary", "")).strip()
+        if status_error:
+            return status_error
+
+        return ""
+
     def _normalize_profiles(self, value: Any) -> List[str]:
         normalized = self._normalize_string_list(value)
         return normalized or list(self.default_profiles)
@@ -357,10 +448,10 @@ class DynamicLibraryBuildTool:
             shape = item.get("shape")
             if shape not in (None, ""):
                 if not isinstance(shape, (list, tuple)):
-                    raise ValueError(f"entry_args_schema[{index}].shape must be a list of positive integers")
+                    raise ValueError(f"entry_args_schema[{index}].shape must be a list of non-negative integers")
                 normalized_shape = [int(dim) for dim in shape]
-                if any(dim <= 0 for dim in normalized_shape):
-                    raise ValueError(f"entry_args_schema[{index}].shape must contain positive integers")
+                if any(dim < 0 for dim in normalized_shape):
+                    raise ValueError(f"entry_args_schema[{index}].shape must contain non-negative integers")
                 normalized_item["shape"] = normalized_shape
             normalized.append(normalized_item)
         return normalized

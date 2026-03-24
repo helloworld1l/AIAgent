@@ -26,12 +26,14 @@ class ChatRequest(BaseModel):
     message: str
     user_id: str = "default"
     session_id: str = "default"
+    request_web_research: bool = False
 
 
 class QueryRequest(BaseModel):
     question: str
     user_id: str = "default"
     session_id: str = "default"
+    request_web_research: bool = False
 
 
 @router.post("/chat")
@@ -40,7 +42,12 @@ async def chat(payload: ChatRequest):
         raise HTTPException(status_code=503, detail="Agent is not initialized")
     if not payload.message.strip():
         raise HTTPException(status_code=422, detail="message cannot be empty")
-    result = agent.chat(payload.message, payload.user_id, payload.session_id)
+    result = agent.chat(
+        payload.message,
+        payload.user_id,
+        payload.session_id,
+        request_web_research=payload.request_web_research,
+    )
     return {"success": True, "message": result.get("message", ""), "data": result.get("data", {})}
 
 
@@ -50,11 +57,15 @@ async def query(payload: QueryRequest):
         raise HTTPException(status_code=503, detail="Agent is not initialized")
     if not payload.question.strip():
         raise HTTPException(status_code=422, detail="question cannot be empty")
-    result = agent.process_query(payload.question, payload.user_id, payload.session_id)
+    result = agent.process_query(
+        payload.question,
+        payload.user_id,
+        payload.session_id,
+        request_web_research=payload.request_web_research,
+    )
     return {"success": True, "message": result.get("message", ""), "data": result.get("data", {})}
 
 
 @router.get("/models")
 async def models():
     return json.loads(list_supported_models())
-

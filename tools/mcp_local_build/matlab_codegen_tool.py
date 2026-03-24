@@ -28,7 +28,7 @@ class MatlabCodegenTool:
         self.project_root = Path(__file__).resolve().parents[2]
         self.templates_dir = Path(__file__).resolve().parent / "templates"
         self.dry_run = _env_flag("LOCAL_BUILD_MCP_DRY_RUN", default=True)
-        self.timeout_seconds = max(30, int(os.getenv("MCP_BUILD_TIMEOUT_MATLAB_SEC", "300")))
+        self.timeout_seconds = max(30, int(os.getenv("MCP_BUILD_TIMEOUT_MATLAB_SEC", "1200")))
 
     def materialize_inputs(
         self,
@@ -127,12 +127,24 @@ class MatlabCodegenTool:
         command_path = paths.matlab_dir / "matlab_command.json"
         command_path.write_text(json.dumps({"command": command}, ensure_ascii=False, indent=2), encoding="utf-8")
 
+        default_runtime_prefdir = (self.project_root / ".matlab_pref_for_build").resolve()
+        configured_prefdir = str(os.getenv("MATLAB_PREFDIR", "")).strip()
+        configured_prefdir_path = Path(configured_prefdir).expanduser().resolve() if configured_prefdir else None
+        if configured_prefdir_path is not None and configured_prefdir_path != default_runtime_prefdir:
+            matlab_prefdir = configured_prefdir_path
+        else:
+            matlab_prefdir = paths.root / ".matlab_pref"
+        matlab_prefdir.mkdir(parents=True, exist_ok=True)
+        command_env = dict(os.environ)
+        command_env["MATLAB_PREFDIR"] = str(matlab_prefdir)
+
         detail = {
             "runner_script": str(runner_script),
             "target_lang": target_lang,
             "matlab_codegen_mode": matlab_codegen_mode,
             "generate_report": generate_report,
             "dry_run": self.dry_run,
+            "matlab_prefdir": str(matlab_prefdir),
             "command": command,
             "codegen_dir": str(codegen_dir),
         }
@@ -156,7 +168,7 @@ class MatlabCodegenTool:
                 "codegen_dir": str(codegen_dir),
             }
 
-        completed = run_command(command, timeout=self.timeout_seconds)
+        completed = run_command(command, timeout=self.timeout_seconds, env=command_env)
 
         stdout_path.write_text(completed.stdout or "", encoding="utf-8-sig")
         stderr_path.write_text(completed.stderr or "", encoding="utf-8-sig")
@@ -167,16 +179,18 @@ class MatlabCodegenTool:
             "matlab_command": str(command_path),
         }
         if completed.returncode != 0:
+            error_message = (completed.stderr or completed.stdout or "MATLAB code generation failed").strip()
             self.job_manager.append_step(job_id, "matlab_generate_cpp", "failed", detail)
             self.job_manager.set_job_error(
                 job_id,
                 "matlab_codegen_failed",
-                (completed.stderr or completed.stdout or "MATLAB code generation failed").strip(),
+                error_message,
                 extra={"logs": log_payload},
             )
             return {
                 "status": "failed",
                 "error_type": "matlab_codegen_failed",
+                "message": error_message,
                 "logs": log_payload,
             }
 

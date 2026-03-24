@@ -172,7 +172,7 @@ def _infer_entry_args_schema(text: str, input_args: List[str]) -> List[Dict[str,
     if lowered_args == ["mode", "time", "ts", "x", "u"]:
         state_dim = _infer_dimension_variable(text, "state_dim")
         input_dim = _infer_dimension_variable(text, "input_dim")
-        if state_dim is None or input_dim is None or state_dim <= 0 or input_dim <= 0:
+        if state_dim is None or input_dim is None or state_dim < 0 or input_dim < 0:
             return []
         return [
             {"name": normalized_args[0], "type": "double_scalar"},
